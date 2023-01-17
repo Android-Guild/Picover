@@ -1,5 +1,4 @@
-
-package com.example.android.picover.ui.theme
+package com.example.android.picover.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
