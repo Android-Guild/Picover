@@ -28,28 +28,28 @@ fun PicoverNavigationDrawer(
     items: List<NavigationItem>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    onItemClick: (NavigationItem) -> Unit
+    onItemClick: (NavigationItem) -> Unit,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
 
     PermanentNavigationDrawer(
         drawerContent = {
             PermanentDrawerSheet(
-                modifier = modifier.width(240.dp)
+                modifier = modifier.width(240.dp),
             ) {
                 Column(
                     modifier = Modifier
                         .wrapContentWidth()
                         .fillMaxHeight()
                         .background(MaterialTheme.colorScheme.inverseOnSurface)
-                        .padding(12.dp)
+                        .padding(12.dp),
                 ) {
                     items.forEach { item ->
                         NavigationDrawerItem(
                             label = {
                                 Text(
                                     text = stringResource(id = item.labelResId),
-                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                    modifier = Modifier.padding(horizontal = 16.dp),
                                 )
                             },
                             selected = item.route == backStackEntry.value?.destination?.route,
@@ -57,12 +57,12 @@ fun PicoverNavigationDrawer(
                             icon = {
                                 Icon(
                                     imageVector = item.icon,
-                                    contentDescription = stringResource(id = item.labelResId)
+                                    contentDescription = stringResource(id = item.labelResId),
                                 )
                             },
                             colors = NavigationDrawerItemDefaults.colors(
-                                unselectedContainerColor = Color.Transparent
-                            )
+                                unselectedContainerColor = Color.Transparent,
+                            ),
                         )
                     }
                 }
@@ -72,7 +72,7 @@ fun PicoverNavigationDrawer(
         PicoverNavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = NavigationItem.Home.route
+            startDestination = NavigationItem.Home.route,
         )
     }
 }

@@ -16,7 +16,7 @@ fun PicoverNavigationRail(
     items: List<NavigationItem>,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    onItemClick: (NavigationItem) -> Unit
+    onItemClick: (NavigationItem) -> Unit,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
 
@@ -29,19 +29,19 @@ fun PicoverNavigationRail(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = stringResource(id = item.labelResId)
+                            contentDescription = stringResource(id = item.labelResId),
                         )
                     },
                     label = {
                         Text(text = stringResource(id = item.labelResId))
-                    }
+                    },
                 )
             }
         }
         PicoverNavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = NavigationItem.Home.route
+            startDestination = NavigationItem.Home.route,
         )
     }
 }

@@ -3,6 +3,7 @@ package com.example.android.picover.presentation.navigation
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 
+@Suppress("ktlint:trailing-comma-on-declaration-site")
 enum class NavigationType {
     NAVIGATION_BAR,
     NAVIGATION_RAIL,

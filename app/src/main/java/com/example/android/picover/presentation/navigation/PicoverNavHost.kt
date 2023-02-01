@@ -13,12 +13,12 @@ import com.example.android.picover.presentation.ProfileScreen
 fun PicoverNavHost(
     modifier: Modifier,
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         composable("home") {
             HomeScreen()
