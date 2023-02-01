@@ -9,6 +9,8 @@ enum class NavigationType {
     NAVIGATION_RAIL,
     NAVIGATION_DRAWER;
 
+
+
     companion object {
         fun fromWindowSize(windowSize: WindowSizeClass) = when (windowSize.widthSizeClass) {
             WindowWidthSizeClass.Medium -> NAVIGATION_RAIL
