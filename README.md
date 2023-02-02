@@ -4,7 +4,7 @@ App for documenting memories from Android Guild meetings and parties
 
 ## Contribution
 
-Current issues are present in the [project backlog](https://github.com/orgs/intive/projects/3). Workflow is the following:
+Current issues are pr  esent in the [project backlog](https://github.com/orgs/intive/projects/3). Workflow is the following:
 - **TODO** column is for giving ideas and discussions on the topics. Most of the ideas are created as a drafts and then discussed.
 - If the idea is accepted and prepared to be implemented, it goes to **Ready for development** column.
 - **In progress** and **Done** columns are self-explanatory.
