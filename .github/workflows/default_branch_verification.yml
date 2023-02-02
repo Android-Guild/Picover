@@ -1,8 +1,9 @@
-name: Default branch verification
+name: Dev branch verification
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches:
+      - dev
 
 jobs:
   build:
