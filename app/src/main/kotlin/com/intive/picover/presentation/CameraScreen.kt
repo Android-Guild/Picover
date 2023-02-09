@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.intive.picover.R
 
 @Composable
-fun CameraScreen() {
+fun CameraScreen(cameraViewModel: CameraViewModel) {
 	Box(
 		modifier = Modifier.fillMaxSize()
 	) {
@@ -20,3 +20,4 @@ fun CameraScreen() {
 		)
 	}
 }
+

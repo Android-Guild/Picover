@@ -17,8 +17,10 @@ import com.intive.picover.presentation.navigation.PicoverNavigationBar
 import com.intive.picover.presentation.navigation.PicoverNavigationDrawer
 import com.intive.picover.presentation.navigation.PicoverNavigationRail
 import com.intive.picover.presentation.ui.theme.PicoverTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class)
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
