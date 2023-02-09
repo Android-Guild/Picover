@@ -11,23 +11,23 @@ import com.example.android.picover.presentation.ProfileScreen
 
 @Composable
 fun PicoverNavHost(
-    modifier: Modifier,
-    navController: NavHostController,
-    startDestination: String
+	modifier: Modifier,
+	navController: NavHostController,
+	startDestination: String
 ) {
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = startDestination
-    ) {
-        composable("home") {
-            HomeScreen()
-        }
-        composable("camera") {
-            CameraScreen()
-        }
-        composable("profile") {
-            ProfileScreen()
-        }
-    }
+	NavHost(
+		modifier = modifier,
+		navController = navController,
+		startDestination = startDestination
+	) {
+		composable("home") {
+			HomeScreen()
+		}
+		composable("camera") {
+			CameraScreen()
+		}
+		composable("profile") {
+			ProfileScreen()
+		}
+	}
 }

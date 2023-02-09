@@ -14,35 +14,35 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun PicoverNavigationBar(
-    items: List<NavigationItem>,
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onItemClick: (NavigationItem) -> Unit
+	items: List<NavigationItem>,
+	navController: NavHostController,
+	modifier: Modifier = Modifier,
+	onItemClick: (NavigationItem) -> Unit
 ) {
-    val backStackEntry = navController.currentBackStackEntryAsState()
+	val backStackEntry = navController.currentBackStackEntryAsState()
 
-    Column {
-        PicoverNavHost(
-            modifier = modifier.weight(1f),
-            navController = navController,
-            startDestination = NavigationItem.Home.route
-        )
-        NavigationBar(modifier = Modifier.fillMaxWidth()) {
-            items.forEach { item ->
-                NavigationBarItem(
-                    selected = item.route == backStackEntry.value?.destination?.route,
-                    onClick = { onItemClick(item) },
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = stringResource(id = item.labelResId)
-                        )
-                    },
-                    label = {
-                        Text(text = stringResource(id = item.labelResId))
-                    }
-                )
-            }
-        }
-    }
+	Column {
+		PicoverNavHost(
+			modifier = modifier.weight(1f),
+			navController = navController,
+			startDestination = NavigationItem.Home.route
+		)
+		NavigationBar(modifier = Modifier.fillMaxWidth()) {
+			items.forEach { item ->
+				NavigationBarItem(
+					selected = item.route == backStackEntry.value?.destination?.route,
+					onClick = { onItemClick(item) },
+					icon = {
+						Icon(
+							imageVector = item.icon,
+							contentDescription = stringResource(id = item.labelResId)
+						)
+					},
+					label = {
+						Text(text = stringResource(id = item.labelResId))
+					}
+				)
+			}
+		}
+	}
 }

@@ -11,12 +11,12 @@ import com.example.android.picover.R
 
 @Composable
 fun ProfileScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = stringResource(id = R.string.profile),
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
+	Box(
+		modifier = Modifier.fillMaxSize()
+	) {
+		Text(
+			text = stringResource(id = R.string.profile),
+			modifier = Modifier.align(Alignment.Center)
+		)
+	}
 }

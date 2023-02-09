@@ -9,25 +9,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.android.picover.R
 
 sealed class NavigationItem(
-    @StringRes val labelResId: Int,
-    val icon: ImageVector,
-    val route: String
+	@StringRes val labelResId: Int,
+	val icon: ImageVector,
+	val route: String
 ) {
-    object Home : NavigationItem(
-        labelResId = R.string.home,
-        icon = Icons.Filled.Home,
-        route = "home"
-    )
+	object Home : NavigationItem(
+		labelResId = R.string.home,
+		icon = Icons.Filled.Home,
+		route = "home"
+	)
 
-    object Camera : NavigationItem(
-        labelResId = R.string.camera,
-        icon = Icons.Filled.PhotoCamera,
-        route = "camera"
-    )
+	object Camera : NavigationItem(
+		labelResId = R.string.camera,
+		icon = Icons.Filled.PhotoCamera,
+		route = "camera"
+	)
 
-    object Profile : NavigationItem(
-        labelResId = R.string.profile,
-        icon = Icons.Filled.Person,
-        route = "profile"
-    )
+	object Profile : NavigationItem(
+		labelResId = R.string.profile,
+		icon = Icons.Filled.Person,
+		route = "profile"
+	)
 }

@@ -20,58 +20,58 @@ import com.example.android.picover.presentation.ui.theme.PicoverTheme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            PicoverTheme {
-                val windowSize = calculateWindowSizeClass(this)
-                val navigationType = NavigationType.fromWindowSize(windowSize)
-                val navController = rememberNavController()
-                val navigationItems = listOf(
-                    NavigationItem.Home,
-                    NavigationItem.Camera,
-                    NavigationItem.Profile
-                )
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContent {
+			PicoverTheme {
+				val windowSize = calculateWindowSizeClass(this)
+				val navigationType = NavigationType.fromWindowSize(windowSize)
+				val navController = rememberNavController()
+				val navigationItems = listOf(
+					NavigationItem.Home,
+					NavigationItem.Camera,
+					NavigationItem.Profile
+				)
 
-                Scaffold {
-                    AnimatedVisibility(
-                        visible = navigationType == NavigationType.NAVIGATION_BAR
-                    ) {
-                        PicoverNavigationBar(
-                            items = navigationItems,
-                            navController = navController,
-                            onItemClick = {
-                                navController.navigate(it.route)
-                            },
-                            modifier = Modifier.padding(it)
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = navigationType == NavigationType.NAVIGATION_RAIL
-                    ) {
-                        PicoverNavigationRail(
-                            items = navigationItems,
-                            navController = navController,
-                            onItemClick = {
-                                navController.navigate(it.route)
-                            },
-                            modifier = Modifier.padding(it)
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = navigationType == NavigationType.NAVIGATION_DRAWER
-                    ) {
-                        PicoverNavigationDrawer(
-                            items = navigationItems,
-                            navController = navController,
-                            onItemClick = {
-                                navController.navigate(it.route)
-                            },
-                            modifier = Modifier.padding(it)
-                        )
-                    }
-                }
-            }
-        }
-    }
+				Scaffold {
+					AnimatedVisibility(
+						visible = navigationType == NavigationType.NAVIGATION_BAR
+					) {
+						PicoverNavigationBar(
+							items = navigationItems,
+							navController = navController,
+							onItemClick = {
+								navController.navigate(it.route)
+							},
+							modifier = Modifier.padding(it)
+						)
+					}
+					AnimatedVisibility(
+						visible = navigationType == NavigationType.NAVIGATION_RAIL
+					) {
+						PicoverNavigationRail(
+							items = navigationItems,
+							navController = navController,
+							onItemClick = {
+								navController.navigate(it.route)
+							},
+							modifier = Modifier.padding(it)
+						)
+					}
+					AnimatedVisibility(
+						visible = navigationType == NavigationType.NAVIGATION_DRAWER
+					) {
+						PicoverNavigationDrawer(
+							items = navigationItems,
+							navController = navController,
+							onItemClick = {
+								navController.navigate(it.route)
+							},
+							modifier = Modifier.padding(it)
+						)
+					}
+				}
+			}
+		}
+	}
 }
