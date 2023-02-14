@@ -11,12 +11,12 @@ import com.example.android.picover.R
 
 @Composable
 fun CameraScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = stringResource(id = R.string.camera),
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
+	Box(
+		modifier = Modifier.fillMaxSize()
+	) {
+		Text(
+			text = stringResource(id = R.string.camera),
+			modifier = Modifier.align(Alignment.Center)
+		)
+	}
 }

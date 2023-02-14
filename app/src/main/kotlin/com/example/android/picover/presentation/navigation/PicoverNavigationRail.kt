@@ -13,35 +13,35 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun PicoverNavigationRail(
-    items: List<NavigationItem>,
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onItemClick: (NavigationItem) -> Unit
+	items: List<NavigationItem>,
+	navController: NavHostController,
+	modifier: Modifier = Modifier,
+	onItemClick: (NavigationItem) -> Unit
 ) {
-    val backStackEntry = navController.currentBackStackEntryAsState()
+	val backStackEntry = navController.currentBackStackEntryAsState()
 
-    Row {
-        NavigationRail {
-            items.forEach { item ->
-                NavigationRailItem(
-                    selected = item.route == backStackEntry.value?.destination?.route,
-                    onClick = { onItemClick(item) },
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = stringResource(id = item.labelResId)
-                        )
-                    },
-                    label = {
-                        Text(text = stringResource(id = item.labelResId))
-                    }
-                )
-            }
-        }
-        PicoverNavHost(
-            modifier = modifier,
-            navController = navController,
-            startDestination = NavigationItem.Home.route
-        )
-    }
+	Row {
+		NavigationRail {
+			items.forEach { item ->
+				NavigationRailItem(
+					selected = item.route == backStackEntry.value?.destination?.route,
+					onClick = { onItemClick(item) },
+					icon = {
+						Icon(
+							imageVector = item.icon,
+							contentDescription = stringResource(id = item.labelResId)
+						)
+					},
+					label = {
+						Text(text = stringResource(id = item.labelResId))
+					}
+				)
+			}
+		}
+		PicoverNavHost(
+			modifier = modifier,
+			navController = navController,
+			startDestination = NavigationItem.Home.route
+		)
+	}
 }
