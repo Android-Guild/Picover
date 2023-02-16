@@ -1,9 +1,10 @@
-package com.example.android.picover.presentation.navigation
+package com.intive.picover.presentation.navigation
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun PicoverNavigationRail(
+fun PicoverNavigationBar(
 	items: List<NavigationItem>,
 	navController: NavHostController,
 	modifier: Modifier = Modifier,
@@ -20,10 +21,15 @@ fun PicoverNavigationRail(
 ) {
 	val backStackEntry = navController.currentBackStackEntryAsState()
 
-	Row {
-		NavigationRail {
+	Column {
+		PicoverNavHost(
+			modifier = modifier.weight(1f),
+			navController = navController,
+			startDestination = NavigationItem.Home.route
+		)
+		NavigationBar(modifier = Modifier.fillMaxWidth()) {
 			items.forEach { item ->
-				NavigationRailItem(
+				NavigationBarItem(
 					selected = item.route == backStackEntry.value?.destination?.route,
 					onClick = { onItemClick(item) },
 					icon = {
@@ -38,10 +44,5 @@ fun PicoverNavigationRail(
 				)
 			}
 		}
-		PicoverNavHost(
-			modifier = modifier,
-			navController = navController,
-			startDestination = NavigationItem.Home.route
-		)
 	}
 }

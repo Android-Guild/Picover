@@ -1,4 +1,4 @@
-package com.example.android.picover
+package com.intive.picover
 
 import org.junit.Test
 

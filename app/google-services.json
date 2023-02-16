@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:286990969949:android:db2320401d929378dc31b4",
+        "mobilesdk_app_id": "1:286990969949:android:5c073bdd429518c8dc31b4",
         "android_client_info": {
-          "package_name": "com.example.android.picover"
+          "package_name": "com.intive.picover"
         }
       },
       "oauth_client": [

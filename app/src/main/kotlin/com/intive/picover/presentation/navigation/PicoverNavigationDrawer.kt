@@ -1,4 +1,4 @@
-package com.example.android.picover.presentation.navigation
+package com.intive.picover.presentation.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,10 +25,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PicoverNavigationDrawer(
-	items: List<NavigationItem>,
-	navController: NavHostController,
-	modifier: Modifier = Modifier,
-	onItemClick: (NavigationItem) -> Unit
+    items: List<NavigationItem>,
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    onItemClick: (NavigationItem) -> Unit
 ) {
 	val backStackEntry = navController.currentBackStackEntryAsState()
 

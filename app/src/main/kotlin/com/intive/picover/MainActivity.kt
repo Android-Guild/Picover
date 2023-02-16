@@ -1,4 +1,4 @@
-package com.example.android.picover
+package com.intive.picover
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,12 +11,12 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.android.picover.presentation.navigation.NavigationItem
-import com.example.android.picover.presentation.navigation.NavigationType
-import com.example.android.picover.presentation.navigation.PicoverNavigationBar
-import com.example.android.picover.presentation.navigation.PicoverNavigationDrawer
-import com.example.android.picover.presentation.navigation.PicoverNavigationRail
-import com.example.android.picover.presentation.ui.theme.PicoverTheme
+import com.intive.picover.presentation.navigation.NavigationItem
+import com.intive.picover.presentation.navigation.NavigationType
+import com.intive.picover.presentation.navigation.PicoverNavigationBar
+import com.intive.picover.presentation.navigation.PicoverNavigationDrawer
+import com.intive.picover.presentation.navigation.PicoverNavigationRail
+import com.intive.picover.presentation.ui.theme.PicoverTheme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {

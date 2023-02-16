@@ -1,4 +1,4 @@
-package com.example.android.picover.presentation.ui.theme
+package com.intive.picover.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

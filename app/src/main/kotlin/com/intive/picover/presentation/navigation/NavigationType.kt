@@ -1,4 +1,4 @@
-package com.example.android.picover.presentation.navigation
+package com.intive.picover.presentation.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
