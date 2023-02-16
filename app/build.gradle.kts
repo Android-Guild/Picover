@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-	namespace = "com.example.android.picover"
+	namespace = "com.intive.picover"
 	compileSdk = 33
 
 	defaultConfig {
-		applicationId = "com.example.android.picover"
+		applicationId = "com.intive.picover"
 		minSdk = 26
 		targetSdk = 33
 		versionCode = 1
