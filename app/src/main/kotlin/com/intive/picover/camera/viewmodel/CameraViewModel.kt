@@ -1,4 +1,4 @@
-package com.intive.picover.presentation
+package com.intive.picover.camera.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

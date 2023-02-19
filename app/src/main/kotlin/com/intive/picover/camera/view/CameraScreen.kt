@@ -1,4 +1,4 @@
-package com.intive.picover.presentation
+package com.intive.picover.camera.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.intive.picover.R
+import com.intive.picover.camera.viewmodel.CameraViewModel
 
 @Composable
 fun CameraScreen(cameraViewModel: CameraViewModel) {
