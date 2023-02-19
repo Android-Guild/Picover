@@ -1,4 +1,4 @@
-package com.intive.picover.presentation.navigation
+package com.intive.picover.main.navigation.model
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

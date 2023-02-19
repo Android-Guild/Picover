@@ -1,4 +1,4 @@
-package com.intive.picover.presentation.navigation
+package com.intive.picover.main.navigation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.intive.picover.main.navigation.model.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

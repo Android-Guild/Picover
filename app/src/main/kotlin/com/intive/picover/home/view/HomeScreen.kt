@@ -1,4 +1,4 @@
-package com.intive.picover.presentation
+package com.intive.picover.home.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,12 +10,12 @@ import androidx.compose.ui.res.stringResource
 import com.intive.picover.R
 
 @Composable
-fun ProfileScreen() {
+fun HomeScreen() {
 	Box(
 		modifier = Modifier.fillMaxSize()
 	) {
 		Text(
-			text = stringResource(id = R.string.profile),
+			text = stringResource(id = R.string.home),
 			modifier = Modifier.align(Alignment.Center)
 		)
 	}

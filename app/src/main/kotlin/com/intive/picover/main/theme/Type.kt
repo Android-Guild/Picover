@@ -1,4 +1,4 @@
-package com.intive.picover.presentation.ui.theme
+package com.intive.picover.main.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

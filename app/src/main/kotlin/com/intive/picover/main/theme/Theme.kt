@@ -1,4 +1,4 @@
-package com.intive.picover.presentation.ui.theme
+package com.intive.picover.main.theme
 
 import android.app.Activity
 import android.os.Build
