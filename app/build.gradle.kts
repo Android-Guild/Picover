@@ -1,6 +1,8 @@
 plugins {
 	id("com.android.application")
-	id("org.jetbrains.kotlin.android")
+	kotlin("android")
+	kotlin("kapt")
+	id("com.google.dagger.hilt.android")
 	id("com.google.gms.google-services")
 }
 
@@ -37,6 +39,10 @@ android {
 	}
 }
 
+kapt {
+	correctErrorTypes = true
+}
+
 dependencies {
 
 	implementation(platform("androidx.compose:compose-bom:2023.01.00"))
@@ -52,7 +58,11 @@ dependencies {
 	implementation("com.google.gms:google-services:4.3.15")
 	implementation(platform("com.google.firebase:firebase-bom:31.2.0"))
 	implementation("com.google.firebase:firebase-analytics-ktx")
+	implementation("com.google.dagger:hilt-android:2.44.2")
+	kapt("com.google.dagger:hilt-android-compiler:2.44.2")
+	implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 	debugImplementation("androidx.compose.ui:ui-tooling")
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
 	testImplementation("junit:junit:4.13.2")
 }
+
