@@ -6,6 +6,10 @@ plugins {
 	id("com.google.gms.google-services")
 }
 
+apply {
+	from("../scripts/ktlint.gradle.kts")
+}
+
 android {
 	namespace = "com.intive.picover"
 	compileSdk = 33
