@@ -13,12 +13,11 @@ import com.intive.picover.camera.viewmodel.CameraViewModel
 @Composable
 fun CameraScreen(cameraViewModel: CameraViewModel) {
 	Box(
-		modifier = Modifier.fillMaxSize()
+		modifier = Modifier.fillMaxSize(),
 	) {
 		Text(
 			text = stringResource(id = R.string.camera),
-			modifier = Modifier.align(Alignment.Center)
+			modifier = Modifier.align(Alignment.Center),
 		)
 	}
 }
-

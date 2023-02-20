@@ -32,12 +32,12 @@ class MainActivity : ComponentActivity() {
 				val navigationItems = listOf(
 					NavigationItem.Home,
 					NavigationItem.Camera,
-					NavigationItem.Profile
+					NavigationItem.Profile,
 				)
 
 				Scaffold {
 					AnimatedVisibility(
-						visible = navigationType == NavigationType.NAVIGATION_BAR
+						visible = navigationType == NavigationType.NAVIGATION_BAR,
 					) {
 						PicoverNavigationBar(
 							items = navigationItems,
@@ -45,11 +45,11 @@ class MainActivity : ComponentActivity() {
 							onItemClick = {
 								navController.navigate(it.route)
 							},
-							modifier = Modifier.padding(it)
+							modifier = Modifier.padding(it),
 						)
 					}
 					AnimatedVisibility(
-						visible = navigationType == NavigationType.NAVIGATION_RAIL
+						visible = navigationType == NavigationType.NAVIGATION_RAIL,
 					) {
 						PicoverNavigationRail(
 							items = navigationItems,
@@ -57,11 +57,11 @@ class MainActivity : ComponentActivity() {
 							onItemClick = {
 								navController.navigate(it.route)
 							},
-							modifier = Modifier.padding(it)
+							modifier = Modifier.padding(it),
 						)
 					}
 					AnimatedVisibility(
-						visible = navigationType == NavigationType.NAVIGATION_DRAWER
+						visible = navigationType == NavigationType.NAVIGATION_DRAWER,
 					) {
 						PicoverNavigationDrawer(
 							items = navigationItems,
@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
 							onItemClick = {
 								navController.navigate(it.route)
 							},
-							modifier = Modifier.padding(it)
+							modifier = Modifier.padding(it),
 						)
 					}
 				}

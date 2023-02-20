@@ -18,7 +18,7 @@ fun PicoverNavigationBar(
 	items: List<NavigationItem>,
 	navController: NavHostController,
 	modifier: Modifier = Modifier,
-	onItemClick: (NavigationItem) -> Unit
+	onItemClick: (NavigationItem) -> Unit,
 ) {
 	val backStackEntry = navController.currentBackStackEntryAsState()
 
@@ -26,7 +26,7 @@ fun PicoverNavigationBar(
 		PicoverNavHost(
 			modifier = modifier.weight(1f),
 			navController = navController,
-			startDestination = NavigationItem.Home.route
+			startDestination = NavigationItem.Home.route,
 		)
 		NavigationBar(modifier = Modifier.fillMaxWidth()) {
 			items.forEach { item ->
@@ -36,12 +36,12 @@ fun PicoverNavigationBar(
 					icon = {
 						Icon(
 							imageVector = item.icon,
-							contentDescription = stringResource(id = item.labelResId)
+							contentDescription = stringResource(id = item.labelResId),
 						)
 					},
 					label = {
 						Text(text = stringResource(id = item.labelResId))
-					}
+					},
 				)
 			}
 		}

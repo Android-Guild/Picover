@@ -11,23 +11,23 @@ import com.intive.picover.R
 sealed class NavigationItem(
 	@StringRes val labelResId: Int,
 	val icon: ImageVector,
-	val route: String
+	val route: String,
 ) {
 	object Home : NavigationItem(
 		labelResId = R.string.home,
 		icon = Icons.Filled.Home,
-		route = "home"
+		route = "home",
 	)
 
 	object Camera : NavigationItem(
 		labelResId = R.string.camera,
 		icon = Icons.Filled.PhotoCamera,
-		route = "camera"
+		route = "camera",
 	)
 
 	object Profile : NavigationItem(
 		labelResId = R.string.profile,
 		icon = Icons.Filled.Person,
-		route = "profile"
+		route = "profile",
 	)
 }
