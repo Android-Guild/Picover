@@ -15,7 +15,7 @@ fun ProfileScreen() {
 		modifier = Modifier.fillMaxSize(),
 	) {
 		Text(
-			text = stringResource(id = R.string.profile),
+			text = stringResource(id = R.string.Profile),
 			modifier = Modifier.align(Alignment.Center),
 		)
 	}

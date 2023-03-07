@@ -14,19 +14,19 @@ sealed class NavigationItem(
 	val route: String,
 ) {
 	object Home : NavigationItem(
-		labelResId = R.string.home,
+		labelResId = R.string.Home,
 		icon = Icons.Filled.Home,
 		route = "home",
 	)
 
 	object Camera : NavigationItem(
-		labelResId = R.string.camera,
+		labelResId = R.string.Camera,
 		icon = Icons.Filled.PhotoCamera,
 		route = "camera",
 	)
 
 	object Profile : NavigationItem(
-		labelResId = R.string.profile,
+		labelResId = R.string.Profile,
 		icon = Icons.Filled.Person,
 		route = "profile",
 	)

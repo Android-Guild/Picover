@@ -15,7 +15,7 @@ fun HomeScreen() {
 		modifier = Modifier.fillMaxSize(),
 	) {
 		Text(
-			text = stringResource(id = R.string.home),
+			text = stringResource(id = R.string.Home),
 			modifier = Modifier.align(Alignment.Center),
 		)
 	}
