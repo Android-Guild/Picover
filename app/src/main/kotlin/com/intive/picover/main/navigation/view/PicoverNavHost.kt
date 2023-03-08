@@ -14,12 +14,12 @@ import com.intive.picover.profile.view.ProfileScreen
 fun PicoverNavHost(
 	modifier: Modifier,
 	navController: NavHostController,
-	startDestination: String
+	startDestination: String,
 ) {
 	NavHost(
 		modifier = modifier,
 		navController = navController,
-		startDestination = startDestination
+		startDestination = startDestination,
 	) {
 		composable("home") {
 			HomeScreen()
@@ -32,4 +32,3 @@ fun PicoverNavHost(
 		}
 	}
 }
-

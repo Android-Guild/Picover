@@ -12,11 +12,11 @@ import com.intive.picover.R
 @Composable
 fun ProfileScreen() {
 	Box(
-		modifier = Modifier.fillMaxSize()
+		modifier = Modifier.fillMaxSize(),
 	) {
 		Text(
 			text = stringResource(id = R.string.profile),
-			modifier = Modifier.align(Alignment.Center)
+			modifier = Modifier.align(Alignment.Center),
 		)
 	}
 }
