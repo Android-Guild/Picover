@@ -16,7 +16,7 @@ fun CameraScreen(cameraViewModel: CameraViewModel) {
 		modifier = Modifier.fillMaxSize(),
 	) {
 		Text(
-			text = stringResource(id = R.string.camera),
+			text = stringResource(id = R.string.Camera),
 			modifier = Modifier.align(Alignment.Center),
 		)
 	}

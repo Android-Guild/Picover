@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Picover</string>
-    <string name="home">Home</string>
-    <string name="camera">Camera</string>
-    <string name="profile">Profile</string>
+    <string name="AppName">Picover</string>
+    <string name="Home">Home</string>
+    <string name="Camera">Camera</string>
+    <string name="Profile">Profile</string>
 </resources>
