@@ -65,6 +65,7 @@ dependencies {
 	implementation("com.google.dagger:hilt-android:2.44.2")
 	kapt("com.google.dagger:hilt-android-compiler:2.44.2")
 	implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+	implementation("com.github.skydoves:landscapist-coil:2.1.3")
 	debugImplementation("androidx.compose.ui:ui-tooling")
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
 	testImplementation("junit:junit:4.13.2")
