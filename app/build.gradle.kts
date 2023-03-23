@@ -71,6 +71,7 @@ dependencies {
 	implementation("com.github.skydoves:landscapist-coil:2.1.3")
 	debugImplementation("androidx.compose.ui:ui-tooling")
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
-	testImplementation("junit:junit:4.13.2")
+	testImplementation(platform("io.kotest:kotest-bom:5.5.5"))
+	testImplementation("io.kotest:kotest-runner-junit5")
 }
 

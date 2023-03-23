@@ -1,16 +1,13 @@
 plugins {
-    kotlin("jvm")
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
+	kotlin("jvm")
 }
 
 dependencies {
-    val lintVersion = "30.4.2"
+	val lintVersion = "30.4.2"
 	compileOnly("com.android.tools.lint:lint-api:$lintVersion")
 	compileOnly("com.android.tools.lint:lint-checks:$lintVersion")
+	testImplementation(platform("io.kotest:kotest-bom:5.5.5"))
 	testImplementation("com.android.tools.lint:lint:$lintVersion")
 	testImplementation("com.android.tools.lint:lint-tests:$lintVersion")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("io.kotest:kotest-runner-junit5")
 }
