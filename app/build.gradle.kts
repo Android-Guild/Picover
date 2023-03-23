@@ -4,6 +4,7 @@ plugins {
 	kotlin("kapt")
 	id("com.google.dagger.hilt.android")
 	id("com.google.gms.google-services")
+	id("com.google.android.gms.oss-licenses-plugin")
 }
 
 apply {
@@ -59,6 +60,8 @@ dependencies {
 	implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 	implementation("androidx.activity:activity-compose:1.6.1")
 	implementation("androidx.navigation:navigation-compose:2.5.3")
+	implementation("androidx.appcompat:appcompat:1.6.1")
+	implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
 	implementation("com.google.gms:google-services:4.3.15")
 	implementation(platform("com.google.firebase:firebase-bom:31.2.0"))
 	implementation("com.google.firebase:firebase-analytics-ktx")
