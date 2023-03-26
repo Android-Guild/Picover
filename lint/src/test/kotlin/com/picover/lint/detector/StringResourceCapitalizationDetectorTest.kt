@@ -2,12 +2,11 @@ package com.picover.lint.detector
 
 import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
-import org.junit.jupiter.api.Test
+import io.kotest.core.spec.style.ShouldSpec
 
-internal class StringResourceCapitalizationDetectorTest {
+internal class StringResourceCapitalizationDetectorTest : ShouldSpec({
 
-	@Test
-	fun testDetectingNotCapitalizedBasic() {
+	should("report error for string resources WHEN names are not capitalized") {
 		lint().files(
 			TestFiles.xml(
 				"/res/values/strings.xml",
@@ -26,8 +25,7 @@ internal class StringResourceCapitalizationDetectorTest {
 			.expectContains("camera")
 	}
 
-	@Test
-	fun testNotReportForColors() {
+	should("not report errors for not capitalized color resources") {
 		lint().files(
 			TestFiles.xml(
 				"/res/values/color.xml",
@@ -42,4 +40,4 @@ internal class StringResourceCapitalizationDetectorTest {
 			.run()
 			.expectClean()
 	}
-}
+})
