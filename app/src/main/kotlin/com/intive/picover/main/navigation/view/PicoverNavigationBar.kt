@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.android.picover.presentation.ProfileDrawerContent
 import com.intive.picover.main.navigation.model.NavigationItem
+import com.intive.picover.profile.view.ProfileDrawerContent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

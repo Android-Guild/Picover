@@ -1,4 +1,4 @@
-package com.example.android.picover.presentation
+package com.intive.picover.profile.view
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
