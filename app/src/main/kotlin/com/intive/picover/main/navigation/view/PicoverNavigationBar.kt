@@ -44,7 +44,7 @@ fun PicoverNavigationBar(
 			PicoverNavHost(
 				modifier = modifier.weight(1f),
 				navController = navController,
-				startDestination = NavigationItem.Home.route,
+				startDestination = NavigationItem.Parties.route,
 			)
 		}
 		NavigationBar(modifier = Modifier.fillMaxWidth()) {

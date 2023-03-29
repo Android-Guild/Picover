@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
 				val navigationType = NavigationType.fromWindowSize(windowSize)
 				val navController = rememberNavController()
 				val navigationItems = listOf(
-					NavigationItem.Home,
+					NavigationItem.Parties,
 					NavigationItem.Camera,
 					NavigationItem.Profile,
 				)
