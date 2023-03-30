@@ -42,7 +42,7 @@ fun PicoverNavigationRail(
 		PicoverNavHost(
 			modifier = modifier,
 			navController = navController,
-			startDestination = NavigationItem.Home.route,
+			startDestination = NavigationItem.Parties.route,
 		)
 	}
 }

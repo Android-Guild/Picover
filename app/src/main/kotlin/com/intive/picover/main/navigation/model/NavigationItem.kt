@@ -2,7 +2,7 @@ package com.intive.picover.main.navigation.model
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Celebration
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -13,10 +13,10 @@ sealed class NavigationItem(
 	val icon: ImageVector,
 	val route: String,
 ) {
-	object Home : NavigationItem(
-		labelResId = R.string.Home,
-		icon = Icons.Filled.Home,
-		route = "home",
+	object Parties : NavigationItem(
+		labelResId = R.string.Parties,
+		icon = Icons.Filled.Celebration,
+		route = "parties",
 	)
 
 	object Camera : NavigationItem(

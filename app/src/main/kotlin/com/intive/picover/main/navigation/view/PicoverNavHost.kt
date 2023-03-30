@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.intive.picover.camera.view.CameraScreen
-import com.intive.picover.home.view.HomeScreen
+import com.intive.picover.parties.view.PartiesScreen
 import com.intive.picover.profile.view.ProfileScreen
 
 @Composable
@@ -21,8 +21,8 @@ fun PicoverNavHost(
 		navController = navController,
 		startDestination = startDestination,
 	) {
-		composable("home") {
-			HomeScreen()
+		composable("parties") {
+			PartiesScreen()
 		}
 		composable("camera") {
 			CameraScreen(hiltViewModel())
