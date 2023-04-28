@@ -24,8 +24,8 @@ class StringResourceCapitalizationDetector : Detector(), XmlScanner {
 		listOf(SdkConstants.TAG_STRING)
 
 	override fun visitElement(context: XmlContext, element: Element) {
-		val attribute = element.getAttributeNode("name")
-		if (attribute.value.first().isUpperCase().not()) {
+		val attribute = element.getAttributeNode(SdkConstants.ATTR_NAME)
+		if (attribute.value.first().isLowerCase()) {
 			context.report(ISSUE, context.getValueLocation(attribute), "Use PascalCase")
 		}
 	}
