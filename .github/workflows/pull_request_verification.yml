@@ -1,52 +1,38 @@
 name: Pull Request verification
-
-on:
-  pull_request:
-    branches: '**'
+on: pull_request
 
 jobs:
 
-  setup_java:
+  branch-name:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: set up JDK
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Check correct branch name
+        run: ./.github/scripts/branch/checkBranch.sh
+
+  commit-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{github.event.after}}
+      - name: Check correct commit message
+        run: ./.github/scripts/commit/checkCommitMessage.sh
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
-
-  branch_name:
-    needs: setup_java
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Give Permission to File checkBranch.sh
-        run: chmod +x ./.github/scripts/branch/checkBranch.sh
-      - name: Check correct branch name
-        run: ./.github/scripts/branch/checkBranch.sh
-
-  commit_message:
-    needs: setup_java
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: ${{github.event.after}}
-      - name: Give Permission to File checkCommitMessage.sh
-        run: chmod +x ./.github/scripts/commit/checkCommitMessage.sh
-      - name: Check correct commit message
-        run: ./.github/scripts/commit/checkCommitMessage.sh
-
-  build:
-    needs: setup_java
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
       - name: Check lint
         run: ./gradlew lintDebug
       - name: Check ktlint
