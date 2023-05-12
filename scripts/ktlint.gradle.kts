@@ -1,7 +1,7 @@
 val ktlint by configurations.creating
 
 dependencies {
-	ktlint("com.pinterest:ktlint:0.48.2")
+	ktlint("com.pinterest:ktlint:0.49.0")
 	ktlint(project(":ktlint-ruleset"))
 }
 
