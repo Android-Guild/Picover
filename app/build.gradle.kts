@@ -9,10 +9,6 @@ plugins {
 	id(libs.plugins.oss.licenses.get().pluginId)
 }
 
-apply {
-	from("../scripts/ktlint.gradle.kts")
-}
-
 android {
 	namespace = "com.intive.picover"
 	compileSdk = 33

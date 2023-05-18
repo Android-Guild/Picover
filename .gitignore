@@ -1,5 +1,5 @@
 .gradle
 /.idea
-/build
+build
 local.properties
 google-services.json
