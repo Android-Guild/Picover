@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.intive.picover.main.navigation.model.NavigationItem
-import com.intive.picover.profile.view.ProfileDrawerContent
+import com.intive.picover.profile.view.ProfileScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +33,7 @@ fun PicoverNavigationBar(
 	val backStackEntry = navController.currentBackStackEntryAsState()
 	Column {
 		ModalNavigationDrawer(
-			drawerContent = { ProfileDrawerContent() },
+			drawerContent = { ModalDrawerSheet { ProfileScreen() } },
 			drawerState = drawerState,
 			gesturesEnabled = drawerState.isOpen,
 			modifier = modifier.weight(1f),

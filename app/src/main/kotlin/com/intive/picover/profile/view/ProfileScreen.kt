@@ -1,22 +1,31 @@
 package com.intive.picover.profile.view
 
-import androidx.compose.foundation.layout.Box
+import android.content.Intent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
 
 @Composable
 fun ProfileScreen() {
-	Box(
+	val context = LocalContext.current
+	Column(
 		modifier = Modifier.fillMaxSize(),
+		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		Text(
-			text = stringResource(id = R.string.Profile),
-			modifier = Modifier.align(Alignment.Center),
-		)
+		Button(
+			onClick = {
+				context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+			},
+		) {
+			Text(stringResource(R.string.OpenLicenses))
+		}
 	}
 }
