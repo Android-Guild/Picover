@@ -17,5 +17,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+      - name: Read google-service.json
+        env:
+          FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+        run: echo $FIREBASE_GOOGLE_SERVICE > app/src/google-services.json
       - name: Build with Gradle
         run: ./gradlew build
