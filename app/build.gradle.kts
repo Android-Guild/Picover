@@ -73,6 +73,7 @@ dependencies {
 	kapt("com.google.dagger:hilt-android-compiler:2.45")
 	implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 	implementation("com.github.skydoves:landscapist-coil:2.1.3")
+	implementation("com.google.android.material:material:1.9.0")
 	debugImplementation("androidx.compose.ui:ui-tooling")
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
 	testImplementation(platform("io.kotest:kotest-bom:5.5.5"))
