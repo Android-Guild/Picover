@@ -74,6 +74,8 @@ dependencies {
 	implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 	implementation("com.github.skydoves:landscapist-coil:2.1.3")
 	implementation("com.google.android.material:material:1.9.0")
+	implementation("com.google.firebase:firebase-auth-ktx")
+	implementation("com.firebaseui:firebase-ui-auth:8.0.2")
 	debugImplementation("androidx.compose.ui:ui-tooling")
 	debugImplementation("androidx.compose.ui:ui-test-manifest")
 	testImplementation(platform("io.kotest:kotest-bom:5.5.5"))
