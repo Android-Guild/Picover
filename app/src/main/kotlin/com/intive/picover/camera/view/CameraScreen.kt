@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.intive.picover.R
@@ -23,7 +22,6 @@ import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun CameraScreen(viewModel: CameraViewModel) {
-	LocalLifecycleOwner.current.lifecycle.addObserver(viewModel)
 	val takenImageUri by viewModel.takenImageUri
 	val isImageTaken by viewModel.isImageTaken
 	val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
