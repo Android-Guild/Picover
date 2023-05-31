@@ -77,7 +77,6 @@ dependencies {
 	implementation("com.google.firebase:firebase-auth-ktx")
 	implementation("com.firebaseui:firebase-ui-auth:8.0.2")
 	debugImplementation("androidx.compose.ui:ui-tooling")
-	debugImplementation("androidx.compose.ui:ui-test-manifest")
 	testImplementation(platform("io.kotest:kotest-bom:5.5.5"))
 	testImplementation("io.kotest:kotest-runner-junit5")
 	testImplementation("io.mockk:mockk:1.13.5")
