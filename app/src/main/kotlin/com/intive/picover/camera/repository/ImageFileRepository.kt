@@ -8,13 +8,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import javax.inject.Inject
 
-// TODO-BCH Should be unit tested after Kotest setup
 class ImageFileRepository @Inject constructor(
 	@ApplicationContext private val context: Context,
 ) {
 
-	fun createTempFileAndGetUri(): Uri? {
-		val tempFile = File.createTempFile("IMG_", ".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES))
-		return FileProvider.getUriForFile(context, "${context.packageName}.provider", tempFile)
-	}
+	fun createTempFileAndGetUri(): Uri? =
+		File.createTempFile("IMG_", ".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)).let {
+			FileProvider.getUriForFile(context, "${context.packageName}.provider", it)
+		}
 }
