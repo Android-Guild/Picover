@@ -69,6 +69,7 @@ dependencies {
 	implementation("com.google.gms:google-services:4.3.15")
 	implementation(platform("com.google.firebase:firebase-bom:31.2.0"))
 	implementation("com.google.firebase:firebase-analytics-ktx")
+	implementation("com.google.firebase:firebase-storage-ktx")
 	implementation("com.google.dagger:hilt-android:2.45")
 	kapt("com.google.dagger:hilt-android-compiler:2.45")
 	implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
