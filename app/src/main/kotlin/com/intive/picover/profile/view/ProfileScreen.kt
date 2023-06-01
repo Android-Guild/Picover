@@ -12,9 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
+import com.intive.picover.profile.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(viewModel: ProfileViewModel) {
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier.fillMaxSize(),
@@ -26,6 +27,12 @@ fun ProfileScreen() {
 			},
 		) {
 			Text(stringResource(R.string.OpenLicenses))
+		}
+		Button(onClick = viewModel::onLogoutClick) {
+			Text(stringResource(R.string.LogoutButton))
+		}
+		Button(onClick = viewModel::onDeleteAccountClick) {
+			Text(stringResource(R.string.DeleteAccountButton))
 		}
 	}
 }
