@@ -1,0 +1,24 @@
+name: Setup Build Environment
+
+on:
+  workflow_call:
+    inputs:
+      command:
+        required: true
+        type: string
+
+jobs:
+  setup-build-environment:
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2.0.10
+      - name: Read google-service.json
+        env:
+          FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+        run: echo $FIREBASE_GOOGLE_SERVICE > app/src/google-services.json
+      - name: Execute command
+        run: ${{ inputs.command }}
