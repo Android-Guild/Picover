@@ -23,15 +23,12 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2.0.10
       - name: Read google-service.json
         env:
           FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
