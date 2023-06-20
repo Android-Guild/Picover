@@ -1,0 +1,48 @@
+[versions]
+dagger = "2.46.1"
+kotlin = "1.8.21"
+ktlint = "0.49.1"
+lint = "31.0.2"
+
+[libraries]
+android-core = { group = "androidx.core", name = "core-ktx", version.strictly = "1.10.1" }
+android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.strictly = "2.6.1" }
+android-compose-activity = { group = "androidx.activity", name = "activity-compose", version.strictly = "1.7.2" }
+android-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.strictly = "2.5.3" }
+android-google-services = { group = "com.google.gms", name = "google-services", version.strictly = "4.3.15" }
+android-google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.strictly = "17.0.1" }
+coil = { group = "com.github.skydoves", name = "landscapist-coil", version.strictly = "2.2.0" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.strictly = "2023.05.01" }
+compose-ui-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
+dagger-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.strictly = "1.0.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.strictly = "32.0.0" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebaseui-auth = { group = "com.firebaseui", name = "firebase-ui-auth", version.strictly = "8.0.2" }
+lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
+ktlint-core = { group = "com.pinterest.ktlint", name = "ktlint-core", version.ref = "ktlint" }
+ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-core", version.ref = "ktlint" }
+material = { group = "com.google.android.material", name = "material", version.strictly = "1.9.0" }
+
+test-mockk = { group = "io.mockk", name = "mockk", version.strictly = "1.13.5" }
+test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
+test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
+test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.strictly = "5.6.2" }
+
+[bundles]
+lint-test = ["test-lint", "test-lint-tests"]
+
+[plugins]
+android-application = { id = "com.android.application", version.strictly = "8.0.2" }
+google-services = { id = "com.google.gms.google-services", version.strictly = "4.3.15" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+oss-licenses = { id = "com.google.android.gms.oss-licenses-plugin" }
