@@ -20,6 +20,19 @@ jobs:
       - name: Check correct commit message
         run: ./.github/scripts/commit/checkCommitMessage.sh
 
+  count-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: PR commits
+        run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} ))" >> "${GITHUB_ENV}"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: ${{ env.PR_FETCH_DEPTH }}
+      - name: Count Commits
+        run: ./.github/scripts/commit/checkCountCommits.sh "${{ env.PR_FETCH_DEPTH }}"
+
   lint-check:
     uses: ./.github/workflows/setup_docker_and_execute_command.yml
     with:
