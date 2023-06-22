@@ -10,9 +10,6 @@ import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import com.android.tools.lint.detector.api.XmlContext
 import com.android.tools.lint.detector.api.XmlScanner
-import com.android.tools.lint.detector.api.XmlScannerConstants
-import org.w3c.dom.Attr
-import org.w3c.dom.Document
 import org.w3c.dom.Element
 
 class StringResourceCapitalizationDetector : Detector(), XmlScanner {
@@ -39,7 +36,7 @@ class StringResourceCapitalizationDetector : Detector(), XmlScanner {
 			category = Category.CORRECTNESS,
 			severity = Severity.ERROR,
 			implementation = Implementation(StringResourceCapitalizationDetector::class.java, Scope.RESOURCE_FILE_SCOPE),
-			androidSpecific = true
+			androidSpecific = true,
 		)
 	}
 }

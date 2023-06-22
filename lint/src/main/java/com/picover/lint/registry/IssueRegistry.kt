@@ -14,6 +14,6 @@ class IssueRegistry : IssueRegistry() {
 	)
 
 	override val issues = listOf(
-		StringResourceCapitalizationDetector.ISSUE
+		StringResourceCapitalizationDetector.ISSUE,
 	)
 }
