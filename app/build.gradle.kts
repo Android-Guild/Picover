@@ -81,4 +81,3 @@ dependencies {
 		because("Needed to locally trigger single kotest test - check new versions of kotlin and kotest plugins to fix this workaround")
 	}
 }
-
