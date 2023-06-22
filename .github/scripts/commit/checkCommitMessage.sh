@@ -11,6 +11,6 @@ message=$(git log -1 --pretty=format:"%s" | tr -dc '[:print:]\n')
 if ! [[ "$message" =~ $regex ]]
 then
   echo "::error::Message is invalid — $message"
-  echo "::error::Commit message should look like - #\$issue_number \$descr  iption "
+  echo "::error::Commit message should look like - #\$issue_number \$descr  ipt ion "
   exit 1
 fi
