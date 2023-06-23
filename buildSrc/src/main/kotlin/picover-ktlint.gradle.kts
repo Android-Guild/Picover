@@ -1,13 +1,10 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+
 plugins {
 	`java-library`
 }
 
 val ktlint by configurations.creating
-
-dependencies {
-	ktlint("com.pinterest:ktlint:0.49.0")
-	ktlint(project(":ktlint-ruleset"))
-}
 
 val ktlintCheck by tasks.creating(JavaExec::class) {
 	description = "Check Kotlin code style."
@@ -18,4 +15,12 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
 		"**/*.kts",
 		"!**/build/**",
 	)
+}
+
+// https://github.com/gradle/gradle/issues/15383
+val libs = the<LibrariesForLibs>()
+
+dependencies {
+	ktlint(libs.ktlint)
+	ktlint(project(":ktlint-ruleset"))
 }
