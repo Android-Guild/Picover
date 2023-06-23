@@ -2,7 +2,6 @@ name: Pull Request verification
 on: pull_request
 
 jobs:
-
   branch-name:
     runs-on: ubuntu-latest
     steps:
@@ -21,21 +20,25 @@ jobs:
       - name: Check correct commit message
         run: ./.github/scripts/commit/checkCommitMessage.sh
 
+  lint-check:
+    uses: ./.github/workflows/setup_build_environment.yml
+    with:
+      command: ./gradlew lintDebug
+    secrets: inherit
+
+  ktlint-check:
+    uses: ./.github/workflows/setup_build_environment.yml
+    with:
+      command: ./gradlew ktlintCheck
+
   build:
-    runs-on: ubuntu-latest
-    container: gradle:8.0.0-jdk17
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2.0.10
-      - name: Read google-service.json
-        env:
-          FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
-        run: echo $FIREBASE_GOOGLE_SERVICE > app/src/google-services.json
-      - name: Check lint
-        run: ./gradlew lintDebug
-      - name: Check ktlint
-        run: ./gradlew ktlintCheck
-      - name: Build with Gradle
-        run: ./gradlew build
+    uses: ./.github/workflows/setup_build_environment.yml
+    with:
+      command: ./gradlew assemble
+    secrets: inherit
+
+  tests:
+    uses: ./.github/workflows/setup_build_environment.yml
+    with:
+      command: ./gradlew test
+    secrets: inherit
