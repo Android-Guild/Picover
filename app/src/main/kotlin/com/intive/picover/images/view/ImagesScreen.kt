@@ -18,40 +18,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.intive.picover.common.loader.PicoverLoader
-import com.intive.picover.images.viewmodel.ImagesStorageState
-import com.intive.picover.images.viewmodel.ImagesStorageState.Error
-import com.intive.picover.images.viewmodel.ImagesStorageState.Loading
-import com.intive.picover.images.viewmodel.ImagesStorageState.Success
+import com.intive.picover.common.viewmodel.state.ViewModelState
 import com.intive.picover.images.viewmodel.ImagesViewModel
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun ImagesScreen(viewModel: ImagesViewModel) {
-	val state by viewModel.uiState
+	val state by viewModel.state
 	ValidateFirebaseStorageState(state)
 }
 
 @Composable
-private fun ValidateFirebaseStorageState(state: ImagesStorageState) {
-	when (state) {
-		is Success -> {
-			val uris = state.uris
-			LazyColumn(
-				content = {
-					items(uris) {
-						ListItem(uri = it)
-					}
-				},
-				horizontalAlignment = Alignment.CenterHorizontally,
-				verticalArrangement = Arrangement.Center,
-			)
-		}
+private fun ValidateFirebaseStorageState(state: ViewModelState<List<Uri>>) {
+	when {
+		state.isLoaded() -> LazyColumn(
+			content = {
+				items(state.data()) {
+					ListItem(uri = it)
+				}
+			},
+			horizontalAlignment = Alignment.CenterHorizontally,
+			verticalArrangement = Arrangement.Center,
+		)
 
-		is Error -> {
+		state.isError() -> {
 			// TODO-KMA Handle the error
 		}
 
-		is Loading -> PicoverLoader(modifier = Modifier.fillMaxSize())
+		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 	}
 }
 
