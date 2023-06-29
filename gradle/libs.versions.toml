@@ -26,6 +26,7 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.s
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebaseui-auth = { group = "com.firebaseui", name = "firebase-ui-auth", version.strictly = "8.0.2" }
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
 ktlint = { group = "com.pinterest", name = "ktlint", version.ref = "ktlint" }
