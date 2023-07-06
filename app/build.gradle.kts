@@ -74,6 +74,7 @@ dependencies {
 	implementation(libs.material)
 	implementation(libs.firebase.auth)
 	implementation(libs.firebaseui.auth)
+	implementation(libs.firebase.database)
 	debugImplementation(libs.compose.ui.tooling)
 	testImplementation(libs.test.kotest.runner)
 	testImplementation(libs.test.mockk)

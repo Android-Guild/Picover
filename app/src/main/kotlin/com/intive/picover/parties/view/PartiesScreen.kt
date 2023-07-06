@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +19,6 @@ import androidx.navigation.NavHostController
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.theme.Typography
 import com.intive.picover.parties.model.Party
-import com.intive.picover.parties.state.PartiesState
 import com.intive.picover.parties.viewmodel.PartiesViewModel
 
 @Composable
@@ -26,18 +26,18 @@ fun PartiesScreen(
 	viewModel: PartiesViewModel,
 	navController: NavHostController,
 ) {
-	when (val state = viewModel.parties.value) {
-		is PartiesState.Loading -> {
-			PicoverLoader()
-		}
+	val state by viewModel.state
+	when {
+		state.isLoading() -> PicoverLoader()
+		state.isLoaded() -> LoadedContent(
+			parties = state.data(),
+			openDetails = {
+				navController.navigate("partyDetails/$it")
+			},
+		)
 
-		is PartiesState.Loaded -> {
-			LoadedContent(
-				parties = state.parties,
-				openDetails = {
-					navController.navigate("partyDetails/$it")
-				},
-			)
+		state.isError() -> {
+			// TODO: Will be implemented in #133
 		}
 	}
 }

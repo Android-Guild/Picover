@@ -1,21 +1,27 @@
 package com.intive.picover.parties.repository
 
-import com.intive.picover.parties.model.Party
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.snapshots
+import com.intive.picover.parties.model.PartyRemote
 import javax.inject.Inject
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.map
 
-@Singleton
-class MockedPartiesRepository @Inject constructor() {
+class MockedPartiesRepository @Inject constructor(
+	firebaseDatabase: FirebaseDatabase,
+) {
 
-	private val parties = listOf(
-		Party(id = 1, title = "title1", description = "description1"),
-		Party(id = 2, title = "title2", description = "description2"),
-		Party(id = 3, title = "title3", description = "description3"),
-		Party(id = 4, title = "title4", description = "description4"),
-		Party(id = 5, title = "title5", description = "description5"),
-	)
+	private val partiesReference =
+		firebaseDatabase.getReference("Parties")
 
-	fun getParties() = parties
+	fun parties() =
+		partiesReference.snapshots.map { snapshot ->
+			snapshot.children.map { childSnapshot ->
+				childSnapshot.getValue(PartyRemote::class.java)!!
+			}
+		}
 
-	fun getPartyById(id: Int) = parties.find { it.id == id }!!
+	fun partyById(id: Int) =
+		parties().map { parties ->
+			parties.first { it.id == id }
+		}
 }
