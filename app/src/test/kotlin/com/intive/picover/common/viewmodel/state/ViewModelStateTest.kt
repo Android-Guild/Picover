@@ -11,7 +11,7 @@ internal class ViewModelStateTest : ShouldSpec(
 	{
 		val data: Any = mockk()
 
-		should("SHOULD isLoading AND isError AND isLoaded AND return values based on view model state") {
+		should("isLoading AND isError AND isLoaded AND return values based on view model state") {
 			listOf(
 				ViewModelStateParams(
 					state = ViewModelState.Loading,
@@ -40,7 +40,7 @@ internal class ViewModelStateTest : ShouldSpec(
 			}
 		}
 
-		should("SHOULD throw ClassCastException WHEN data called AND view model state is NOT loaded") {
+		should("throw ClassCastException WHEN data called AND view model state is NOT loaded") {
 			listOf(
 				ViewModelState.Loading,
 				ViewModelState.Error,
@@ -51,7 +51,7 @@ internal class ViewModelStateTest : ShouldSpec(
 			}
 		}
 
-		should("SHOULD return data WHEN data called AND view model state is loaded") {
+		should("return data WHEN data called AND view model state is loaded") {
 			ViewModelState.Loaded(data).data() shouldBe data
 		}
 	},
