@@ -69,7 +69,7 @@ private fun TakenImage(imageUri: Uri) {
 			contentScale = ContentScale.Crop,
 			alignment = Alignment.Center,
 		),
-		previewPlaceholder = R.drawable.ic_launcher_background,
+		previewPlaceholder = R.drawable.ic_launcher_foreground,
 	)
 }
 
