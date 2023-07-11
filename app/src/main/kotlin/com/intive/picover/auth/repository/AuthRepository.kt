@@ -2,6 +2,7 @@ package com.intive.picover.auth.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.intive.picover.auth.model.AuthEvent
+import com.intive.picover.profile.model.Profile
 import javax.inject.Inject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -30,10 +31,22 @@ class AuthRepository @Inject constructor(
 		firebaseAuth.signOut()
 	}
 
+	fun userProfile() =
+		requireUser().let {
+			Profile(
+				photo = it.photoUrl,
+				name = it.displayName!!,
+				email = it.email!!,
+			)
+		}
+
 	// TODO #100 Handle FirebaseAuthRecentLoginRequiredException
 	suspend fun deleteAccount() {
-		firebaseAuth.currentUser!!
+		requireUser()
 			.delete()
 			.await()
 	}
+
+	private fun requireUser() =
+		firebaseAuth.currentUser!!
 }

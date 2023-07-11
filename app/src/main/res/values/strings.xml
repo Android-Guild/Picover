@@ -11,4 +11,6 @@
     <string name="DeleteAccountConfirmationDialogDescription">This operation cannot be undone. You will need to re-authenticate to delete your account.</string>
     <string name="ConfirmButton">Yes</string>
     <string name="CancelButton">Cancel</string>
+    <string name="UserName">User Name</string>
+    <string name="UserEmail">User Email</string>
 </resources>
