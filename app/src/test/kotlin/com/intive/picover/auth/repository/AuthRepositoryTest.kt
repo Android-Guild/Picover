@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.intive.picover.auth.model.AuthEvent
 import com.intive.picover.profile.model.Profile
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
@@ -33,11 +34,11 @@ class AuthRepositoryTest : ShouldSpec(
 			unmockkAll()
 		}
 
-		listOf(
-			null to AuthEvent.NotLogged,
-			mockk<FirebaseUser>() to AuthEvent.Logged,
-		).forEach { (user, authEvent) ->
-			should("return $authEvent WHEN observeEvents called AND AuthStateListener returned $user user") {
+		should("return authEvent depending on user returned from AuthStateListener WHEN observeEvents called") {
+			listOf(
+				null to AuthEvent.NotLogged,
+				mockk<FirebaseUser>() to AuthEvent.Logged,
+			).forAll { (user, authEvent) ->
 				val listenerSlot = slot<FirebaseAuth.AuthStateListener>()
 				every { firebaseAuth.addAuthStateListener(capture(listenerSlot)) } answers {
 					listenerSlot.captured.onAuthStateChanged(
