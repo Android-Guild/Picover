@@ -1,4 +1,4 @@
-# Picover
+# Picover [![Dev branch verification](https://github.com/intive/Picover/actions/workflows/default_branch_verification.yml/badge.svg)](https://github.com/intive/Picover/actions/workflows/default_branch_verification.yml) [![Pull Request verification](https://github.com/intive/Picover/actions/workflows/pull_request_verification.yml/badge.svg)](https://github.com/intive/Picover/actions/workflows/pull_request_verification.yml)
 
 App for documenting memories from Android Guild meetings and parties
 
