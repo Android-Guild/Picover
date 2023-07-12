@@ -8,7 +8,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.PartyRemote
 import com.intive.picover.parties.model.toUI
-import com.intive.picover.parties.repository.MockedPartiesRepository
+import com.intive.picover.parties.repository.PartiesRepository
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -27,7 +27,7 @@ class PartyDetailsViewModelTest : ShouldSpec(
 		val partyId = 2
 		val partyRemote: PartyRemote = mockk()
 		val party: Party = mockk()
-		val repository: MockedPartiesRepository = mockk()
+		val repository: PartiesRepository = mockk()
 		val savedStateHandle = SavedStateHandle(mapOf("partyId" to partyId))
 		lateinit var tested: PartyDetailsViewModel
 

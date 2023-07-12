@@ -10,7 +10,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.toUI
-import com.intive.picover.parties.repository.MockedPartiesRepository
+import com.intive.picover.parties.repository.PartiesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.catch
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PartiesViewModel @Inject constructor(
-	private val partiesRepository: MockedPartiesRepository,
+	private val partiesRepository: PartiesRepository,
 ) : ViewModel() {
 
 	val state: MutableState<ViewModelState<List<Party>>> = mutableStateOf(Loading)

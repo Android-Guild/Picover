@@ -15,14 +15,14 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 
-class MockedPartiesRepositoryTest : ShouldSpec(
+class PartiesRepositoryTest : ShouldSpec(
 	{
 
 		val databaseReference: DatabaseReference = mockk()
 		val firebaseDatabase: FirebaseDatabase = mockk {
 			every { getReference("Parties") } returns databaseReference
 		}
-		val tested = MockedPartiesRepository(firebaseDatabase)
+		val tested = PartiesRepository(firebaseDatabase)
 
 		beforeSpec {
 			mockkStatic("com.google.firebase.database.ktx.DatabaseKt")
