@@ -6,7 +6,7 @@ import com.intive.picover.parties.model.PartyRemote
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 
-class MockedPartiesRepository @Inject constructor(
+class PartiesRepository @Inject constructor(
 	firebaseDatabase: FirebaseDatabase,
 ) {
 

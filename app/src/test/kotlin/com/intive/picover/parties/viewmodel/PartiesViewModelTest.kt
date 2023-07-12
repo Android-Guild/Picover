@@ -7,7 +7,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.PartyRemote
 import com.intive.picover.parties.model.toUI
-import com.intive.picover.parties.repository.MockedPartiesRepository
+import com.intive.picover.parties.repository.PartiesRepository
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -25,7 +25,7 @@ class PartiesViewModelTest : ShouldSpec(
 
 		val partiesRemote: List<PartyRemote> = mockk()
 		val parties: List<Party> = mockk()
-		val repository: MockedPartiesRepository = mockk()
+		val repository: PartiesRepository = mockk()
 		lateinit var tested: PartiesViewModel
 		beforeSpec {
 			mockkStatic(List<PartyRemote>::toUI)
