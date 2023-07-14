@@ -2,9 +2,103 @@
 
 App for documenting memories from Android Guild meetings and parties
 
+## Team:
+
+<table>
+  <tr>
+    <td>
+      <p align="center">
+        <a href="https://github.com/BorysChajdas">
+          <img  src="https://avatars.githubusercontent.com/BorysChajdas" alt="Borys Chajdas" width="70">
+        </a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+        <a href="https://github.com/MarekMacko">
+          <img src="https://avatars.githubusercontent.com/MarekMacko" alt="Marek Macko" width="70">
+        </a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+        <a href="https://github.com/Nataniel-Antosik">
+          <img src="https://avatars.githubusercontent.com/Nataniel-Antosik" alt="Nataniel Antosik" width="70" >
+        </a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+        <a href="https://github.com/kmaslowiec">
+		  <img src="https://avatars.githubusercontent.com/kmaslowiec" alt="Konrad Masłowiec" width="70">
+		</a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+		<a href="https://github.com/michal-kucznerowicz">
+		  <img src="https://avatars.githubusercontent.com/michal-kucznerowicz" alt="Michał Kucznerowicz<" width="70">
+		</a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+		<a href="https://github.com/marcinWisnia">
+		  <img src="https://avatars.githubusercontent.com/marcinWisnia" alt="Marcin Wiśniewski" width="70">
+		</a>
+      </p>
+    </td>
+	<td>
+      <p align="center">
+		<a href="https://github.com/bartek977">
+		  <img src="https://avatars.githubusercontent.com/bartek977" alt="Bartłomiej Turkosz" width="70">
+		</a>
+      </p>
+    </td>
+  </tr>
+  <tr>
+	<td>
+	  <p align="center">
+		Borys Chajdas
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Marek Macko
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Nataniel Antosik
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Konrad Masłowiec
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Michał Kucznerowicz
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Marcin Wiśniewski
+	  </p>
+    </td>
+	<td>
+	  <p align="center">
+		Bartłomiej Turkosz
+	  </p>
+    </td>
+  </tr>
+</table>
+
 ## Contribution
 
 Current issues are present in the [project backlog](https://github.com/orgs/intive/projects/3). Workflow is the following:
+
 - **TODO** column is for giving ideas and discussions on the topics. Most of the ideas are created as a drafts and then discussed.
 - If the idea is accepted and prepared to be implemented, it goes to **Ready for development** column.
 - **In progress** and **Done** columns are self-explanatory.
