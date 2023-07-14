@@ -2,6 +2,7 @@ package com.intive.picover.profile.view
 
 import android.content.Intent
 import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -70,6 +71,16 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			},
 		) {
 			Text(stringResource(R.string.DeleteAccountButton))
+		}
+		Button(
+			onClick = {
+				CustomTabsIntent
+					.Builder()
+					.build()
+					.launchUrl(context, Urls.github)
+			},
+		) {
+			Text(stringResource(R.string.GithubButton))
 		}
 	}
 	if (isDeleteAccountDialogVisible) {
@@ -172,4 +183,8 @@ private fun UserAvatar(
 			)
 		},
 	)
+}
+
+private object Urls {
+	val github = Uri.parse("https://github.com/intive/Picover")
 }

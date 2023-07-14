@@ -7,6 +7,7 @@
     <string name="TakePictureButton">Take a picture</string>
     <string name="LogoutButton">Logout</string>
     <string name="DeleteAccountButton">Delete account</string>
+    <string name="GithubButton">GitHub</string>
     <string name="DeleteAccountConfirmationDialogTitle">Are you sure you want to delete your account?</string>
     <string name="DeleteAccountConfirmationDialogDescription">This operation cannot be undone. You will need to re-authenticate to delete your account.</string>
     <string name="ConfirmButton">Yes</string>
