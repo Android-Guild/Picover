@@ -9,7 +9,9 @@
     <string name="DeleteAccountButton">Delete account</string>
     <string name="GithubButton">GitHub</string>
     <string name="DeleteAccountConfirmationDialogTitle">Are you sure you want to delete your account?</string>
-    <string name="DeleteAccountConfirmationDialogDescription">This operation cannot be undone. You will need to re-authenticate to delete your account.</string>
+    <string name="DeleteAccountConfirmationDialogDescription">This operation cannot be undone. In some cases, you will be logged out and will have to log in again to delete your account.</string>
+    <string name="DeleteAccountSuccessToastText">Account deleted.</string>
+    <string name="DeleteAccountReAuthenticationToastText">You need to log in again to delete your account.</string>
     <string name="ConfirmButton">Yes</string>
     <string name="CancelButton">Cancel</string>
     <string name="UserName">User Name</string>
