@@ -1,9 +1,12 @@
 package com.intive.picover.auth.repository
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
+import com.intive.picover.common.converters.BitmapConverter
 import com.intive.picover.profile.model.Profile
 import javax.inject.Inject
 import kotlinx.coroutines.channels.awaitClose
@@ -11,8 +14,12 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class AuthRepository @Inject constructor(
+	storageReference: StorageReference,
 	private val firebaseAuth: FirebaseAuth,
+	private val bitmapConverter: BitmapConverter,
 ) {
+
+	private val userAvatarReference = storageReference.child("user/${requireUser().uid}")
 
 	fun observeEvents() =
 		callbackFlow {
@@ -33,14 +40,16 @@ class AuthRepository @Inject constructor(
 		firebaseAuth.signOut()
 	}
 
-	fun userProfile() =
-		requireUser().let {
+	suspend fun userProfile(): Profile {
+		val photoUrl = userAvatarReference.downloadUrl.await()
+		return requireUser().let {
 			Profile(
-				photo = it.photoUrl,
+				photo = photoUrl,
 				name = it.displayName!!,
 				email = it.email!!,
 			)
 		}
+	}
 
 	suspend fun deleteAccount(): AccountDeletionResult {
 		return try {
@@ -52,6 +61,13 @@ class AuthRepository @Inject constructor(
 			firebaseAuth.signOut()
 			AccountDeletionResult.ReAuthenticationNeeded
 		}
+	}
+
+	suspend fun updateUserAvatar(uri: Uri): Profile {
+		userAvatarReference
+			.putBytes(bitmapConverter.convertBitmapToBytes(uri).toByteArray())
+			.await()
+		return userProfile()
 	}
 
 	private fun requireUser() =

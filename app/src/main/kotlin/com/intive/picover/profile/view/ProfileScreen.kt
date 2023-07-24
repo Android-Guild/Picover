@@ -2,6 +2,10 @@ package com.intive.picover.profile.view
 
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,7 +18,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -45,6 +51,11 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 	val profile by viewModel.profile
 	val context = LocalContext.current
 	var isDeleteAccountDialogVisible by remember { mutableStateOf(false) }
+	val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+		if (uri != null) {
+			viewModel.updateAvatar(uri)
+		}
+	}
 	Column(
 		modifier = Modifier
 			.verticalScroll(rememberScrollState())
@@ -53,7 +64,9 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		if (profile.isLoaded()) {
-			ProfileSegment(profile.data())
+			ProfileSegment(profile.data(), photoLauncher)
+		} else {
+			CircularProgressIndicator()
 		}
 		Button(
 			onClick = {
@@ -119,8 +132,19 @@ private fun DeleteAccountDialog(
 @Composable
 private fun ProfileSegment(
 	profile: Profile,
+	launcher: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>,
 ) {
-	UserAvatar(profile.photo)
+	IconButton(
+		modifier = Modifier
+			.size(120.dp),
+		onClick = {
+			launcher.launch(
+				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+			)
+		},
+	) {
+		UserAvatar(profile.photo)
+	}
 	Divider(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -171,6 +195,9 @@ private fun UserAvatar(
 			contentDescription = null,
 			contentScale = ContentScale.Crop,
 		),
+		loading = {
+			CircularProgressIndicator()
+		},
 		failure = {
 			Image(
 				painter = painterResource(id = R.drawable.ic_avatar_placeholder),

@@ -1,5 +1,6 @@
 package com.intive.picover.profile.viewmodel
 
+import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -45,7 +46,28 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
+	fun updateAvatar(uri: Uri) {
+		viewModelScope.launch {
+			_profile.value = Loading
+			runCatching {
+				authRepository.updateUserAvatar(uri)
+			}.onSuccess {
+				_profile.value = Loaded(it)
+			}.onFailure {
+				// TODO NAN handle exception
+			}
+		}
+	}
+
 	private fun fetchProfile() {
-		_profile.value = Loaded(authRepository.userProfile())
+		viewModelScope.launch {
+			runCatching {
+				authRepository.userProfile()
+			}.onSuccess {
+				_profile.value = Loaded(it)
+			}.onFailure {
+				// TODO NAN handle exception
+			}
+		}
 	}
 }

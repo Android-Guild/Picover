@@ -4,9 +4,12 @@ import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
+import com.intive.picover.common.converters.BitmapConverter
 import com.intive.picover.profile.model.Profile
+import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -17,16 +20,43 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
+import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 
 class AuthRepositoryTest : ShouldSpec(
 	{
-		val firebaseAuth: FirebaseAuth = mockk(relaxUnitFun = true)
-		val tested = AuthRepository(firebaseAuth)
+		isolationMode = IsolationMode.InstancePerTest
+
 		val userPhoto = mockk<Uri>()
 		val userName = "Jack Smith"
 		val userEmail = "test@gmail.com"
+		val userUid = "test1234567890"
+		val profile = Profile(userPhoto, userName, userEmail)
+		val byteArrayOutputStream = mockk<ByteArrayOutputStream>(relaxed = true)
+		val firebaseAuth: FirebaseAuth = mockk(relaxUnitFun = true) {
+			every { currentUser } returns mockk {
+				every { photoUrl } returns userPhoto
+				every { displayName } returns userName
+				every { email } returns userEmail
+				every { uid } returns userUid
+			}
+		}
+		val bitmapConverter = mockk<BitmapConverter> {
+			every { convertBitmapToBytes(userPhoto) } returns byteArrayOutputStream
+		}
+		val referenceToUserAvatar = mockk<StorageReference> {
+			every { putBytes(byteArrayOutputStream.toByteArray()) } returns mockk {
+				every { isComplete } returns true
+				every { exception } returns null
+				every { isCanceled } returns false
+				every { result } returns mockk()
+			}
+		}
+		val storageReference: StorageReference = mockk(relaxed = true) {
+			every { child("user/$userUid") } returns referenceToUserAvatar
+		}
+		val tested = AuthRepository(storageReference, firebaseAuth, bitmapConverter)
 
 		beforeSpec {
 			mockkStatic("kotlinx.coroutines.tasks.TasksKt")
@@ -81,12 +111,27 @@ class AuthRepositoryTest : ShouldSpec(
 			result shouldBe AccountDeletionResult.ReAuthenticationNeeded
 		}
 
-		should("return Profile data WHEN userProfile called") {
-			val profile = Profile(userPhoto, userName, userEmail)
-			every { firebaseAuth.currentUser!! } returns mockk {
-				every { photoUrl } returns userPhoto
-				every { displayName } returns userName
-				every { email } returns userEmail
+		should("call StorageReference.putBytes WHEN updateUserAvatar called") {
+			every { referenceToUserAvatar.downloadUrl } returns mockk {
+				coEvery { await() } returns userPhoto
+			}
+
+			tested.updateUserAvatar(userPhoto)
+
+			verify { referenceToUserAvatar.putBytes(byteArrayOutputStream.toByteArray()) }
+		}
+
+		should("return Profile WHEN updateUserAvatar called") {
+			every { referenceToUserAvatar.downloadUrl } returns mockk {
+				coEvery { await() } returns userPhoto
+			}
+
+			tested.updateUserAvatar(userPhoto) shouldBe profile
+		}
+
+		should("return Profile WHEN userProfile called") {
+			every { referenceToUserAvatar.downloadUrl } returns mockk {
+				coEvery { await() } returns userPhoto
 			}
 
 			tested.userProfile() shouldBe profile
