@@ -145,6 +145,15 @@ private fun ProfileSegment(
 	) {
 		UserAvatar(profile.photo)
 	}
+	TextButton(
+		onClick = {
+			launcher.launch(
+				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+			)
+		},
+	) {
+		Text(stringResource(R.string.ClickToEdit))
+	}
 	Divider(
 		modifier = Modifier
 			.fillMaxWidth()

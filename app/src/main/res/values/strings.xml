@@ -16,4 +16,5 @@
     <string name="CancelButton">Cancel</string>
     <string name="UserName">User Name</string>
     <string name="UserEmail">User Email</string>
+    <string name="ClickToEdit">Click To Edit</string>
 </resources>
