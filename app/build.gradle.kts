@@ -1,5 +1,7 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
 
+import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
+
 plugins {
 	id(libs.plugins.android.application.get().pluginId)
 	kotlin("android")
@@ -7,6 +9,7 @@ plugins {
 	id(libs.plugins.hilt.android.get().pluginId)
 	id(libs.plugins.google.services.get().pluginId)
 	id(libs.plugins.oss.licenses.get().pluginId)
+	id(libs.plugins.kotlin.noarg.get().pluginId)
 }
 
 android {
@@ -44,6 +47,10 @@ android {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
 	}
+}
+
+configure<NoArgExtension> {
+	annotation("com.intive.picover.common.annotation.NoArgConstructor")
 }
 
 kapt {

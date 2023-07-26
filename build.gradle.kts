@@ -9,6 +9,7 @@ buildscript {
 plugins {
 	alias(libs.plugins.android.application) apply false
 	alias(libs.plugins.kotlin.android) apply false
+	alias(libs.plugins.kotlin.noarg) apply false
 	alias(libs.plugins.google.services) apply false
 	alias(libs.plugins.hilt.android) apply false
 	`picover-ktlint` apply true
