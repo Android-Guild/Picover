@@ -2,7 +2,9 @@ package com.intive.picover.auth.repository
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseUser
+import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
 import com.intive.picover.profile.model.Profile
 import io.kotest.core.spec.style.ShouldSpec
@@ -58,14 +60,25 @@ class AuthRepositoryTest : ShouldSpec(
 			verify { firebaseAuth.signOut() }
 		}
 
-		should("call delete on currentUser from FirebaseAuth WHEN deleteAccount called AND currentUser is present") {
+		should("call delete on currentUser from FirebaseAuth AND return Success WHEN deleteAccount called AND delete succeeded") {
 			every { firebaseAuth.currentUser!!.delete() } returns mockk {
 				coEvery { await() } returns mockk()
 			}
 
-			tested.deleteAccount()
+			val result = tested.deleteAccount()
 
 			verify { firebaseAuth.currentUser!!.delete() }
+			result shouldBe AccountDeletionResult.Success
+		}
+
+		should("return ReAuthenticationNeeded WHEN deleteAccount called AND delete failed with FirebaseAuthRecentLoginRequiredException") {
+			every { firebaseAuth.currentUser!!.delete() } returns mockk {
+				coEvery { await() } throws mockk<FirebaseAuthRecentLoginRequiredException>()
+			}
+
+			val result = tested.deleteAccount()
+
+			result shouldBe AccountDeletionResult.ReAuthenticationNeeded
 		}
 
 		should("return Profile data WHEN userProfile called") {

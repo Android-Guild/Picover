@@ -1,6 +1,8 @@
 package com.intive.picover.auth.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
 import com.intive.picover.profile.model.Profile
 import javax.inject.Inject
@@ -40,11 +42,16 @@ class AuthRepository @Inject constructor(
 			)
 		}
 
-	// TODO #100 Handle FirebaseAuthRecentLoginRequiredException
-	suspend fun deleteAccount() {
-		requireUser()
-			.delete()
-			.await()
+	suspend fun deleteAccount(): AccountDeletionResult {
+		return try {
+			requireUser()
+				.delete()
+				.await()
+			AccountDeletionResult.Success
+		} catch (firebaseAuthRecentLoginRequiredException: FirebaseAuthRecentLoginRequiredException) {
+			firebaseAuth.signOut()
+			AccountDeletionResult.ReAuthenticationNeeded
+		}
 	}
 
 	private fun requireUser() =
