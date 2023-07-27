@@ -1,6 +1,7 @@
 package com.intive.picover.parties.view
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.theme.Typography
 import com.intive.picover.parties.model.Party
@@ -20,11 +22,9 @@ fun PartyDetailsScreen(
 ) {
 	val state by viewModel.state
 	when {
-		state.isLoading() -> PicoverLoader()
+		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 		state.isLoaded() -> LoadedContent(party = state.data())
-		state.isError() -> {
-			// TODO: Will be implemented in #133
-		}
+		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.loadParty() })
 	}
 }
 

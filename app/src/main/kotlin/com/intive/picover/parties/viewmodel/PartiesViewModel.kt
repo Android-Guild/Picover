@@ -27,8 +27,9 @@ class PartiesViewModel @Inject constructor(
 		loadParties()
 	}
 
-	private fun loadParties() {
+	fun loadParties() {
 		viewModelScope.launch {
+			state.value = Loading
 			partiesRepository.parties()
 				.catch {
 					state.value = Error
