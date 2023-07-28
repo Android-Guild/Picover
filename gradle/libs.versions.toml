@@ -43,7 +43,7 @@ test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", versi
 lint-test = ["test-lint", "test-lint-tests"]
 
 [plugins]
-android-application = { id = "com.android.application", version.strictly = "8.0.2" }
+android-application = { id = "com.android.application", version.strictly = "8.1.0" }
 google-services = { id = "com.google.gms.google-services", version.strictly = "4.3.15" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
