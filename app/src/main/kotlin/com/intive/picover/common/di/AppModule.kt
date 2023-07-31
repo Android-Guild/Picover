@@ -13,8 +13,12 @@ import kotlinx.coroutines.Dispatchers
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+	// TODO NAN replace usage it in ImagesRepository to StorageReference (provideFirebaseStorageReference)
 	@Provides
 	fun provideFirebaseStoreInstance() = FirebaseStorage.getInstance()
+
+	@Provides
+	fun provideFirebaseStorageReference() = FirebaseStorage.getInstance().reference
 
 	@Provides
 	fun provideFirebaseDatabase() = Firebase.database
