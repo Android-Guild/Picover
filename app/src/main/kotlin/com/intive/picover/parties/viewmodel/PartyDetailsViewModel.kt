@@ -27,12 +27,13 @@ class PartyDetailsViewModel @Inject constructor(
 	private val partyId: Int = savedStateHandle["partyId"]!!
 
 	init {
-		loadParty(partyId)
+		loadParty()
 	}
 
-	private fun loadParty(id: Int) {
+	fun loadParty() {
 		viewModelScope.launch {
-			partiesRepository.partyById(id)
+			state.value = Loading
+			partiesRepository.partyById(partyId)
 				.catch {
 					state.value = Error
 				}.collect {
