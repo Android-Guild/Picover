@@ -1,9 +1,11 @@
 package com.intive.picover.auth.repository
 
 import android.net.Uri
+import android.text.TextUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
@@ -12,6 +14,7 @@ import com.intive.picover.profile.model.Profile
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
@@ -28,12 +31,12 @@ class AuthRepositoryTest : ShouldSpec(
 	{
 		isolationMode = IsolationMode.InstancePerTest
 
-		val userPhoto = mockk<Uri>()
+		val userPhoto: Uri = mockk()
 		val userName = "Jack Smith"
 		val userEmail = "test@gmail.com"
 		val userUid = "test1234567890"
 		val profile = Profile(userPhoto, userName, userEmail)
-		val byteArrayOutputStream = mockk<ByteArrayOutputStream>(relaxed = true)
+		val byteArrayOutputStream: ByteArrayOutputStream = mockk(relaxed = true)
 		val firebaseAuth: FirebaseAuth = mockk(relaxUnitFun = true) {
 			every { currentUser } returns mockk {
 				every { photoUrl } returns userPhoto
@@ -42,10 +45,10 @@ class AuthRepositoryTest : ShouldSpec(
 				every { uid } returns userUid
 			}
 		}
-		val bitmapConverter = mockk<BitmapConverter> {
+		val bitmapConverter: BitmapConverter = mockk {
 			every { convertBitmapToBytes(userPhoto) } returns byteArrayOutputStream
 		}
-		val referenceToUserAvatar = mockk<StorageReference> {
+		val referenceToUserAvatar: StorageReference = mockk {
 			every { putBytes(byteArrayOutputStream.toByteArray()) } returns mockk {
 				every { isComplete } returns true
 				every { exception } returns null
@@ -60,6 +63,7 @@ class AuthRepositoryTest : ShouldSpec(
 
 		beforeSpec {
 			mockkStatic("kotlinx.coroutines.tasks.TasksKt")
+			mockkStatic(TextUtils::isEmpty)
 		}
 
 		afterSpec {
@@ -112,9 +116,7 @@ class AuthRepositoryTest : ShouldSpec(
 		}
 
 		should("call StorageReference.putBytes WHEN updateUserAvatar called") {
-			every { referenceToUserAvatar.downloadUrl } returns mockk {
-				coEvery { await() } returns userPhoto
-			}
+			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
 			tested.updateUserAvatar(userPhoto)
 
@@ -122,19 +124,32 @@ class AuthRepositoryTest : ShouldSpec(
 		}
 
 		should("return Profile WHEN updateUserAvatar called") {
-			every { referenceToUserAvatar.downloadUrl } returns mockk {
-				coEvery { await() } returns userPhoto
-			}
+			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
 			tested.updateUserAvatar(userPhoto) shouldBe profile
 		}
 
 		should("return Profile WHEN userProfile called") {
-			every { referenceToUserAvatar.downloadUrl } returns mockk {
-				coEvery { await() } returns userPhoto
-			}
+			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
 			tested.userProfile() shouldBe profile
+		}
+
+		should("set display name WHEN updateUserName called") {
+			val slot = slot<UserProfileChangeRequest>()
+			val currentUser: FirebaseUser = mockk {
+				every { displayName } returns "Marian Kowalski"
+				every { email } returns userEmail
+			}
+			every { firebaseAuth.currentUser!! } returns currentUser
+			every { TextUtils.isEmpty(any()) } returns true
+			coEvery { currentUser.updateProfile(capture(slot)).await() } returns mockk()
+			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
+
+			val result = tested.updateUserName("Marian Kowalski")
+
+			result shouldBeEqual Profile(userPhoto, "Marian Kowalski", userEmail)
+			slot.captured.displayName!! shouldBeEqual "Marian Kowalski"
 		}
 	},
 )
