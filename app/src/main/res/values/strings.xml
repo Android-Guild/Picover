@@ -18,6 +18,7 @@
     <string name="UserEmail">User Email</string>
     <string name="ClickToEdit">Click To Edit</string>
     <string name="GenericErrorMessage">Something went wrong. Please try again later.</string>
-    <string name="GenericErrorButtonText">Retry</string>
+    <string name="RetryButton">Retry</string>
     <string name="EditUserData">Edit User Data</string>
+    <string name="ProfileError">Something went wrong \nClick to refresh</string>
 </resources>

@@ -11,6 +11,7 @@ import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.toast.ToastPublisher
 import com.intive.picover.common.viewmodel.state.ViewModelState
+import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
@@ -64,7 +65,7 @@ class ProfileViewModel @Inject constructor(
 			}.onSuccess {
 				_profile.value = Loaded(it)
 			}.onFailure {
-				// TODO NAN handle exception
+				_profile.value = Error
 			}
 		}
 	}
@@ -77,19 +78,20 @@ class ProfileViewModel @Inject constructor(
 			}.onSuccess {
 				_profile.value = Loaded(it)
 			}.onFailure {
-				// TODO NAN handle exception
+				_profile.value = Error
 			}
 		}
 	}
 
-	private fun fetchProfile() {
+	fun fetchProfile() {
+		_profile.value = Loading
 		viewModelScope.launch {
 			runCatching {
 				authRepository.userProfile()
 			}.onSuccess {
 				_profile.value = Loaded(it)
 			}.onFailure {
-				// TODO NAN handle exception
+				_profile.value = Error
 			}
 		}
 	}

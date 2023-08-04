@@ -6,6 +6,7 @@ import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
 import com.intive.picover.common.toast.ToastPublisher
+import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
@@ -81,6 +82,10 @@ class ProfileViewModelTest : ShouldSpec(
 					{ authRepository.updateUserName("Marian K") },
 					{ tested.updateName("Marian K") },
 				),
+				ManageProfileParam(
+					{ authRepository.userProfile() },
+					{ tested.fetchProfile() },
+				),
 			).forAll { param ->
 				coEvery { param.profileMethod.invoke() } returns profile
 
@@ -100,12 +105,39 @@ class ProfileViewModelTest : ShouldSpec(
 					{ authRepository.updateUserName("Marian K") },
 					{ tested.updateName("Marian K") },
 				),
+				ManageProfileParam(
+					{ authRepository.userProfile() },
+					{ tested.fetchProfile() },
+				),
 			).forAll { param ->
 				coEvery { param.profileMethod.invoke() } just Awaits
 
 				param.action.invoke()
 
 				tested.profile.value shouldBe Loading
+			}
+		}
+
+		should("be error WHEN specific method throws exception") {
+			listOf(
+				ManageProfileParam(
+					{ authRepository.updateUserAvatar(uri) },
+					{ tested.updateAvatar(uri) },
+				),
+				ManageProfileParam(
+					{ authRepository.updateUserName("Marian K") },
+					{ tested.updateName("Marian K") },
+				),
+				ManageProfileParam(
+					{ authRepository.userProfile() },
+					{ tested.fetchProfile() },
+				),
+			).forAll { param ->
+				coEvery { param.profileMethod.invoke() } throws Exception()
+
+				param.action.invoke()
+
+				tested.profile.value shouldBe Error
 			}
 		}
 
