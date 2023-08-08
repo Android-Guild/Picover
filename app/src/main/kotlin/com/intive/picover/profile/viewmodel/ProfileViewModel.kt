@@ -58,36 +58,28 @@ class ProfileViewModel @Inject constructor(
 	}
 
 	fun updateAvatar(uri: Uri) {
-		viewModelScope.launch {
-			_profile.value = Loading
-			runCatching {
-				authRepository.updateUserAvatar(uri)
-			}.onSuccess {
-				_profile.value = Loaded(it)
-			}.onFailure {
-				_profile.value = Error
-			}
+		executeAndUpdateProfile {
+			authRepository.updateUserAvatar(uri)
 		}
 	}
 
 	fun updateName(name: String) {
-		viewModelScope.launch {
-			_profile.value = Loading
-			runCatching {
-				authRepository.updateUserName(name)
-			}.onSuccess {
-				_profile.value = Loaded(it)
-			}.onFailure {
-				_profile.value = Error
-			}
+		executeAndUpdateProfile {
+			authRepository.updateUserName(name)
 		}
 	}
 
 	fun fetchProfile() {
-		_profile.value = Loading
+		executeAndUpdateProfile {
+			authRepository.userProfile()
+		}
+	}
+
+	private fun executeAndUpdateProfile(action: suspend () -> Profile) {
 		viewModelScope.launch {
+			_profile.value = Loading
 			runCatching {
-				authRepository.userProfile()
+				action()
 			}.onSuccess {
 				_profile.value = Loaded(it)
 			}.onFailure {
