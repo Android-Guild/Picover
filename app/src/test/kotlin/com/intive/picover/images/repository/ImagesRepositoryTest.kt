@@ -1,7 +1,6 @@
 package com.intive.picover.images.repository
 
 import android.net.Uri
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
 import io.kotest.assertions.throwables.shouldThrowExactly
@@ -12,22 +11,20 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ImagesRepositoryTest : ShouldSpec(
 	{
 
 		val testDispatcher = StandardTestDispatcher()
-		val storageReference: StorageReference = mockk(relaxed = true)
-		val firebaseStorage: FirebaseStorage = mockk {
-			every { reference.child("image") } returns storageReference
-		}
+		val imageReference: StorageReference = mockk()
 		val storageItem: StorageReference = mockk()
-		val tested = ImagesRepository(firebaseStorage, testDispatcher)
+		val storageReference: StorageReference = mockk {
+			every { child("image") } returns imageReference
+		}
+		val tested = ImagesRepository(storageReference, testDispatcher)
 
 		beforeSpec {
 			mockkStatic("kotlinx.coroutines.tasks.TasksKt")
@@ -43,7 +40,7 @@ class ImagesRepositoryTest : ShouldSpec(
 					every { items } returns listOf(storageItem)
 				}
 				val uriResult: Uri = mockk()
-				every { storageReference.listAll() } returns mockk {
+				every { imageReference.listAll() } returns mockk {
 					coEvery { await() } returns listResult
 				}
 				every { storageItem.downloadUrl } returns mockk {
@@ -56,7 +53,7 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		should("throw exception WHEN fetching storage reference fails") {
 			runTest(testDispatcher) {
-				every { storageReference.listAll() } returns mockk {
+				every { imageReference.listAll() } returns mockk {
 					coEvery { await() } throws Exception()
 				}
 
@@ -71,7 +68,7 @@ class ImagesRepositoryTest : ShouldSpec(
 				val listResult: ListResult = mockk {
 					every { items } returns listOf(storageItem)
 				}
-				every { storageReference.listAll() } returns mockk {
+				every { imageReference.listAll() } returns mockk {
 					coEvery { await() } returns listResult
 				}
 				every { storageItem.downloadUrl } returns mockk {
