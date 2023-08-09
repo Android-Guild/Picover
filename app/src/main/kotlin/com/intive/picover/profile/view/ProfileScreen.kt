@@ -196,23 +196,43 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 									keyboardController?.hide()
 								}
 							},
+							enabled = viewModel.validatingName(userName).isValid(),
 						) {
 							Icon(Icons.Rounded.Check, contentDescription = null)
 						}
 					},
 				)
 			}
-			// TODO NAN add validation for text field
-			TextField(
+			Column(
 				modifier = Modifier
 					.padding(start = 20.dp, end = 20.dp, bottom = 42.dp)
 					.fillMaxWidth(),
-				value = userName,
-				onValueChange = {
-					userName = it
-				},
-				label = { Text(stringResource(id = R.string.UserName)) },
-			)
+			) {
+				TextField(
+					modifier = Modifier
+						.fillMaxWidth(),
+					value = userName,
+					onValueChange = {
+						userName = it
+					},
+					supportingText = {
+						if (!viewModel.validatingName(userName).isValid()) {
+							Text(
+								modifier = Modifier
+									.fillMaxWidth(),
+								text = stringResource(id = viewModel.validatingName(userName).errorMessageId),
+							)
+						}
+						Text(
+							text = "${userName.length} / 20",
+							modifier = Modifier.fillMaxWidth(),
+							textAlign = TextAlign.End,
+						)
+					},
+					isError = !viewModel.validatingName(userName).isValid(),
+					label = { Text(stringResource(id = R.string.UserName)) },
+				)
+			}
 		}
 	}
 }
