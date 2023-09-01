@@ -28,8 +28,8 @@ class ProfileViewModelTest : ShouldSpec(
 		extension(CoroutineTestExtension())
 		isolationMode = IsolationMode.InstancePerTest
 
-		val profile = mockk<Profile>()
-		val uri = mockk<Uri>()
+		val profile: Profile = mockk()
+		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
 		val toastPublisher: ToastPublisher = mockk(relaxed = true)
 		val tested by lazy { ProfileViewModel(authRepository, toastPublisher) }
