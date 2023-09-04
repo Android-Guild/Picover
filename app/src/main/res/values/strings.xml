@@ -19,4 +19,5 @@
     <string name="ClickToEdit">Click To Edit</string>
     <string name="GenericErrorMessage">Something went wrong. Please try again later.</string>
     <string name="GenericErrorButtonText">Retry</string>
+    <string name="EditUserData">Edit User Data</string>
 </resources>
