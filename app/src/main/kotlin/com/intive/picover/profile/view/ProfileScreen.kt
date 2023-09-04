@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
@@ -59,6 +61,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
+import com.intive.picover.common.animations.ShimmerBrush
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
@@ -92,14 +95,18 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			.padding(top = 10.dp),
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		// TODO NAN change to linear indicator for first loading and after refresh to avoid jumping UI
 		when (profile) {
 			is Loaded -> {
 				ProfileSegment(profile.data(), photoLauncher, sheetState, coroutineScope)
 			}
 
 			is Loading -> {
-				CircularProgressIndicator()
+				val loadingProfile = Profile(null, stringResource(id = R.string.Loading), stringResource(id = R.string.Loading))
+				LinearProgressIndicator(
+					modifier = Modifier
+						.fillMaxWidth(),
+				)
+				ProfileSegment(loadingProfile, photoLauncher, sheetState, coroutineScope, editButtonsEnabled = false, showShimmer = true)
 			}
 
 			is Error -> {
@@ -239,6 +246,8 @@ private fun ProfileSegment(
 	launcher: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>,
 	sheetState: SheetState,
 	coroutineScope: CoroutineScope,
+	editButtonsEnabled: Boolean = true,
+	showShimmer: Boolean = false,
 ) {
 	IconButton(
 		modifier = Modifier
@@ -248,8 +257,22 @@ private fun ProfileSegment(
 				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
 			)
 		},
+		enabled = editButtonsEnabled,
 	) {
-		UserAvatar(profile.photo)
+		if (!showShimmer) {
+			UserAvatar(profile.photo)
+		} else {
+			val brush = ShimmerBrush(targetValue = 1300f, showShimmer = true)
+			Canvas(
+				modifier = Modifier.size(120.dp),
+				onDraw = {
+					drawRect(
+						brush = brush,
+						size = size,
+					)
+				},
+			)
+		}
 	}
 	TextButton(
 		onClick = {
@@ -257,6 +280,7 @@ private fun ProfileSegment(
 				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
 			)
 		},
+		enabled = editButtonsEnabled,
 	) {
 		Text(stringResource(R.string.ClickToEdit))
 	}
@@ -292,6 +316,7 @@ private fun ProfileSegment(
 					sheetState.show()
 				}
 			},
+			enabled = editButtonsEnabled,
 		) {
 			Icon(
 				modifier = Modifier.size(24.dp),
