@@ -59,6 +59,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
+import com.intive.picover.common.error.PicoverGenericError
+import com.intive.picover.common.viewmodel.state.ViewModelState.Error
+import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
+import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
 import com.intive.picover.profile.viewmodel.ProfileViewModel
 import com.skydoves.landscapist.ImageOptions
@@ -88,11 +92,28 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			.padding(top = 10.dp),
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		if (profile.isLoaded()) {
-			ProfileSegment(profile.data(), photoLauncher, sheetState, coroutineScope)
-		} else {
-			// TODO NAN change to linear indicator for first loading and after refresh to avoid jumping UI
-			CircularProgressIndicator()
+		// TODO NAN change to linear indicator for first loading and after refresh to avoid jumping UI
+		when (profile) {
+			is Loaded -> {
+				ProfileSegment(profile.data(), photoLauncher, sheetState, coroutineScope)
+			}
+
+			is Loading -> {
+				CircularProgressIndicator()
+			}
+
+			is Error -> {
+				PicoverGenericError(
+					message = stringResource(R.string.ProfileError),
+					onRetryClick = viewModel::fetchProfile,
+				)
+				Divider(
+					modifier = Modifier
+						.fillMaxWidth()
+						.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+					thickness = 1.dp,
+				)
+			}
 		}
 		Button(
 			onClick = {

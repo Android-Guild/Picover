@@ -44,7 +44,7 @@ fun PicoverGenericError(
 		)
 		onRetryClick?.let {
 			TextButton(onClick = it) {
-				Text(stringResource(id = R.string.GenericErrorButtonText).uppercase())
+				Text(stringResource(id = R.string.RetryButton).uppercase())
 			}
 		}
 	}
