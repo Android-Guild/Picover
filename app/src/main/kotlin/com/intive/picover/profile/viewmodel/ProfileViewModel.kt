@@ -15,6 +15,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
+import com.intive.picover.validators.TextValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -74,6 +75,14 @@ class ProfileViewModel @Inject constructor(
 			authRepository.userProfile()
 		}
 	}
+
+	fun validatingName(text: String) =
+		TextValidator.Builder(text)
+			.allowEmpty(false)
+			.allowBlank(false)
+			.maxLength(20)
+			.build()
+			.validatingText()
 
 	private fun executeAndUpdateProfile(action: suspend () -> Profile) {
 		viewModelScope.launch {
