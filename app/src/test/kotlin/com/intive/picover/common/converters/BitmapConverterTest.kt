@@ -22,12 +22,12 @@ class BitmapConverterTest : ShouldSpec(
 	{
 		isolationMode = IsolationMode.InstancePerTest
 
-		val context = mockk<Context>()
-		val uri = mockk<Uri>()
+		val context: Context = mockk()
+		val uri: Uri = mockk()
 		val qualityPercent = 50
 		val compressFormat = Bitmap.CompressFormat.JPEG
 		val byteArrayOutputStreamCapture = slot<ByteArrayOutputStream>()
-		val bitmap = mockk<Bitmap> {
+		val bitmap: Bitmap = mockk {
 			every { compress(compressFormat, qualityPercent, capture(byteArrayOutputStreamCapture)) } returns true
 		}
 		val tested = BitmapConverter(context)
