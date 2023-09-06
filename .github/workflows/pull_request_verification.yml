@@ -10,8 +10,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Check correct branch name
-        run: ./.github/scripts/branch/checkBranch.sh
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Assert branch name
+        run: python ./.github/scripts/branch/assert_branch_name.py ${{ github.head_ref }}
 
   commit-message:
     runs-on: ubuntu-latest
