@@ -5,27 +5,23 @@ env:
   COMMITS_COUNT: ${{ github.event.pull_request.commits }}
 
 jobs:
-  branch-name:
+  assert-pull-request-metadata:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: setup python
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - name: Assert branch name
         run: python ./.github/scripts/branch/assert_branch_name.py ${{ github.head_ref }}
-
-  commit-message:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{github.event.pull_request.head.sha}}
-      - name: Check correct commit message
-        run: ./.github/scripts/commit/checkCommitMessage.sh
+      - name: Assert commit message
+        run: |
+          HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)
+          python ./.github/scripts/commit/assert_commit_message.py "$HEAD_COMMIT_MESSAGE"
 
   count-commits:
     runs-on: ubuntu-latest
