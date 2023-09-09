@@ -127,8 +127,10 @@ Example:
 
 ### Pull Requests
 
-- Pull Request title should be the same as commit message
+- Pull Request title should be the same as the commit message
 - Only one commit should be present in one Pull Request
+- Progress not perfection. In the review, we suggest what can be improved. If the issue does not affect the functionality it is up to the owner of the PR if he wants to implement it.
+- All comments need to be answered before the approval.
 
 ## CI/CD
 
