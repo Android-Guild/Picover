@@ -20,7 +20,7 @@ class AuthRepository @Inject constructor(
 	private val bitmapConverter: BitmapConverter,
 ) {
 
-	private val userAvatarReference = storageReference.child("user/${requireUser().uid}")
+	private val userAvatarReference by lazy { storageReference.child("user/${requireUser().uid}") }
 
 	fun observeEvents() =
 		callbackFlow {

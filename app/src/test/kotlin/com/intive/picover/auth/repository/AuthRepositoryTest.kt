@@ -16,6 +16,7 @@ import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
+import io.mockk.Called
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -140,6 +141,7 @@ class AuthRepositoryTest : ShouldSpec(
 			val currentUser: FirebaseUser = mockk {
 				every { displayName } returns "Marian Kowalski"
 				every { email } returns userEmail
+				every { uid } returns userUid
 			}
 			every { firebaseAuth.currentUser!! } returns currentUser
 			every { TextUtils.isEmpty(any()) } returns true
@@ -150,6 +152,10 @@ class AuthRepositoryTest : ShouldSpec(
 
 			result shouldBeEqual Profile(userPhoto, "Marian Kowalski", userEmail)
 			slot.captured.displayName!! shouldBeEqual "Marian Kowalski"
+		}
+
+		should("not call storageReference WHEN class is created") {
+			verify { storageReference wasNot Called }
 		}
 	},
 )
