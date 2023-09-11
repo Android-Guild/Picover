@@ -3,6 +3,7 @@ package com.intive.picover.auth.repository
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
@@ -20,7 +21,7 @@ class AuthRepository @Inject constructor(
 	private val bitmapConverter: BitmapConverter,
 ) {
 
-	private val userAvatarReference = storageReference.child("user/${requireUser().uid}")
+	private val userAvatarReference by lazy { storageReference.child("user/${requireUser().uid}") }
 
 	fun observeEvents() =
 		callbackFlow {
@@ -80,6 +81,5 @@ class AuthRepository @Inject constructor(
 		return userProfile()
 	}
 
-	private fun requireUser() =
-		firebaseAuth.currentUser!!
+	private fun requireUser(): FirebaseUser = firebaseAuth.currentUser!!
 }

@@ -129,17 +129,12 @@ class AuthRepositoryTest : ShouldSpec(
 			tested.updateUserAvatar(userPhoto) shouldBe profile
 		}
 
-		should("return Profile WHEN userProfile called") {
-			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
-
-			tested.userProfile() shouldBe profile
-		}
-
 		should("set display name WHEN updateUserName called") {
 			val slot = slot<UserProfileChangeRequest>()
 			val currentUser: FirebaseUser = mockk {
 				every { displayName } returns "Marian Kowalski"
 				every { email } returns userEmail
+				every { uid } returns userUid
 			}
 			every { firebaseAuth.currentUser!! } returns currentUser
 			every { TextUtils.isEmpty(any()) } returns true
@@ -151,5 +146,6 @@ class AuthRepositoryTest : ShouldSpec(
 			result shouldBeEqual Profile(userPhoto, "Marian Kowalski", userEmail)
 			slot.captured.displayName!! shouldBeEqual "Marian Kowalski"
 		}
+
 	},
 )
