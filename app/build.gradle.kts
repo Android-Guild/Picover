@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
 plugins {
 	id(libs.plugins.android.application.get().pluginId)
 	kotlin("android")
-	kotlin("kapt")
+	id(libs.plugins.kotlin.ksp.get().pluginId)
 	id(libs.plugins.hilt.android.get().pluginId)
 	id(libs.plugins.google.services.get().pluginId)
 	id(libs.plugins.oss.licenses.get().pluginId)
@@ -48,10 +48,6 @@ configure<NoArgExtension> {
 	annotation("com.intive.picover.common.annotation.NoArgConstructor")
 }
 
-kapt {
-	correctErrorTypes = true
-}
-
 dependencies {
 	lintChecks(project(":lint"))
 	implementation(platform(libs.compose.bom))
@@ -70,7 +66,7 @@ dependencies {
 	implementation(libs.firebase.analytics)
 	implementation(libs.firebase.storage)
 	implementation(libs.dagger.hilt.android)
-	kapt(libs.dagger.hilt.compiler)
+	ksp(libs.dagger.hilt.compiler)
 	implementation(libs.dagger.hilt.navigation)
 	implementation(libs.coil)
 	implementation(libs.material)
