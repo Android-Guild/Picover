@@ -14,6 +14,7 @@
     <string name="DeleteAccountReAuthenticationToastText">You need to log in again to delete your account.</string>
     <string name="DeleteButton">Delete</string>
     <string name="CancelButton">Cancel</string>
+    <string name="SaveButton">Save</string>
     <string name="UserName">User Name</string>
     <string name="GenericErrorMessage">Something went wrong. Please try again later.</string>
     <string name="RetryButton">Retry</string>
@@ -24,4 +25,7 @@
     <string name="TextShouldNotBeBlank">"Text should not be blank"</string>
     <string name="TextIsTooLong">"Text is too long"</string>
     <string name="TextIsValid">""</string>
+    <string name="PartyScreenFabAddIcon">Click to create new party</string>
+    <string name="PartyScreenAddPartyBottomSheetTitle">Party Title</string>
+    <string name="PartyScreenAddPartyBottomSheetDescription">Description</string>
 </resources>

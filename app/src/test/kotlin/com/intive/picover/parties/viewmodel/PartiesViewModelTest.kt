@@ -1,6 +1,8 @@
 package com.intive.picover.parties.viewmodel
 
 import com.intive.picover.common.coroutines.CoroutineTestExtension
+import com.intive.picover.common.validator.TextValidator
+import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
@@ -19,6 +21,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -36,6 +39,7 @@ class PartiesViewModelTest : ShouldSpec(
 		val partiesRemote: List<PartyRemote> = mockk()
 		val parties: List<Party> = mockk()
 		val repository: PartiesRepository = mockk()
+		val textValidator: TextValidator = mockk()
 		lateinit var tested: PartiesViewModel
 
 		beforeSpec {
@@ -55,7 +59,11 @@ class PartiesViewModelTest : ShouldSpec(
 			).forAll { (result, state) ->
 				every { repository.parties() } returns result
 
-				tested = PartiesViewModel(repository)
+				tested = PartiesViewModel(
+					partiesRepository = repository,
+					shortTextValidator = textValidator,
+					longTextValidator = textValidator,
+				)
 
 				tested.state.value shouldBe state
 			}
@@ -75,6 +83,42 @@ class PartiesViewModelTest : ShouldSpec(
 
 				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToPartyDetails(1)
 			}
+		}
+
+		should("call validator WHEN validateShortInputText runs") {
+			val text = "MyUserName1234"
+
+			every { textValidator.validate(text) } returns ValidationStatus.ValidText
+
+			tested.validateShortText(text)
+
+			verify { textValidator.validate(text) }
+		}
+
+		should("call validator WHEN validateLongText runs") {
+			val text = "MyUserName1234"
+
+			every { textValidator.validate(text) } returns ValidationStatus.ValidText
+
+			tested.validateLongText(text)
+
+			verify { textValidator.validate(text) }
+		}
+
+		should("update the title WHEN newTitle is provided") {
+			val title = "new title"
+
+			tested.updateTitle(title)
+
+			tested.title shouldBe title
+		}
+
+		should("update the description WHEN newDescription is provided") {
+			val description = "new description"
+
+			tested.updateDescription(description)
+
+			tested.description shouldBe description
 		}
 	},
 )
