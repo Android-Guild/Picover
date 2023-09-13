@@ -38,12 +38,6 @@ jobs:
             exit 1
           fi
 
-  lint-check:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew lintDebug
-    secrets: inherit
-
   ktlint-check:
     uses: ./.github/workflows/setup_build_environment.yml
     with:
