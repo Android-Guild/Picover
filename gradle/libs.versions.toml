@@ -5,10 +5,10 @@ ktlint = "0.50.0"
 lint = "31.0.2"
 
 [libraries]
-android-core = { group = "androidx.core", name = "core-ktx", version.strictly = "1.10.1" }
-android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.strictly = "2.6.1" }
+android-core = "androidx.core:core-ktx:1.10.1"
+android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.prefer = "2.6.1" }
 android-compose-activity = { group = "androidx.activity", name = "activity-compose", version.strictly = "1.7.2" }
-android-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.strictly = "2.6.0" }
+android-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.require = "2.6.0" }
 android-google-services = { group = "com.google.gms", name = "google-services", version.strictly = "4.3.15" }
 android-google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.strictly = "17.0.1" }
 coil = { group = "com.github.skydoves", name = "landscapist-coil", version.strictly = "2.2.0" }
@@ -43,7 +43,7 @@ test-ktlint = { group = "com.pinterest.ktlint", name = "ktlint-test", version.re
 lint-test = ["test-lint", "test-lint-tests"]
 
 [plugins]
-android-application = { id = "com.android.application", version.strictly = "8.1.0" }
+android-application = { id = "com.android.application", version.strictly = "8.1.1" }
 google-services = { id = "com.google.gms.google-services", version.strictly = "4.3.15" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
