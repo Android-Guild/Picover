@@ -1,5 +1,6 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
 
+import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
 import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
 
 plugins {
@@ -10,6 +11,7 @@ plugins {
 	id(libs.plugins.google.services.get().pluginId)
 	id(libs.plugins.oss.licenses.get().pluginId)
 	id(libs.plugins.kotlin.noarg.get().pluginId)
+	id(libs.plugins.firebase.appdistribution.get().pluginId)
 }
 
 android {
@@ -27,6 +29,11 @@ android {
 	}
 
 	buildTypes {
+		getByName("debug") {
+			firebaseAppDistribution {
+				serviceCredentialsFile = "app/src/service-credentials.json"
+			}
+		}
 		getByName("release") {
 			isMinifyEnabled = false
 			proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

@@ -13,6 +13,7 @@ plugins {
 	alias(libs.plugins.kotlin.noarg) apply false
 	alias(libs.plugins.google.services) apply false
 	alias(libs.plugins.hilt.android) apply false
+	alias(libs.plugins.firebase.appdistribution) apply false
 	`picover-ktlint` apply true
 }
 

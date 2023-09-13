@@ -3,3 +3,4 @@
 build
 local.properties
 google-services.json
+service-credentials.json
