@@ -1,8 +1,8 @@
 package com.intive.picover.common.viewmodel.state
 
 sealed class ViewModelState<out T> {
-	object Loading : ViewModelState<Nothing>()
-	object Error : ViewModelState<Nothing>()
+	data object Loading : ViewModelState<Nothing>()
+	data object Error : ViewModelState<Nothing>()
 	data class Loaded<T>(val data: T) : ViewModelState<T>()
 
 	fun isLoading() =
