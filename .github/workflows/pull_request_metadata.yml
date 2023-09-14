@@ -1,0 +1,29 @@
+name: Pull request metadata
+on: pull_request
+
+jobs:
+  assert-pull-request-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Assert branch name
+        run: python ./.github/scripts/branch/assert_branch_name.py ${{ github.head_ref }}
+      - name: Assert commit message
+        run: |
+          HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)
+          python ./.github/scripts/commit/assert_commit_message.py "$HEAD_COMMIT_MESSAGE"
+      - name: Assert number of commits
+        run: |
+          COMMITS_COUNT=${{ github.event.pull_request.commits }}
+          if (( $COMMITS_COUNT > 1 )); then
+            echo "Error: You have $COMMITS_COUNT commits in pull request. Squash them and keep only one."
+            exit 1
+          fi
+
