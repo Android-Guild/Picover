@@ -2,11 +2,11 @@ import re
 import sys
 
 developer_pattern = re.compile(r'#[0-9]+\s[^\s].*')
-dependabot_pattern = re.compile(r'Bump .+')
+renovate_pattern = re.compile(r'Update .+')
 
 
 def assert_commit_message(branch_name):
-    return bool(developer_pattern.fullmatch(branch_name) or dependabot_pattern.fullmatch(branch_name))
+    return bool(developer_pattern.fullmatch(branch_name) or renovate_pattern.fullmatch(branch_name))
 
 
 current_commit_message = sys.argv[1]
@@ -18,8 +18,8 @@ commits = [
     (False, "100 Configure"),
     (False, " #100 Configure"),
     (False, "#100  Configure"),
-    (True, "Bump kotlin from 1.8.0 to 1.9.0"),
-    (False, " Bump kotlin"),
+    (True, "Update kotlin from 1.8.0 to 1.9.0"),
+    (False, " Update kotlin"),
     (True, current_commit_message),
 ]
 
