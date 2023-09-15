@@ -19,13 +19,15 @@ class TextValidator private constructor(
 	}
 
 	class Builder {
-		private var allowEmpty = true
-		private var allowBlank = true
-		private var maxLength: Int? = null
+		var allowEmpty = true
+		var allowBlank = true
+		var maxLength: Int? = null
 
-		fun allowEmpty(allow: Boolean) = apply { allowEmpty = allow }
-		fun allowBlank(allow: Boolean) = apply { allowBlank = allow }
-		fun maxLength(length: Int) = apply { maxLength = length }
 		fun build() = TextValidator(allowEmpty, allowBlank, maxLength)
 	}
 }
+
+inline fun textValidator(block: TextValidator.Builder.() -> Unit) =
+	TextValidator.Builder()
+		.apply(block)
+		.build()
