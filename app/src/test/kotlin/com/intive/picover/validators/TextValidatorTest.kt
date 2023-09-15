@@ -77,15 +77,15 @@ class TextValidatorTest : ShouldSpec(
 					errorMessageResId = R.string.TextIsValid,
 				),
 			).forAll { param ->
-				val tested = TextValidator.Builder(param.text)
+				val tested = TextValidator.Builder()
 					.allowEmpty(param.allowEmpty)
 					.allowBlank(param.allowBlank)
 					.maxLength(param.maxLength)
 					.build()
 
-				tested.validatingText() shouldBe param.validationStatus
-				tested.validatingText().isValid() shouldBe param.isValid
-				tested.validatingText().errorMessageId shouldBe param.errorMessageResId
+				tested.validatingText(param.text) shouldBe param.validationStatus
+				tested.validatingText(param.text).isValid() shouldBe param.isValid
+				tested.validatingText(param.text).errorMessageId shouldBe param.errorMessageResId
 			}
 		}
 	},
