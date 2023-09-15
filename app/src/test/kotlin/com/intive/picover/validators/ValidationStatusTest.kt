@@ -1,10 +1,11 @@
 package com.intive.picover.validators
 
 import com.intive.picover.R
-import com.intive.picover.validators.ValidationStatus.BlankText
-import com.intive.picover.validators.ValidationStatus.EmptyText
-import com.intive.picover.validators.ValidationStatus.TooLongText
-import com.intive.picover.validators.ValidationStatus.ValidText
+import com.intive.picover.common.validator.ValidationStatus
+import com.intive.picover.common.validator.ValidationStatus.BlankText
+import com.intive.picover.common.validator.ValidationStatus.EmptyText
+import com.intive.picover.common.validator.ValidationStatus.TooLongText
+import com.intive.picover.common.validator.ValidationStatus.ValidText
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe

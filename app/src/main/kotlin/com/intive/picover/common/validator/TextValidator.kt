@@ -1,9 +1,9 @@
-package com.intive.picover.validators
+package com.intive.picover.common.validator
 
-import com.intive.picover.validators.ValidationStatus.BlankText
-import com.intive.picover.validators.ValidationStatus.EmptyText
-import com.intive.picover.validators.ValidationStatus.TooLongText
-import com.intive.picover.validators.ValidationStatus.ValidText
+import com.intive.picover.common.validator.ValidationStatus.BlankText
+import com.intive.picover.common.validator.ValidationStatus.EmptyText
+import com.intive.picover.common.validator.ValidationStatus.TooLongText
+import com.intive.picover.common.validator.ValidationStatus.ValidText
 
 class TextValidator private constructor(
 	private val allowEmpty: Boolean,

@@ -6,12 +6,12 @@ import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
 import com.intive.picover.common.toast.ToastPublisher
+import com.intive.picover.common.validator.TextValidator
+import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
-import com.intive.picover.validators.TextValidator
-import com.intive.picover.validators.ValidationStatus
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec

@@ -10,13 +10,13 @@ import com.intive.picover.R
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.toast.ToastPublisher
+import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.state.ViewModelState
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
-import com.intive.picover.validators.TextValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch

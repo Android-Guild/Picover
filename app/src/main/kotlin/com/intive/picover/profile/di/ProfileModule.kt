@@ -1,7 +1,7 @@
 package com.intive.picover.profile.di
 
+import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.qualifier.Validator
-import com.intive.picover.validators.TextValidator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
