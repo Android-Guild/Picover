@@ -33,7 +33,7 @@ ktlint = { group = "com.pinterest", name = "ktlint", version.ref = "ktlint" }
 ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-core", version.ref = "ktlint" }
 material = { group = "com.google.android.material", name = "material", version.strictly = "1.9.0" }
 
-test-mockk = { group = "io.mockk", name = "mockk", version.strictly = "1.13.5" }
+test-mockk = { group = "io.mockk", name = "mockk", version.strictly = "1.13.7" }
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
 test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.strictly = "5.6.2" }
