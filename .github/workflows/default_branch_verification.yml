@@ -11,3 +11,9 @@ jobs:
     with:
       command: ./gradlew build
     secrets: inherit
+
+  app-distribution:
+    uses: ./.github/workflows/setup_build_environment.yml
+    with:
+      command: ./gradlew assembleDebug appDistributionUploadDebug # TODO: issue 199
+    secrets: inherit

@@ -16,9 +16,13 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2.0.10
-      - name: Read google-service.json
+      - name: Save google-service.json
         env:
           FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
         run: echo $FIREBASE_GOOGLE_SERVICE > app/src/google-services.json
+      - name: Save service-credentials.json
+        env:
+          FIREBASE_SERVICE_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+        run: echo $FIREBASE_SERVICE_CREDENTIALS > app/src/service-credentials.json
       - name: Execute command
         run: ${{ inputs.command }}
