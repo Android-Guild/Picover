@@ -1,43 +1,7 @@
 name: Pull Request verification
 on: pull_request
 
-env:
-  COMMITS_COUNT: ${{ github.event.pull_request.commits }}
-
 jobs:
-  assert-pull-request-metadata:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Assert branch name
-        run: python ./.github/scripts/branch/assert_branch_name.py ${{ github.head_ref }}
-      - name: Assert commit message
-        run: |
-          HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)
-          python ./.github/scripts/commit/assert_commit_message.py "$HEAD_COMMIT_MESSAGE"
-
-  count-commits:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: $COMMITS_COUNT
-      - name: Assert number of commits
-        run: |
-          if (( $COMMITS_COUNT > 1 )); then
-            echo "Error: Pull request contains more than one commit (you have $COMMITS_COUNT commits)."
-            exit 1
-          fi
-
   ktlint-check:
     uses: ./.github/workflows/setup_build_environment.yml
     with:
