@@ -5,15 +5,28 @@ on:
       - dev
 
 jobs:
-
   build:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew build
-    secrets: inherit
+    steps:
+      - name: Build
+        uses: ./.github/workflows/setup_build_environment.yml
+        with:
+          command: ./gradlew build
+        secrets: inherit
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
-  app-distribution:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew assembleDebug appDistributionUploadDebug # TODO: issue 199
-    secrets: inherit
+  upload-debug-apk:
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: apk
+      - name: Distribution upload
+        uses: ./.github/workflows/setup_build_environment.yml
+        with:
+          command: ./gradlew appDistributionUploadDebug
+        secrets: inherit
