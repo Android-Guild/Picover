@@ -36,7 +36,7 @@ material = { group = "com.google.android.material", name = "material", version.s
 test-mockk = { group = "io.mockk", name = "mockk", version.strictly = "1.13.7" }
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
-test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.strictly = "5.6.2" }
+test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.strictly = "5.7.2" }
 test-ktlint = { group = "com.pinterest.ktlint", name = "ktlint-test", version.ref = "ktlint" }
 
 [bundles]
