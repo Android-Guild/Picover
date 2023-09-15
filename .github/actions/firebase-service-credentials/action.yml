@@ -1,0 +1,13 @@
+name: "Firebase service credentials"
+description: "Save service-credentials.json file"
+inputs:
+  secret:
+    required: true
+    description: "Firebase service credentials secret"
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      env:
+        SECRET: ${{ inputs.secret }}
+      run: echo $SECRET > app/src/service-credentials.json

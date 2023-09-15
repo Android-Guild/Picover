@@ -1,16 +1,13 @@
 name: Pull request metadata
 on: pull_request
-
 jobs:
   assert-pull-request-metadata:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Setup python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - name: Assert branch name
@@ -26,4 +23,3 @@ jobs:
             echo "Error: You have $COMMITS_COUNT commits in pull request. Squash them and keep only one."
             exit 1
           fi
-

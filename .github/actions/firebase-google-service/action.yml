@@ -1,0 +1,13 @@
+name: "Firebase google service"
+description: "Save google-service.json file"
+inputs:
+  secret:
+    required: true
+    description: "Firebase google service secret"
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      env:
+        SECRET: ${{ inputs.secret }}
+      run: echo $SECRET > app/src/google-services.json

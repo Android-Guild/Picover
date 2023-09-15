@@ -1,0 +1,9 @@
+name: Ktlint check
+on: pull_request
+jobs:
+  ktlint-check:
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./gradlew ktlintCheck
