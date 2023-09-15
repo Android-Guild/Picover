@@ -12,7 +12,7 @@ sealed class MainState {
 			}
 	}
 
-	object Loading : MainState()
-	object UserAuthorized : MainState()
-	object UserUnauthorized : MainState()
+	data object Loading : MainState()
+	data object UserAuthorized : MainState()
+	data object UserUnauthorized : MainState()
 }
