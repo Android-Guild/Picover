@@ -6,7 +6,7 @@ lint = "31.0.2"
 
 [libraries]
 android-core = "androidx.core:core-ktx:1.10.1"
-android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.prefer = "2.6.1" }
+android-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.prefer = "2.6.2" }
 android-compose-activity = { group = "androidx.activity", name = "activity-compose", version.strictly = "1.7.2" }
 android-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.require = "2.6.0" }
 android-google-services = { group = "com.google.gms", name = "google-services", version.strictly = "4.3.15" }
