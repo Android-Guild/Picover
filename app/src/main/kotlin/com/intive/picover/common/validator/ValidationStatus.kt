@@ -1,4 +1,4 @@
-package com.intive.picover.validators
+package com.intive.picover.common.validator
 
 import com.intive.picover.R
 
