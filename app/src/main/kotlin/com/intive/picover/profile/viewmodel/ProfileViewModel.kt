@@ -10,6 +10,7 @@ import com.intive.picover.R
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.toast.ToastPublisher
+import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.state.ViewModelState
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
 	private val authRepository: AuthRepository,
 	private val toastPublisher: ToastPublisher,
+	@Validator.Profile private val textValidator: TextValidator,
 ) : ViewModel() {
 
 	private val _profile = mutableStateOf<ViewModelState<Profile>>(Loading)
@@ -77,12 +79,7 @@ class ProfileViewModel @Inject constructor(
 	}
 
 	fun validatingName(text: String) =
-		TextValidator.Builder(text)
-			.allowEmpty(false)
-			.allowBlank(false)
-			.maxLength(20)
-			.build()
-			.validatingText()
+		textValidator.validatingText(text)
 
 	private fun executeAndUpdateProfile(action: suspend () -> Profile) {
 		viewModelScope.launch {

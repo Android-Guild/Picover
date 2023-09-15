@@ -10,6 +10,8 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
+import com.intive.picover.validators.TextValidator
+import com.intive.picover.validators.ValidationStatus
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
@@ -32,7 +34,8 @@ class ProfileViewModelTest : ShouldSpec(
 		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
 		val toastPublisher: ToastPublisher = mockk(relaxed = true)
-		val tested by lazy { ProfileViewModel(authRepository, toastPublisher) }
+		val textValidator: TextValidator = mockk()
+		val tested by lazy { ProfileViewModel(authRepository, toastPublisher, textValidator) }
 
 		should("call logout on AuthRepository WHEN onLogoutClick") {
 			tested.onLogoutClick()
@@ -149,6 +152,13 @@ class ProfileViewModelTest : ShouldSpec(
 			tested.updateName("Marian K")
 
 			tested.userName.value shouldBe "Marian K"
+		}
+
+		should("validate text WHEN validatingName called") {
+			val text = "MyUserName1234"
+			every { textValidator.validatingText(text) } returns ValidationStatus.ValidText
+
+			tested.validatingName(text) shouldBe ValidationStatus.ValidText
 		}
 	},
 )

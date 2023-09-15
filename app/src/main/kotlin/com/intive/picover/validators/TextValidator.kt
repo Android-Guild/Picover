@@ -6,20 +6,19 @@ import com.intive.picover.validators.ValidationStatus.TooLongText
 import com.intive.picover.validators.ValidationStatus.ValidText
 
 class TextValidator private constructor(
-	private val text: String,
 	private val allowEmpty: Boolean,
 	private val allowBlank: Boolean,
 	private val maxLength: Int?,
 ) {
 
-	fun validatingText() = when {
+	fun validatingText(text: String) = when {
 		!allowEmpty && text.isEmpty() -> EmptyText
 		!allowBlank && text.isBlank() -> BlankText
 		maxLength != null && text.length > maxLength -> TooLongText
 		else -> ValidText
 	}
 
-	class Builder(private val text: String) {
+	class Builder {
 		private var allowEmpty = true
 		private var allowBlank = true
 		private var maxLength: Int? = null
@@ -27,6 +26,6 @@ class TextValidator private constructor(
 		fun allowEmpty(allow: Boolean) = apply { allowEmpty = allow }
 		fun allowBlank(allow: Boolean) = apply { allowBlank = allow }
 		fun maxLength(length: Int) = apply { maxLength = length }
-		fun build() = TextValidator(text, allowEmpty, allowBlank, maxLength)
+		fun build() = TextValidator(allowEmpty, allowBlank, maxLength)
 	}
 }
