@@ -9,6 +9,7 @@ jobs:
     container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/gradle-cache
       - uses: android-actions/setup-android@v2.0.10
       - uses: ./.github/actions/firebase-google-service
         with:
@@ -19,6 +20,7 @@ jobs:
     container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/gradle-cache
       - uses: android-actions/setup-android@v2.0.10
       - uses: ./.github/actions/firebase-google-service
         with:

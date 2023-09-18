@@ -6,4 +6,5 @@ jobs:
     container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/gradle-cache
       - run: ./gradlew ktlintCheck
