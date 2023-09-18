@@ -1,7 +1,7 @@
 [versions]
 dagger = "2.48"
 kotlin = "1.9.10"
-ktlint = "0.50.0"
+ktlint = "1.0.0"
 lint = "31.1.1"
 
 [libraries]
@@ -28,7 +28,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebaseui-auth = { group = "com.firebaseui", name = "firebase-ui-auth", version.strictly = "8.0.2" }
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
-ktlint = { group = "com.pinterest", name = "ktlint", version.ref = "ktlint" }
+ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
 ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-core", version.ref = "ktlint" }
 material = { group = "com.google.android.material", name = "material", version.strictly = "1.9.0" }
 
@@ -37,6 +37,7 @@ test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "li
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
 test-kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.strictly = "5.7.2" }
 test-ktlint = { group = "com.pinterest.ktlint", name = "ktlint-test", version.ref = "ktlint" }
+test-slf4j = "org.slf4j:slf4j-simple:2.0.9"
 
 [bundles]
 lint-test = ["test-lint", "test-lint-tests"]

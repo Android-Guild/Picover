@@ -21,6 +21,6 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
 val libs = the<LibrariesForLibs>()
 
 dependencies {
-	ktlint(libs.ktlint)
+	ktlint(libs.ktlint.cli)
 	ktlint(project(":ktlint-ruleset"))
 }

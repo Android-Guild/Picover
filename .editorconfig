@@ -2,7 +2,11 @@
 end_of_line = lf
 insert_final_newline = true
 
-[{*.kt,*.kts}]
+[*.{kt,kts}]
+ktlint_code_style = android_studio
+ktlint_standard_function-naming = disabled
+ktlint_standard_function-signature = disabled
+ktlint_function_signature_body_expression_wrapping = always
 indent_style = tab
 indent_size = 4
 max_line_length = 140

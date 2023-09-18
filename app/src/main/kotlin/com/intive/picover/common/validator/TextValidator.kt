@@ -11,19 +11,21 @@ class TextValidator private constructor(
 	private val maxLength: Int?,
 ) {
 
-	fun validatingText(text: String) = when {
-		!allowEmpty && text.isEmpty() -> EmptyText
-		!allowBlank && text.isBlank() -> BlankText
-		maxLength != null && text.length > maxLength -> TooLongText
-		else -> ValidText
-	}
+	fun validatingText(text: String) =
+		when {
+			!allowEmpty && text.isEmpty() -> EmptyText
+			!allowBlank && text.isBlank() -> BlankText
+			maxLength != null && text.length > maxLength -> TooLongText
+			else -> ValidText
+		}
 
 	class Builder {
 		var allowEmpty = true
 		var allowBlank = true
 		var maxLength: Int? = null
 
-		fun build() = TextValidator(allowEmpty, allowBlank, maxLength)
+		fun build() =
+			TextValidator(allowEmpty, allowBlank, maxLength)
 	}
 }
 
