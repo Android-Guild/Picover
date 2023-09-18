@@ -12,7 +12,7 @@ android-compose-navigation = { group = "androidx.navigation", name = "navigation
 android-google-services = { group = "com.google.gms", name = "google-services", version.strictly = "4.3.15" }
 android-google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.strictly = "17.0.1" }
 coil = { group = "com.github.skydoves", name = "landscapist-coil", version.strictly = "2.2.8" }
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.strictly = "2023.06.01" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.strictly = "2023.09.00" }
 compose-ui-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
