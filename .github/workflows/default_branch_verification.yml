@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gradle:8.0.0-jdk17
+    container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
       - uses: android-actions/setup-android@v2.0.10
@@ -16,7 +16,7 @@ jobs:
       - run: ./gradlew build
   upload-debug-apk:
     runs-on: ubuntu-latest
-    container: gradle:8.0.0-jdk17
+    container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
       - uses: android-actions/setup-android@v2.0.10
