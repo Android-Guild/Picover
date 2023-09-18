@@ -3,30 +3,27 @@ on:
   push:
     branches:
       - dev
-
 jobs:
   build:
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
     steps:
-      - name: Build
-        uses: ./.github/workflows/setup_build_environment.yml
+      - uses: actions/checkout@v3
+      - uses: android-actions/setup-android@v2.0.10
+      - uses: ./.github/actions/firebase-google-service
         with:
-          command: ./gradlew build
-        secrets: inherit
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-
+          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+      - run: ./gradlew build
   upload-debug-apk:
-    needs: build
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
+      - uses: actions/checkout@v3
+      - uses: android-actions/setup-android@v2.0.10
+      - uses: ./.github/actions/firebase-google-service
         with:
-          name: apk
-      - name: Distribution upload
-        uses: ./.github/workflows/setup_build_environment.yml
+          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+      - uses: ./.github/actions/firebase-service-credentials
         with:
-          command: ./gradlew appDistributionUploadDebug
-        secrets: inherit
+          secret: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+      - run: ./gradlew assembleDebug appDistributionUploadDebug

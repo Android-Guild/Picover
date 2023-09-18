@@ -1,20 +1,23 @@
 name: Pull Request verification
 on: pull_request
-
 jobs:
-  ktlint-check:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew ktlintCheck
-
   build:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew assemble
-    secrets: inherit
-
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
+    steps:
+      - uses: actions/checkout@v3
+      - uses: android-actions/setup-android@v2.0.10
+      - uses: ./.github/actions/firebase-google-service
+        with:
+          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+      - run: ./gradlew assemble
   tests:
-    uses: ./.github/workflows/setup_build_environment.yml
-    with:
-      command: ./gradlew test
-    secrets: inherit
+    runs-on: ubuntu-latest
+    container: gradle:8.0.0-jdk17
+    steps:
+      - uses: actions/checkout@v3
+      - uses: android-actions/setup-android@v2.0.10
+      - uses: ./.github/actions/firebase-google-service
+        with:
+          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
+      - run: ./gradlew test

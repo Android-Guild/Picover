@@ -4,20 +4,16 @@ on:
   push:
     branches:
       - dev
-
 jobs:
   lint-debug:
     runs-on: ubuntu-latest
     container: gradle:8.0.0-jdk17
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2.0.10
-      - name: Save google-service.json
-        env:
-          FIREBASE_GOOGLE_SERVICE: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
-        run: echo $FIREBASE_GOOGLE_SERVICE > app/src/google-services.json
+      - uses: actions/checkout@v3
+      - uses: android-actions/setup-android@v2.0.10
+      - uses: ./.github/actions/firebase-google-service
+        with:
+          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
       - run: ./gradlew lintDebug
       - uses: github/codeql-action/upload-sarif@v2
         if: ${{ always() }}
