@@ -3,7 +3,7 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gradle:8.0.0-jdk17
+    container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
       - uses: android-actions/setup-android@v2.0.10
@@ -13,7 +13,7 @@ jobs:
       - run: ./gradlew assemble
   tests:
     runs-on: ubuntu-latest
-    container: gradle:8.0.0-jdk17
+    container: gradle:8.3.0-jdk17
     steps:
       - uses: actions/checkout@v4
       - uses: android-actions/setup-android@v2.0.10
