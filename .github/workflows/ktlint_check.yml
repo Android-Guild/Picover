@@ -5,5 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:8.0.0-jdk17
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: ./gradlew ktlintCheck
