@@ -1,11 +1,7 @@
-name: Lint
-on:
-  pull_request:
-  push:
-    branches:
-      - dev
+name: Pull Request tests
+on: pull_request
 jobs:
-  lint-debug:
+  tests:
     runs-on: ubuntu-latest
     container: gradle:8.3.0-jdk17
     steps:
@@ -15,9 +11,4 @@ jobs:
       - uses: ./.github/actions/firebase-google-service
         with:
           secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
-      - run: ./gradlew lintDebug
-      - uses: github/codeql-action/upload-sarif@v2
-        if: ${{ always() }}
-        with:
-          sarif_file: app/build/reports/lint-results-debug.sarif
-          category: lint
+      - run: ./gradlew test

@@ -1,0 +1,8 @@
+name: "Gradle cache"
+description: "Configure gradle and cache it if running on the 'dev' branch"
+runs:
+  using: "composite"
+  steps:
+    - uses: gradle/gradle-build-action@v2
+      with:
+        cache-read-only: ${{ github.ref != 'refs/heads/dev' }}
