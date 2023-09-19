@@ -10,10 +10,11 @@ enum class NavigationType {
 	;
 
 	companion object {
-		fun fromWindowSize(windowSize: WindowSizeClass) = when (windowSize.widthSizeClass) {
-			WindowWidthSizeClass.Medium -> NAVIGATION_RAIL
-			WindowWidthSizeClass.Expanded -> NAVIGATION_DRAWER
-			else -> NAVIGATION_BAR
-		}
+		fun fromWindowSize(windowSize: WindowSizeClass) =
+			when (windowSize.widthSizeClass) {
+				WindowWidthSizeClass.Medium -> NAVIGATION_RAIL
+				WindowWidthSizeClass.Expanded -> NAVIGATION_DRAWER
+				else -> NAVIGATION_BAR
+			}
 	}
 }

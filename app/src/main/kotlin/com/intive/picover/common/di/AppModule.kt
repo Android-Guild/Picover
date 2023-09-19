@@ -13,8 +13,10 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 
 	@Provides
-	fun provideFirebaseStorageReference() = FirebaseStorage.getInstance().reference
+	fun provideFirebaseStorageReference() =
+		FirebaseStorage.getInstance().reference
 
 	@Provides
-	fun provideFirebaseDatabase() = Firebase.database
+	fun provideFirebaseDatabase() =
+		Firebase.database
 }

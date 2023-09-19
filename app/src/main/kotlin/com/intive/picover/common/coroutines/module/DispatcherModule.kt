@@ -13,5 +13,6 @@ object DispatcherModule {
 
 	@Provides
 	@Dispatcher.IO
-	fun provideIoDispatcher() = Dispatchers.IO
+	fun provideIoDispatcher() =
+		Dispatchers.IO
 }
