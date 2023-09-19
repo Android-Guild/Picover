@@ -72,7 +72,6 @@ dependencies {
 	implementation(libs.android.compose.activity)
 	implementation(libs.android.compose.navigation)
 	implementation(libs.android.google.oss.licenses)
-	implementation(libs.android.google.services)
 	implementation(platform(libs.firebase.bom))
 	implementation(libs.firebase.analytics)
 	implementation(libs.firebase.storage)
