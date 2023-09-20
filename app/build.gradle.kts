@@ -84,6 +84,7 @@ dependencies {
 	implementation(libs.firebaseui.auth)
 	implementation(libs.firebase.database)
 	debugImplementation(libs.compose.ui.tooling)
+	debugImplementation(libs.leakcanary)
 	testImplementation(libs.test.kotest.runner)
 	testImplementation(libs.test.mockk)
 	testCompileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20") {
