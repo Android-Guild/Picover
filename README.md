@@ -107,23 +107,22 @@ Current issues are present in the [project backlog](https://github.com/orgs/inti
 
 ### Branch
 
-Template:
-> `$acronym/$issue_number-$description`
+Each branch should be associated with a team member and corresponding issue created [here](https://github.com/intive/Picover/issues).
+To accomplish that, use following template `acronym/issue_number/description`, example:
+> kma/1/initial-project
 
-Example:
-> <b>kma/1-inital-project</b>
+Where:
+
+- `acronym` – usually the first character of the team member name and the first two characters of the surname,
+- `issue_number` – number preceded by a hash character for a particular issue,
+- `description` – up to author, "what has been done in this commit?" in few words, could be a name of the issue for
+  issues with only one commit.
 
 ### Commit
 
-Template:
-> `#$issue_number $description`
-
-Example:
-> <b>#1 initial project</b>
-
-– *$acronym* – selected by contributor, should not be changed.
-- *$issue_number* – points to a issue from the [GitHub project](https://github.com/orgs/intive/projects/3/views/1).
-- *$description* – is up to author, "what has been done in this commit?" in few words, could be a name of the issue for issues with only one commit.
+In a similar manner, to keep bidirectional history, each commit should be associated with the corresponding issue,
+so the template is following `#issue_number description`, example:
+> #1 initial project
 
 ### Pull Requests
 
