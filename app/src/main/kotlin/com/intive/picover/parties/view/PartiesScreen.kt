@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +30,11 @@ import androidx.navigation.NavHostController
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.theme.Typography
+import com.intive.picover.parties.model.PartiesEvent
+import com.intive.picover.parties.model.PartiesSideEffect.NavigateToPartyDetails
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.viewmodel.PartiesViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PartiesScreen(
@@ -38,21 +42,26 @@ fun PartiesScreen(
 	navController: NavHostController,
 ) {
 	val state by viewModel.state
+	LaunchedEffect(true) {
+		viewModel.sideEffect.collectLatest { effect ->
+			when (effect) {
+				is NavigateToPartyDetails -> navController.navigate("partyDetails/${effect.partyId}")
+			}
+		}
+	}
 	when {
 		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 		state.isLoaded() -> LoadedContent(
 			parties = state.data(),
-			openDetails = {
-				navController.navigate("partyDetails/$it")
-			},
+			onPartyClick = viewModel::onPartyClick,
 		)
 
-		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.loadParties() })
+		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
 	}
 }
 
 @Composable
-private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
+private fun LoadedContent(parties: List<Party>, onPartyClick: (Int) -> Unit) {
 	val context = LocalContext.current
 	Box(Modifier.fillMaxSize()) {
 		LazyColumn(
@@ -64,7 +73,7 @@ private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
 			items(parties) {
 				PartyTile(
 					party = it,
-					openDetails = openDetails,
+					onPartyClick = onPartyClick,
 				)
 			}
 		}
@@ -84,13 +93,13 @@ private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
 @Composable
 private fun PartyTile(
 	party: Party,
-	openDetails: (Int) -> Unit,
+	onPartyClick: (Int) -> Unit,
 ) {
 	Card(
 		modifier = Modifier
 			.fillMaxWidth()
 			.clickable {
-				openDetails(party.id)
+				onPartyClick(party.id)
 			},
 	) {
 		Column(modifier = Modifier.padding(16.dp)) {
@@ -114,5 +123,5 @@ private fun PartyScreenLoadedPreview() {
 	val parties = (1..5).map {
 		Party(id = it, title = "title$it", description = "description$it")
 	}
-	LoadedContent(parties = parties, openDetails = {})
+	LoadedContent(parties = parties, onPartyClick = {})
 }
