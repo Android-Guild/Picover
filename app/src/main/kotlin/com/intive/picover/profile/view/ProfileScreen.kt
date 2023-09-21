@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
@@ -235,28 +234,6 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			}
 		}
 	}
-}
-
-@Composable
-private fun DeleteAccountDialog(
-	onConfirm: () -> Unit,
-	onDismiss: () -> Unit,
-) {
-	AlertDialog(
-		onDismissRequest = onDismiss,
-		confirmButton = {
-			TextButton(onClick = onConfirm) {
-				Text(stringResource(R.string.DeleteButton).uppercase())
-			}
-		},
-		dismissButton = {
-			TextButton(onClick = onDismiss) {
-				Text(stringResource(R.string.CancelButton).uppercase())
-			}
-		},
-		title = { Text(stringResource(R.string.DeleteAccountConfirmationDialogTitle)) },
-		text = { Text(stringResource(R.string.DeleteAccountConfirmationDialogDescription)) },
-	)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
