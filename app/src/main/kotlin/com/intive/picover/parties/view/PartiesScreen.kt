@@ -42,7 +42,7 @@ fun PartiesScreen(
 		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 		state.isLoaded() -> LoadedContent(
 			parties = state.data(),
-			openDetails = {
+			onPartyClick = {
 				navController.navigate("partyDetails/$it")
 			},
 		)
@@ -52,7 +52,7 @@ fun PartiesScreen(
 }
 
 @Composable
-private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
+private fun LoadedContent(parties: List<Party>, onPartyClick: (Int) -> Unit) {
 	val context = LocalContext.current
 	Box(Modifier.fillMaxSize()) {
 		LazyColumn(
@@ -64,7 +64,7 @@ private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
 			items(parties) {
 				PartyTile(
 					party = it,
-					openDetails = openDetails,
+					onClick = onPartyClick,
 				)
 			}
 		}
@@ -84,13 +84,13 @@ private fun LoadedContent(parties: List<Party>, openDetails: (Int) -> Unit) {
 @Composable
 private fun PartyTile(
 	party: Party,
-	openDetails: (Int) -> Unit,
+	onClick: (Int) -> Unit,
 ) {
 	Card(
 		modifier = Modifier
 			.fillMaxWidth()
 			.clickable {
-				openDetails(party.id)
+				onClick(party.id)
 			},
 	) {
 		Column(modifier = Modifier.padding(16.dp)) {
@@ -114,5 +114,5 @@ private fun PartyScreenLoadedPreview() {
 	val parties = (1..5).map {
 		Party(id = it, title = "title$it", description = "description$it")
 	}
-	LoadedContent(parties = parties, openDetails = {})
+	LoadedContent(parties = parties, onPartyClick = {})
 }
