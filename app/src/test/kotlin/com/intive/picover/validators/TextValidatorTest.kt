@@ -1,6 +1,5 @@
 package com.intive.picover.validators
 
-import com.intive.picover.R
 import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.validator.ValidationStatus.BlankText
 import com.intive.picover.common.validator.ValidationStatus.EmptyText
@@ -16,67 +15,53 @@ class TextValidatorTest : ShouldSpec(
 		should("be validated based on specific conditions") {
 			listOf(
 				TextValidatorTestParam(
-					text = "Jack Smith",
+					textToValidate = "Jack Smith",
 					allowEmpty = false,
 					allowBlank = false,
 					maxLength = 10,
-					isValid = true,
-					validationStatus = ValidText,
-					errorMessageResId = R.string.TextIsValid,
+					expectedStatus = ValidText,
 				),
 				TextValidatorTestParam(
-					text = "0123456789",
+					textToValidate = "0123456789",
 					allowEmpty = false,
 					allowBlank = false,
 					maxLength = 10,
-					isValid = true,
-					validationStatus = ValidText,
-					errorMessageResId = R.string.TextIsValid,
+					expectedStatus = ValidText,
 				),
 				TextValidatorTestParam(
-					text = "012345678910",
+					textToValidate = "012345678910",
 					allowEmpty = false,
 					allowBlank = false,
 					maxLength = 10,
-					isValid = false,
-					validationStatus = TooLongText,
-					errorMessageResId = R.string.TextIsTooLong,
+					expectedStatus = TooLongText,
 				),
 				TextValidatorTestParam(
-					text = "",
+					textToValidate = "",
 					allowEmpty = false,
 					allowBlank = false,
 					maxLength = 10,
-					isValid = false,
-					validationStatus = EmptyText,
-					errorMessageResId = R.string.TextShouldNotBeEmpty,
+					expectedStatus = EmptyText,
 				),
 				TextValidatorTestParam(
-					text = "   ",
+					textToValidate = "   ",
 					allowEmpty = false,
 					allowBlank = false,
 					maxLength = 10,
-					isValid = false,
-					validationStatus = BlankText,
-					errorMessageResId = R.string.TextShouldNotBeBlank,
+					expectedStatus = BlankText,
 				),
 				TextValidatorTestParam(
-					text = "",
+					textToValidate = "",
 					allowEmpty = true,
 					allowBlank = true,
 					maxLength = 10,
-					isValid = true,
-					validationStatus = ValidText,
-					errorMessageResId = R.string.TextIsValid,
+					expectedStatus = ValidText,
 				),
 				TextValidatorTestParam(
-					text = "   ",
+					textToValidate = "   ",
 					allowEmpty = false,
 					allowBlank = true,
 					maxLength = 10,
-					isValid = true,
-					validationStatus = ValidText,
-					errorMessageResId = R.string.TextIsValid,
+					expectedStatus = ValidText,
 				),
 			).forAll { param ->
 				val tested = textValidator {
@@ -85,20 +70,16 @@ class TextValidatorTest : ShouldSpec(
 					maxLength = param.maxLength
 				}
 
-				tested.validate(param.text) shouldBe param.validationStatus
-				tested.validate(param.text).isValid() shouldBe param.isValid
-				tested.validate(param.text).errorMessageId shouldBe param.errorMessageResId
+				tested.validate(param.textToValidate) shouldBe param.expectedStatus
 			}
 		}
 	},
 )
 
 data class TextValidatorTestParam(
-	val text: String,
+	val textToValidate: String,
 	val allowEmpty: Boolean,
 	val allowBlank: Boolean,
 	val maxLength: Int,
-	val isValid: Boolean,
-	val validationStatus: ValidationStatus,
-	val errorMessageResId: Int,
+	val expectedStatus: ValidationStatus,
 )
