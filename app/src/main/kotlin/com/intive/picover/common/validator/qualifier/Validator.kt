@@ -6,5 +6,9 @@ interface Validator {
 
 	@Qualifier
 	@Retention(AnnotationRetention.RUNTIME)
-	annotation class Profile
+	annotation class ShortText
+
+	@Qualifier
+	@Retention(AnnotationRetention.RUNTIME)
+	annotation class LongText
 }
