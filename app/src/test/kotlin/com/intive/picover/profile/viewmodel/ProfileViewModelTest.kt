@@ -156,7 +156,7 @@ class ProfileViewModelTest : ShouldSpec(
 
 		should("validate text WHEN validatingName called") {
 			val text = "MyUserName1234"
-			every { textValidator.validatingText(text) } returns ValidationStatus.ValidText
+			every { textValidator.validate(text) } returns ValidationStatus.ValidText
 
 			tested.validatingName(text) shouldBe ValidationStatus.ValidText
 		}
