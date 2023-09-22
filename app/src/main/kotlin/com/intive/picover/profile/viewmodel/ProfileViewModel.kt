@@ -79,7 +79,7 @@ class ProfileViewModel @Inject constructor(
 	}
 
 	fun validatingName(text: String) =
-		textValidator.validatingText(text)
+		textValidator.validate(text)
 
 	private fun executeAndUpdateProfile(action: suspend () -> Profile) {
 		viewModelScope.launch {

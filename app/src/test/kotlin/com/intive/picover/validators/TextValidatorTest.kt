@@ -85,9 +85,9 @@ class TextValidatorTest : ShouldSpec(
 					maxLength = param.maxLength
 				}
 
-				tested.validatingText(param.text) shouldBe param.validationStatus
-				tested.validatingText(param.text).isValid() shouldBe param.isValid
-				tested.validatingText(param.text).errorMessageId shouldBe param.errorMessageResId
+				tested.validate(param.text) shouldBe param.validationStatus
+				tested.validate(param.text).isValid() shouldBe param.isValid
+				tested.validate(param.text).errorMessageId shouldBe param.errorMessageResId
 			}
 		}
 	},

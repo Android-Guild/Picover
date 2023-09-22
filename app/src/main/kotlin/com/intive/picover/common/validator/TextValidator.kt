@@ -11,7 +11,7 @@ class TextValidator private constructor(
 	private val maxLength: Int?,
 ) {
 
-	fun validatingText(text: String) =
+	fun validate(text: String) =
 		when {
 			!allowEmpty && text.isEmpty() -> EmptyText
 			!allowBlank && text.isBlank() -> BlankText
