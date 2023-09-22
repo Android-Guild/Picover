@@ -246,7 +246,7 @@ private fun DeleteAccountDialog(
 		onDismissRequest = onDismiss,
 		confirmButton = {
 			TextButton(onClick = onConfirm) {
-				Text(stringResource(R.string.ConfirmButton).uppercase())
+				Text(stringResource(R.string.DeleteButton).uppercase())
 			}
 		},
 		dismissButton = {
