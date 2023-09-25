@@ -15,8 +15,6 @@
     <string name="DeleteButton">Delete</string>
     <string name="CancelButton">Cancel</string>
     <string name="UserName">User Name</string>
-    <string name="UserEmail">User Email</string>
-    <string name="ClickToEdit">Click To Edit</string>
     <string name="GenericErrorMessage">Something went wrong. Please try again later.</string>
     <string name="RetryButton">Retry</string>
     <string name="EditUserData">Edit User Data</string>
