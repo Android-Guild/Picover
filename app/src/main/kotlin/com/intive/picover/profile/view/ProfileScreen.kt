@@ -2,41 +2,30 @@ package com.intive.picover.profile.view
 
 import android.content.Intent
 import android.net.Uri
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -48,28 +37,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
-import com.intive.picover.common.animations.ShimmerBrush
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
 import com.intive.picover.profile.viewmodel.ProfileViewModel
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil.CoilImage
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -96,7 +76,19 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 	) {
 		when (profile) {
 			is Loaded -> {
-				ProfileSegment(profile.data(), photoLauncher, sheetState, coroutineScope)
+				UserInfo(
+					profile = profile.data(),
+					onEditPhotoClick = {
+						photoLauncher.launch(
+							PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+						)
+					},
+					onEditNameClick = {
+						coroutineScope.launch {
+							sheetState.show()
+						}
+					},
+				)
 			}
 
 			is Loading -> {
@@ -105,7 +97,21 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 					modifier = Modifier
 						.fillMaxWidth(),
 				)
-				ProfileSegment(loadingProfile, photoLauncher, sheetState, coroutineScope, editButtonsEnabled = false, showShimmer = true)
+				UserInfo(
+					profile = loadingProfile,
+					onEditPhotoClick = {
+						photoLauncher.launch(
+							PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
+						)
+					},
+					onEditNameClick = {
+						coroutineScope.launch {
+							sheetState.show()
+						}
+					},
+					editButtonsEnabled = false,
+					showShimmer = true,
+				)
 			}
 
 			is Error -> {
@@ -113,12 +119,7 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 					message = stringResource(R.string.ProfileError),
 					onRetryClick = viewModel::fetchProfile,
 				)
-				Divider(
-					modifier = Modifier
-						.fillMaxWidth()
-						.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
-					thickness = 1.dp,
-				)
+				Divider(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
 			}
 		}
 		Button(
@@ -234,140 +235,6 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			}
 		}
 	}
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ProfileSegment(
-	profile: Profile,
-	launcher: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>,
-	sheetState: SheetState,
-	coroutineScope: CoroutineScope,
-	editButtonsEnabled: Boolean = true,
-	showShimmer: Boolean = false,
-) {
-	IconButton(
-		modifier = Modifier
-			.size(120.dp),
-		onClick = {
-			launcher.launch(
-				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-			)
-		},
-		enabled = editButtonsEnabled,
-	) {
-		if (!showShimmer) {
-			UserAvatar(profile.photo)
-		} else {
-			val brush = ShimmerBrush(targetValue = 1300f, showShimmer = true)
-			Canvas(
-				modifier = Modifier.size(120.dp),
-				onDraw = {
-					drawRect(
-						brush = brush,
-						size = size,
-					)
-				},
-			)
-		}
-	}
-	TextButton(
-		onClick = {
-			launcher.launch(
-				PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-			)
-		},
-		enabled = editButtonsEnabled,
-	) {
-		Text(stringResource(R.string.ClickToEdit))
-	}
-	Divider(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(all = 14.dp),
-		thickness = 1.dp,
-	)
-	Text(
-		modifier = Modifier
-			.fillMaxWidth(),
-		text = stringResource(id = R.string.UserName),
-		fontSize = 20.sp,
-		fontWeight = FontWeight.Bold,
-		textAlign = TextAlign.Center,
-	)
-	Row(
-		modifier = Modifier
-			.fillMaxWidth(),
-		verticalAlignment = Alignment.CenterVertically,
-	) {
-		Spacer(modifier = Modifier.width(48.dp))
-		Text(
-			modifier = Modifier
-				.weight(1f),
-			text = profile.name,
-			textAlign = TextAlign.Center,
-		)
-		IconButton(
-			onClick = {
-				coroutineScope.launch {
-					sheetState.show()
-				}
-			},
-			enabled = editButtonsEnabled,
-		) {
-			Icon(
-				modifier = Modifier.size(24.dp),
-				imageVector = Icons.Rounded.Edit,
-				contentDescription = null,
-			)
-		}
-	}
-	Text(
-		modifier = Modifier
-			.fillMaxWidth(),
-		text = stringResource(id = R.string.UserEmail),
-		fontSize = 20.sp,
-		fontWeight = FontWeight.Bold,
-		textAlign = TextAlign.Center,
-	)
-	Text(text = profile.email)
-	Divider(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(all = 14.dp),
-		thickness = 1.dp,
-	)
-}
-
-@Composable
-private fun UserAvatar(
-	imageUri: Uri?,
-) {
-	CoilImage(
-		imageModel = { imageUri },
-		modifier = Modifier
-			.size(120.dp)
-			.clip(CircleShape),
-		imageOptions = ImageOptions(
-			alignment = Alignment.Center,
-			contentDescription = null,
-			contentScale = ContentScale.Crop,
-		),
-		loading = {
-			CircularProgressIndicator()
-		},
-		failure = {
-			Image(
-				painter = painterResource(id = R.drawable.ic_avatar_placeholder),
-				contentDescription = null,
-				modifier = Modifier
-					.size(120.dp)
-					.clip(CircleShape),
-				alignment = Alignment.Center,
-				contentScale = ContentScale.Crop,
-			)
-		},
-	)
 }
 
 private object Urls {
