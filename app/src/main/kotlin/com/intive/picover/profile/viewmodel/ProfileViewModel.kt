@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
 	private val authRepository: AuthRepository,
 	private val toastPublisher: ToastPublisher,
-	@Validator.Profile private val textValidator: TextValidator,
+	@Validator.ShortText private val textValidator: TextValidator,
 ) : ViewModel() {
 
 	private val _profile = mutableStateOf<ViewModelState<Profile>>(Loading)
