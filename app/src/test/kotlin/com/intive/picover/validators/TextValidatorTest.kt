@@ -1,11 +1,11 @@
 package com.intive.picover.validators
 
+import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.validator.ValidationStatus.BlankText
 import com.intive.picover.common.validator.ValidationStatus.EmptyText
 import com.intive.picover.common.validator.ValidationStatus.TooLongText
 import com.intive.picover.common.validator.ValidationStatus.ValidText
-import com.intive.picover.common.validator.textValidator
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -64,7 +64,7 @@ class TextValidatorTest : ShouldSpec(
 					expectedStatus = ValidText,
 				),
 			).forAll { param ->
-				val tested = textValidator {
+				val tested = TextValidator.build {
 					allowEmpty = param.allowEmpty
 					allowBlank = param.allowBlank
 					maxLength = param.maxLength

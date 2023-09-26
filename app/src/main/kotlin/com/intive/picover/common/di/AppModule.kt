@@ -3,8 +3,8 @@ package com.intive.picover.common.di
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.qualifier.Validator
-import com.intive.picover.common.validator.textValidator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +25,7 @@ object AppModule {
 	@Provides
 	@Validator.ShortText
 	fun provideShortTextValidator() =
-		textValidator {
+		TextValidator.build {
 			allowEmpty = false
 			allowBlank = false
 			maxLength = 20
@@ -34,7 +34,7 @@ object AppModule {
 	@Provides
 	@Validator.LongText
 	fun provideLongTextValidator() =
-		textValidator {
+		TextValidator.build {
 			allowEmpty = false
 			allowBlank = false
 			maxLength = 80
