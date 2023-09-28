@@ -27,6 +27,7 @@ firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebaseui-auth = "com.firebaseui:firebase-ui-auth:8.0.2"
+play-services-auth = "com.google.android.gms:play-services-auth:20.7.0"
 leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
 ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }

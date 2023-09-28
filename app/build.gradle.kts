@@ -82,6 +82,7 @@ dependencies {
 	implementation(libs.material)
 	implementation(libs.firebase.auth)
 	implementation(libs.firebaseui.auth)
+	implementation(libs.play.services.auth)
 	implementation(libs.firebase.database)
 	debugImplementation(libs.compose.ui.tooling)
 	debugImplementation(libs.leakcanary)
