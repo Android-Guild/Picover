@@ -61,7 +61,7 @@ class ProfileViewModelTest : ShouldSpec(
 
 		should("profile return Profile data WHEN ProfileViewModelTest was initialized") {
 			every { profile.name } returns "Marian"
-			coEvery { authRepository.userProfile() } returns profile
+			coEvery { authRepository.userProfile() } returns Result.success(profile)
 
 			assertSoftly {
 				tested.profile.value shouldBe Loaded(profile)
@@ -90,7 +90,7 @@ class ProfileViewModelTest : ShouldSpec(
 					{ tested.fetchProfile() },
 				),
 			).forAll { param ->
-				coEvery { param.profileMethod.invoke() } returns profile
+				coEvery { param.profileMethod.invoke() } returns Result.success(profile)
 
 				param.action.invoke()
 
@@ -136,7 +136,7 @@ class ProfileViewModelTest : ShouldSpec(
 					{ tested.fetchProfile() },
 				),
 			).forAll { param ->
-				coEvery { param.profileMethod.invoke() } throws Exception()
+				coEvery { param.profileMethod.invoke() } returns Result.failure(Exception())
 
 				param.action.invoke()
 
@@ -145,9 +145,7 @@ class ProfileViewModelTest : ShouldSpec(
 		}
 
 		should("set userName WHEN updateName called") {
-			coEvery { authRepository.updateUserName("Marian K") } returns mockk {
-				every { name } returns "Marian K"
-			}
+			coEvery { authRepository.updateUserName("Marian K") } returns Result.success(Profile(uri, "Marian K", "test@gmail.com"))
 
 			tested.updateName("Marian K")
 
@@ -164,6 +162,6 @@ class ProfileViewModelTest : ShouldSpec(
 )
 
 data class ManageProfileParam(
-	val profileMethod: suspend () -> Profile,
+	val profileMethod: suspend () -> Result<Profile>,
 	val action: () -> Unit,
 )
