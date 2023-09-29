@@ -1,23 +1,17 @@
 package com.intive.picover.profile.view
 
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,15 +28,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
@@ -56,7 +47,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel) {
 	val profile by viewModel.profile
-	val context = LocalContext.current
 	val keyboardController = LocalSoftwareKeyboardController.current
 	var isDeleteAccountDialogVisible by remember { mutableStateOf(false) }
 	val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -69,10 +59,8 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 	var userName by remember { mutableStateOf("") }
 	Column(
 		modifier = Modifier
-			.verticalScroll(rememberScrollState())
 			.fillMaxSize()
 			.padding(top = 10.dp),
-		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		when (profile) {
 			is Loaded -> {
@@ -122,33 +110,12 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 				Divider(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
 			}
 		}
-		Button(
-			onClick = {
-				context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-			},
-		) {
-			Text(stringResource(R.string.OpenLicenses))
-		}
-		Button(onClick = viewModel::onLogoutClick) {
-			Text(stringResource(R.string.LogoutButton))
-		}
-		Button(
-			onClick = {
+		ProfileActions(
+			onLogoutClick = viewModel::onLogoutClick,
+			onDeleteAccountCLick = {
 				isDeleteAccountDialogVisible = true
 			},
-		) {
-			Text(stringResource(R.string.DeleteAccountButton))
-		}
-		Button(
-			onClick = {
-				CustomTabsIntent
-					.Builder()
-					.build()
-					.launchUrl(context, Urls.github)
-			},
-		) {
-			Text(stringResource(R.string.GithubButton))
-		}
+		)
 	}
 	if (isDeleteAccountDialogVisible) {
 		DeleteAccountDialog(
@@ -235,8 +202,4 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			}
 		}
 	}
-}
-
-private object Urls {
-	val github = Uri.parse("https://github.com/intive/Picover")
 }
