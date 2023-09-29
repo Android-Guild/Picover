@@ -8,3 +8,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/gradle-cache
       - run: ./gradlew ktlintCheck
+      - run: echo ${{ github.ref }}

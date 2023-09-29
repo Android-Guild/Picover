@@ -5,4 +5,5 @@ runs:
   steps:
     - uses: gradle/gradle-build-action@v2
       with:
+        cache-write-only: ${{ github.ref == 'refs/heads/dev' }}
         cache-read-only: ${{ github.ref != 'refs/heads/dev' }}
