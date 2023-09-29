@@ -45,7 +45,7 @@ test-slf4j = "org.slf4j:slf4j-simple:2.0.9"
 lint-test = ["test-lint", "test-lint-tests"]
 
 [plugins]
-android-application = { id = "com.android.application", version.strictly = "8.1.1" }
+android-application = { id = "com.android.application", version.strictly = "8.1.2" }
 google-services = { id = "com.google.gms.google-services", version.strictly = "4.4.0" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
