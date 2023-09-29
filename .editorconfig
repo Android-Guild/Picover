@@ -3,10 +3,6 @@ end_of_line = lf
 insert_final_newline = true
 
 [*.{kt,kts}]
-ktlint_code_style = android_studio
-ktlint_standard_function-naming = disabled
-ktlint_standard_function-signature = disabled
-ktlint_function_signature_body_expression_wrapping = always
 indent_style = tab
 indent_size = 4
 max_line_length = 140
@@ -24,6 +20,7 @@ ij_kotlin_import_nested_classes = false
 ij_kotlin_imports_layout = *, ^
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
-
-[**/test/**.kt]
-max_line_length = 180
+ktlint_code_style = android_studio
+ktlint_standard_function-naming = disabled
+ktlint_standard_function-signature = disabled
+ktlint_function_signature_body_expression_wrapping = always
