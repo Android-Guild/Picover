@@ -20,7 +20,6 @@
     <string name="EditUserData">Edit User Data</string>
     <string name="ProfileError">Something went wrong \nClick to refresh</string>
     <string name="Loading">Loading…</string>
-    <string name="UserNameError">Username should not be longer than 20 signs or empty or blank</string>
     <string name="TextShouldNotBeEmpty">"Text should not be empty"</string>
     <string name="TextShouldNotBeBlank">"Text should not be blank"</string>
     <string name="TextIsTooLong">"Text is too long"</string>
