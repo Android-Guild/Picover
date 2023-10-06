@@ -1,5 +1,5 @@
 [versions]
-dagger = "2.48"
+dagger = "2.48.1"
 kotlin = "1.9.10"
 ktlint = "1.0.0"
 lint = "31.1.2"
