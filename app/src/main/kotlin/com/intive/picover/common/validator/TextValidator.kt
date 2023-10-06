@@ -11,6 +11,13 @@ class TextValidator private constructor(
 	private val maxLength: Int?,
 ) {
 
+	companion object {
+		fun build(block: Builder.() -> Unit) =
+			Builder()
+				.apply(block)
+				.let { TextValidator(it.allowEmpty, it.allowBlank, it.maxLength) }
+	}
+
 	fun validate(text: String) =
 		when {
 			!allowEmpty && text.isEmpty() -> EmptyText
@@ -23,13 +30,5 @@ class TextValidator private constructor(
 		var allowEmpty = true
 		var allowBlank = true
 		var maxLength: Int? = null
-
-		fun build() =
-			TextValidator(allowEmpty, allowBlank, maxLength)
 	}
 }
-
-inline fun textValidator(block: TextValidator.Builder.() -> Unit) =
-	TextValidator.Builder()
-		.apply(block)
-		.build()
