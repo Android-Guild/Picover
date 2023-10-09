@@ -21,7 +21,7 @@ android {
 		applicationId = "com.intive.picover"
 		minSdk = 26
 		targetSdk = 34
-		versionCode = 1
+		versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toInt() ?: 1
 		versionName = "0.1"
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}
