@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -27,7 +27,6 @@ import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.navigation.model.NavigationItem
 import com.intive.picover.main.navigation.model.NavigationType
 import com.intive.picover.main.navigation.view.PicoverNavigationBar
-import com.intive.picover.main.navigation.view.PicoverNavigationDrawer
 import com.intive.picover.main.navigation.view.PicoverNavigationRail
 import com.intive.picover.main.theme.PicoverTheme
 import com.intive.picover.main.viewmodel.MainViewModel
@@ -75,52 +74,52 @@ class MainActivity : ComponentActivity() {
 			NavigationItem.Camera,
 			NavigationItem.Profile,
 		)
-		Scaffold {
-			AnimatedVisibility(
-				visible = navigationType == NavigationType.NAVIGATION_BAR,
-			) {
-				val coroutineScope = rememberCoroutineScope()
-				val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-				PicoverNavigationBar(
-					items = navigationItems,
-					navController = navController,
-					onItemClick = {
-						if (it is NavigationItem.Profile) {
-							coroutineScope.launch { drawerState.open() }
-						} else {
-							coroutineScope.launch { drawerState.close() }
-							navController.navigateWithSingleTop(it)
-						}
-					},
-					modifier = Modifier.padding(it),
-					drawerState = drawerState,
-				)
-			}
-			AnimatedVisibility(
-				visible = navigationType == NavigationType.NAVIGATION_RAIL,
-			) {
-				PicoverNavigationRail(
-					items = navigationItems,
-					navController = navController,
-					onItemClick = {
-						navController.navigateWithSingleTop(it)
-					},
-					modifier = Modifier.padding(it),
-				)
-			}
-			AnimatedVisibility(
-				visible = navigationType == NavigationType.NAVIGATION_DRAWER,
-			) {
-				PicoverNavigationDrawer(
-					items = navigationItems,
-					navController = navController,
-					onItemClick = {
-						navController.navigateWithSingleTop(it)
-					},
-					modifier = Modifier.padding(it),
-				)
+		Scaffold { paddingValues ->
+			when (navigationType) {
+				NavigationType.BOTTOM_BAR -> ContentWithNavigationBar(navigationItems, navController, paddingValues)
+				NavigationType.RAIL -> ContentWithNavigationRail(navigationItems, navController, paddingValues)
 			}
 		}
+	}
+
+	@Composable
+	private fun ContentWithNavigationBar(
+		navigationItems: List<NavigationItem>,
+		navController: NavHostController,
+		paddingValues: PaddingValues,
+	) {
+		val coroutineScope = rememberCoroutineScope()
+		val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+		PicoverNavigationBar(
+			items = navigationItems,
+			navController = navController,
+			onItemClick = {
+				if (it is NavigationItem.Profile) {
+					coroutineScope.launch { drawerState.open() }
+				} else {
+					coroutineScope.launch { drawerState.close() }
+					navController.navigateWithSingleTop(it)
+				}
+			},
+			modifier = Modifier.padding(paddingValues),
+			drawerState = drawerState,
+		)
+	}
+
+	@Composable
+	private fun ContentWithNavigationRail(
+		navigationItems: List<NavigationItem>,
+		navController: NavHostController,
+		paddingValues: PaddingValues,
+	) {
+		PicoverNavigationRail(
+			items = navigationItems,
+			navController = navController,
+			onItemClick = {
+				navController.navigateWithSingleTop(it)
+			},
+			modifier = Modifier.padding(paddingValues),
+		)
 	}
 
 	private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
