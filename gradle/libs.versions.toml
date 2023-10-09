@@ -23,6 +23,7 @@ dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compi
 dagger-hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 firebase-bom = "com.google.firebase:firebase-bom:32.3.1"
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
@@ -53,3 +54,4 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.strictly = "1.9.10-1.0.13
 kotlin-noarg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlin" }
 oss-licenses = { id = "com.google.android.gms.oss-licenses-plugin" }
 firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.strictly = "4.0.0" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.strictly = "2.9.9" }

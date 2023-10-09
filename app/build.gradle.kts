@@ -10,6 +10,7 @@ plugins {
 	id(libs.plugins.oss.licenses.get().pluginId)
 	id(libs.plugins.kotlin.noarg.get().pluginId)
 	id(libs.plugins.firebase.appdistribution.get().pluginId)
+	id(libs.plugins.firebase.crashlytics.get().pluginId)
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
 	implementation(libs.android.google.oss.licenses)
 	implementation(platform(libs.firebase.bom))
 	implementation(libs.firebase.analytics)
+	implementation(libs.firebase.crashlytics)
 	implementation(libs.firebase.storage)
 	implementation(libs.dagger.hilt.android)
 	ksp(libs.dagger.hilt.compiler)
