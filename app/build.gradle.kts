@@ -1,5 +1,3 @@
-@file:Suppress("DSL_SCOPE_VIOLATION")
-
 import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
 import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
 
@@ -23,8 +21,7 @@ android {
 		minSdk = 26
 		targetSdk = 34
 		versionCode = 1
-		versionName = "1.0"
-
+		versionName = "0.1"
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}
 
@@ -39,12 +36,15 @@ android {
 			proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 		}
 	}
+
 	buildFeatures {
 		compose = true
 	}
+
 	composeOptions {
 		kotlinCompilerExtensionVersion = "1.5.3"
 	}
+
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
