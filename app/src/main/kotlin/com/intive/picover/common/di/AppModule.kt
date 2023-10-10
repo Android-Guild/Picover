@@ -2,7 +2,7 @@ package com.intive.picover.common.di
 
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.qualifier.Validator
 import dagger.Module
@@ -16,7 +16,7 @@ object AppModule {
 
 	@Provides
 	fun provideFirebaseStorageReference() =
-		FirebaseStorage.getInstance().reference
+		Firebase.storage.reference
 
 	@Provides
 	fun provideFirebaseDatabase() =

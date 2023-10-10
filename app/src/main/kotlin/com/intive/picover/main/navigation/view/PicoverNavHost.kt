@@ -8,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.intive.picover.articles.view.ArticlesScreen
 import com.intive.picover.camera.view.CameraScreen
 import com.intive.picover.images.view.ImagesScreen
 import com.intive.picover.parties.view.PartiesScreen
@@ -45,6 +46,9 @@ fun PicoverNavHost(
 			arguments = listOf(navArgument("partyId") { type = NavType.IntType }),
 		) {
 			PartyDetailsScreen(hiltViewModel())
+		}
+		composable("articles") {
+			ArticlesScreen(hiltViewModel())
 		}
 	}
 }
