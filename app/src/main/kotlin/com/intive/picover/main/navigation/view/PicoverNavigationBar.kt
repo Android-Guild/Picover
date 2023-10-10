@@ -1,60 +1,36 @@
 package com.intive.picover.main.navigation.view
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.intive.picover.main.navigation.model.NavigationItem
-import com.intive.picover.profile.view.ProfileScreen
-import kotlinx.coroutines.launch
 
 @Composable
 fun PicoverNavigationBar(
 	items: List<NavigationItem>,
 	navController: NavHostController,
-	drawerState: DrawerState,
 	modifier: Modifier = Modifier,
 	onItemClick: (NavigationItem) -> Unit,
 ) {
 	val backStackEntry = navController.currentBackStackEntryAsState()
 	Column {
-		ModalNavigationDrawer(
-			drawerContent = { ModalDrawerSheet { ProfileScreen(hiltViewModel()) } },
-			drawerState = drawerState,
-			gesturesEnabled = drawerState.isOpen,
+		PicoverNavHost(
 			modifier = modifier.weight(1f),
-		) {
-			val coroutineScope = rememberCoroutineScope()
-			BackHandler(enabled = drawerState.isOpen) {
-				coroutineScope.launch { drawerState.close() }
-			}
-			PicoverNavHost(
-				modifier = modifier.weight(1f),
-				navController = navController,
-				startDestination = NavigationItem.Parties.route,
-			)
-		}
+			navController = navController,
+			startDestination = NavigationItem.Parties.route,
+		)
 		NavigationBar(modifier = Modifier.fillMaxWidth()) {
 			items.forEach { item ->
 				NavigationBarItem(
-					selected = if (item is NavigationItem.Profile) {
-						drawerState.isOpen
-					} else {
-						item.route == backStackEntry.value?.destination?.route && drawerState.isClosed
-					},
+					selected = item.route == backStackEntry.value?.destination?.route,
 					onClick = { onItemClick(item) },
 					icon = {
 						Icon(

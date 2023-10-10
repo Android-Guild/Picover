@@ -8,16 +8,13 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +32,6 @@ import com.intive.picover.main.viewmodel.state.MainState.UserAuthorized
 import com.intive.picover.main.viewmodel.state.MainState.UserUnauthorized
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
@@ -88,21 +84,13 @@ class MainActivity : ComponentActivity() {
 		navController: NavHostController,
 		paddingValues: PaddingValues,
 	) {
-		val coroutineScope = rememberCoroutineScope()
-		val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 		PicoverNavigationBar(
 			items = navigationItems,
 			navController = navController,
 			onItemClick = {
-				if (it is NavigationItem.Profile) {
-					coroutineScope.launch { drawerState.open() }
-				} else {
-					coroutineScope.launch { drawerState.close() }
-					navController.navigateWithSingleTop(it)
-				}
+				navController.navigateWithSingleTop(it)
 			},
 			modifier = Modifier.padding(paddingValues),
-			drawerState = drawerState,
 		)
 	}
 
