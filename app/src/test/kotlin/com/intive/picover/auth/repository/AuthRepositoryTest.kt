@@ -15,6 +15,7 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.equals.shouldBeEqual
+import io.kotest.matchers.result.shouldBeSuccess
 import io.kotest.matchers.shouldBe
 import io.mockk.Called
 import io.mockk.coEvery
@@ -127,13 +128,17 @@ class AuthRepositoryTest : ShouldSpec(
 		should("return Profile WHEN updateUserAvatar called") {
 			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
-			tested.updateUserAvatar(userPhoto) shouldBe profile
+			val result = tested.updateUserAvatar(userPhoto)
+
+			result shouldBeSuccess profile
 		}
 
 		should("return Profile WHEN userProfile called") {
 			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
-			tested.userProfile() shouldBe profile
+			val result = tested.userProfile()
+
+			result shouldBeSuccess profile
 		}
 
 		should("set display name WHEN updateUserName called") {
@@ -150,7 +155,7 @@ class AuthRepositoryTest : ShouldSpec(
 
 			val result = tested.updateUserName("Marian Kowalski")
 
-			result shouldBeEqual Profile(userPhoto, "Marian Kowalski", userEmail)
+			result shouldBeSuccess Profile(userPhoto, "Marian Kowalski", userEmail)
 			slot.captured.displayName!! shouldBeEqual "Marian Kowalski"
 		}
 

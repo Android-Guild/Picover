@@ -59,10 +59,7 @@ fun UserInfo(
 				Canvas(
 					modifier = Modifier.size(120.dp),
 					onDraw = {
-						drawRect(
-							brush = brush,
-							size = size,
-						)
+						drawCircle(brush = brush)
 					},
 				)
 			}
