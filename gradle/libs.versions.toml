@@ -47,7 +47,7 @@ lint-test = ["test-lint", "test-lint-tests"]
 
 [plugins]
 android-application = { id = "com.android.application", version.strictly = "8.1.2" }
-google-services = { id = "com.google.gms.google-services", version.strictly = "4.4.0" }
+google-services = { id = "com.google.gms.google-services", version.strictly = "4.3.15" } #https://github.com/firebase/firebase-android-sdk/issues/5349
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.strictly = "1.9.10-1.0.13" }
