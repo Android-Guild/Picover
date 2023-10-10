@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.intive.picover.auth.intent.SignInIntent
@@ -88,7 +89,7 @@ class MainActivity : ComponentActivity() {
 							coroutineScope.launch { drawerState.open() }
 						} else {
 							coroutineScope.launch { drawerState.close() }
-							navController.navigate(it.route)
+							navController.navigateWithSingleTop(it)
 						}
 					},
 					modifier = Modifier.padding(it),
@@ -102,7 +103,7 @@ class MainActivity : ComponentActivity() {
 					items = navigationItems,
 					navController = navController,
 					onItemClick = {
-						navController.navigate(it.route)
+						navController.navigateWithSingleTop(it)
 					},
 					modifier = Modifier.padding(it),
 				)
@@ -114,11 +115,17 @@ class MainActivity : ComponentActivity() {
 					items = navigationItems,
 					navController = navController,
 					onItemClick = {
-						navController.navigate(it.route)
+						navController.navigateWithSingleTop(it)
 					},
 					modifier = Modifier.padding(it),
 				)
 			}
+		}
+	}
+
+	private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
+		navigate(item.route) {
+			launchSingleTop = true
 		}
 	}
 }
