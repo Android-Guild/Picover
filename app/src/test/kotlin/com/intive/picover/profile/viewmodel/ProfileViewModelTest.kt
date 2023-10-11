@@ -64,7 +64,7 @@ class ProfileViewModelTest : ShouldSpec(
 			coEvery { authRepository.userProfile() } returns Result.success(profile)
 
 			assertSoftly {
-				tested.profile.value shouldBe Loaded(profile)
+				tested.state.value shouldBe Loaded(profile)
 				tested.userName.value shouldBe "Marian"
 			}
 		}
@@ -94,7 +94,7 @@ class ProfileViewModelTest : ShouldSpec(
 
 				param.action.invoke()
 
-				tested.profile.value shouldBe Loaded(profile)
+				tested.state.value shouldBe Loaded(profile)
 			}
 		}
 
@@ -117,7 +117,7 @@ class ProfileViewModelTest : ShouldSpec(
 
 				param.action.invoke()
 
-				tested.profile.value shouldBe Loading
+				tested.state.value shouldBe Loading
 			}
 		}
 
@@ -140,7 +140,7 @@ class ProfileViewModelTest : ShouldSpec(
 
 				param.action.invoke()
 
-				tested.profile.value shouldBe Error
+				tested.state.value shouldBe Error
 			}
 		}
 
