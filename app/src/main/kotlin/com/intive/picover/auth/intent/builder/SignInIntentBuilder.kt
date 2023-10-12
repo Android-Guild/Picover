@@ -9,13 +9,12 @@ object SignInIntentBuilder {
 	fun build(authUi: AuthUI) =
 		SignInIntent(
 			authUi.createSignInIntentBuilder()
-				.setTheme(Configuration.themeId)
+				.setTheme(R.style.Theme_Picover)
 				.setAvailableProviders(Configuration.providers)
 				.build(),
 		)
 
 	private object Configuration {
-		val themeId = R.style.Theme_Picover
 		val providers = listOf(
 			AuthUI.IdpConfig.EmailBuilder().build(),
 		)
