@@ -68,8 +68,9 @@ fun AddPartyContent(
 				.padding(bottom = 16.dp),
 			value = title,
 			onValueChange = onTitleChange,
-			isError = !titleValidationStatus.isValid(),
-			errorText = stringResource(id = titleValidationStatus.errorMessageId),
+			errorText = titleValidationStatus.errorMessageId?.let {
+				stringResource(id = it)
+			},
 			imeAction = ImeAction.Next,
 			keyboardActions = KeyboardActions(
 				onNext = {
@@ -85,8 +86,9 @@ fun AddPartyContent(
 			value = description,
 			onValueChange = onDescriptionChange,
 			maxLines = 3,
-			isError = !descriptionValidationStatus.isValid(),
-			errorText = stringResource(id = descriptionValidationStatus.errorMessageId),
+			errorText = descriptionValidationStatus.errorMessageId?.let {
+				stringResource(id = it)
+			},
 		)
 		Button(
 			modifier = Modifier,

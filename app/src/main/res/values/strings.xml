@@ -23,7 +23,6 @@
     <string name="TextShouldNotBeEmpty">"Text should not be empty"</string>
     <string name="TextShouldNotBeBlank">"Text should not be blank"</string>
     <string name="TextIsTooLong">"Text is too long"</string>
-    <string name="TextIsValid">""</string>
     <string name="PartyScreenFabAddIcon">Click to create new party</string>
     <string name="PartyScreenAddPartyBottomSheetTitle">Party Title</string>
     <string name="PartyScreenAddPartyBottomSheetDescription">Description</string>

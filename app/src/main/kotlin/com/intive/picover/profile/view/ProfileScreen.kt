@@ -10,7 +10,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -37,7 +36,6 @@ fun ProfileScreen(
 		uri?.let(viewModel::updateAvatar)
 	}
 	var showProfileUpdateBottomSheet by rememberSaveable { mutableStateOf(false) }
-	var userName by remember { mutableStateOf("") }
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -49,6 +47,9 @@ fun ProfileScreen(
 					profile = state.data(),
 					onEditPhotoClick = takePictureOrPickImageLauncher::launch,
 					onEditNameClick = {
+						// TODO: Without this initialization, the username text field will have a previously typed value.
+						//  Thus ProfileUpdateBottomSheet should have an independent state from ProfileScreen to get rid of hacks like this.
+						viewModel.initUsername()
 						showProfileUpdateBottomSheet = true
 					},
 				)
@@ -87,14 +88,12 @@ fun ProfileScreen(
 		)
 	}
 	if (showProfileUpdateBottomSheet) {
-		userName = viewModel.userName.value
 		ProfileUpdateBottomSheet(
-			userName = userName,
-			updateUserName = { userName = it },
-			updateName = { viewModel.updateName(it) },
+			username = viewModel.username.value,
+			onSaveClick = { viewModel.saveUsername() },
 			updateVisibility = { showProfileUpdateBottomSheet = it },
-			validateName = { viewModel.validatingName(it).isValid() },
-			getInvalidNameErrorMessageId = { viewModel.validatingName(it).errorMessageId },
+			onUsernameChange = { viewModel.onUsernameChange(it) },
+			usernameErrorMessageId = viewModel.usernameErrorMessageId,
 		)
 	}
 }
