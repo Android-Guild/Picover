@@ -1,10 +1,7 @@
 package com.intive.picover.parties.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.intive.picover.common.viewmodel.state.ViewModelState
+import com.intive.picover.common.viewmodel.StatefulViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
@@ -19,9 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PartiesViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
-) : ViewModel() {
-
-	val state: MutableState<ViewModelState<List<Party>>> = mutableStateOf(Loading)
+) : StatefulViewModel<List<Party>>() {
 
 	init {
 		loadParties()
@@ -29,12 +24,12 @@ class PartiesViewModel @Inject constructor(
 
 	fun loadParties() {
 		viewModelScope.launch {
-			state.value = Loading
+			_state.value = Loading
 			partiesRepository.parties()
 				.catch {
-					state.value = Error
+					_state.value = Error
 				}.collect {
-					state.value = Loaded(it.toUI())
+					_state.value = Loaded(it.toUI())
 				}
 		}
 	}

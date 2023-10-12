@@ -28,7 +28,7 @@ import com.intive.picover.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel) {
-	val profile by viewModel.profile
+	val state by viewModel.state
 	var isDeleteAccountDialogVisible by remember { mutableStateOf(false) }
 	val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
 		if (uri != null) {
@@ -42,10 +42,10 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 			.fillMaxSize()
 			.padding(top = 10.dp),
 	) {
-		when (profile) {
+		when (state) {
 			is Loaded -> {
 				UserInfo(
-					profile = profile.data(),
+					profile = state.data(),
 					onEditPhotoClick = {
 						photoLauncher.launch(
 							PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),

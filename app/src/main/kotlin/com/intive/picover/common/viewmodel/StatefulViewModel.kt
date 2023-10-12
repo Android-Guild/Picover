@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState
 
-abstract class StatefulViewModel<T> constructor(initialState: ViewModelState<T> = ViewModelState.Loading) : ViewModel() {
+abstract class StatefulViewModel<T>(initialState: ViewModelState<T> = ViewModelState.Loading) : ViewModel() {
 
 	@Suppress("ktlint:standard:property-naming")
 	protected val _state = mutableStateOf(initialState)
