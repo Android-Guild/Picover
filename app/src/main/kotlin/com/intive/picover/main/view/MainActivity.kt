@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -112,6 +113,7 @@ class MainActivity : ComponentActivity() {
 
 	private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
 		navigate(item.route) {
+			popUpTo(graph.findStartDestination().id)
 			launchSingleTop = true
 		}
 	}
