@@ -101,6 +101,7 @@ fun ProfileUpdateBottomSheet(
 				},
 				isError = !validateName(userName),
 				label = { Text(text = stringResource(id = R.string.UserName)) },
+				maxLines = 1,
 			)
 		}
 	}
