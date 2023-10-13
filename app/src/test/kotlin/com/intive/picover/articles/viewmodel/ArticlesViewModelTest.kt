@@ -2,36 +2,34 @@ package com.intive.picover.articles.viewmodel
 
 import com.intive.picover.articles.repository.ArticlesRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
-import com.intive.picover.common.viewmodel.state.ViewModelState
-import io.kotest.core.spec.IsolationMode
+import com.intive.picover.common.testState
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.Awaits
 import io.mockk.coEvery
+import io.mockk.just
 import io.mockk.mockk
 
 class ArticlesViewModelTest : ShouldSpec(
 	{
 		extension(CoroutineTestExtension())
-		isolationMode = IsolationMode.InstancePerTest
 
-		val articlesRepository: ArticlesRepository = mockk()
-		val tested by lazy { ArticlesViewModel(articlesRepository) }
-
-		should("return set initial state to loading") {
-			tested.state.value shouldBe ViewModelState.Loading
-		}
-
-		should("return set state to error WHEN repository returns failure") {
-			coEvery { articlesRepository.names() } returns Result.failure(Throwable())
-
-			tested.state.value shouldBe ViewModelState.Error
-		}
-
-		should("return set state to loaded WHEN repository returns success") {
+		should("set state WHEN repository called") {
 			val articleNames: List<String> = mockk()
-			coEvery { articlesRepository.names() } returns Result.success(articleNames)
+			testState<Result<List<String>>, List<String>>(
+				loadingAnswer = { just(Awaits) },
+				errorAnswer = { returns(Result.failure(Throwable())) },
+				loadedAnswer = { returns(Result.success(articleNames)) },
+				loadedData = articleNames,
+			) { (state, answers) ->
+				val articlesRepository: ArticlesRepository = mockk {
+					coEvery { names() }.answers()
+				}
 
-			tested.state.value shouldBe ViewModelState.Loaded(articleNames)
+				val tested = ArticlesViewModel(articlesRepository)
+
+				tested.state.value shouldBe state
+			}
 		}
 	},
 )

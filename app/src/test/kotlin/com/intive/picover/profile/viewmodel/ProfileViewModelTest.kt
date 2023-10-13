@@ -5,12 +5,11 @@ import com.intive.picover.R
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
+import com.intive.picover.common.testState
 import com.intive.picover.common.toast.ToastPublisher
 import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.ValidationStatus
-import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
-import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.profile.model.Profile
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.IsolationMode
@@ -75,72 +74,33 @@ class ProfileViewModelTest : ShouldSpec(
 			coVerify { authRepository.updateUserAvatar(uri) }
 		}
 
-		should("load profile WHEN specific method called") {
-			listOf(
-				ManageProfileParam(
-					{ authRepository.updateUserAvatar(uri) },
-					{ tested.updateAvatar(uri) },
-				),
-				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
-				),
-				ManageProfileParam(
-					{ authRepository.userProfile() },
-					{ tested.fetchProfile() },
-				),
-			).forAll { param ->
-				coEvery { param.profileMethod.invoke() } returns Result.success(profile)
+		should("set state WHEN specific method called") {
+			testState<Result<Profile>, Profile>(
+				loadingAnswer = { just(Awaits) },
+				errorAnswer = { returns(Result.failure(Exception())) },
+				loadedAnswer = { returns(Result.success(profile)) },
+				loadedData = profile,
+			) { (state, answers) ->
+				listOf(
+					ManageProfileParam(
+						{ authRepository.updateUserAvatar(uri) },
+						{ tested.updateAvatar(uri) },
+					),
+					ManageProfileParam(
+						{ authRepository.updateUserName("Marian K") },
+						{ tested.updateName("Marian K") },
+					),
+					ManageProfileParam(
+						{ authRepository.userProfile() },
+						{ tested.fetchProfile() },
+					),
+				).forAll { (profileMethod, action) ->
+					coEvery { profileMethod() }.answers()
 
-				param.action.invoke()
+					action()
 
-				tested.state.value shouldBe Loaded(profile)
-			}
-		}
-
-		should("be loading WHEN specific method called and start executing") {
-			listOf(
-				ManageProfileParam(
-					{ authRepository.updateUserAvatar(uri) },
-					{ tested.updateAvatar(uri) },
-				),
-				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
-				),
-				ManageProfileParam(
-					{ authRepository.userProfile() },
-					{ tested.fetchProfile() },
-				),
-			).forAll { param ->
-				coEvery { param.profileMethod.invoke() } just Awaits
-
-				param.action.invoke()
-
-				tested.state.value shouldBe Loading
-			}
-		}
-
-		should("be error WHEN specific method throws exception") {
-			listOf(
-				ManageProfileParam(
-					{ authRepository.updateUserAvatar(uri) },
-					{ tested.updateAvatar(uri) },
-				),
-				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
-				),
-				ManageProfileParam(
-					{ authRepository.userProfile() },
-					{ tested.fetchProfile() },
-				),
-			).forAll { param ->
-				coEvery { param.profileMethod.invoke() } returns Result.failure(Exception())
-
-				param.action.invoke()
-
-				tested.state.value shouldBe Error
+					tested.state.value shouldBe state
+				}
 			}
 		}
 
