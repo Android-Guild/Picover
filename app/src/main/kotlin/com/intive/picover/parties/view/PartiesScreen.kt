@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +30,11 @@ import androidx.navigation.NavHostController
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.theme.Typography
+import com.intive.picover.parties.model.PartiesEvent
+import com.intive.picover.parties.model.PartiesSideEffect.NavigateToPartyDetails
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.viewmodel.PartiesViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PartiesScreen(
@@ -38,16 +42,21 @@ fun PartiesScreen(
 	navController: NavHostController,
 ) {
 	val state by viewModel.state
+	LaunchedEffect(true) {
+		viewModel.sideEffects.collectLatest { effect ->
+			when (effect) {
+				is NavigateToPartyDetails -> navController.navigate("partyDetails/${effect.partyId}")
+			}
+		}
+	}
 	when {
 		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 		state.isLoaded() -> LoadedContent(
 			parties = state.data(),
-			onPartyClick = {
-				navController.navigate("partyDetails/$it")
-			},
+			onPartyClick = viewModel::onPartyClick,
 		)
 
-		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.loadParties() })
+		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
 	}
 }
 
