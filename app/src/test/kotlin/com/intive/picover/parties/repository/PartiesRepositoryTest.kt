@@ -34,13 +34,14 @@ class PartiesRepositoryTest : ShouldSpec(
 
 		should("fetch parties") {
 			val party: PartyRemote = mockk()
-			val partySnapshot: DataSnapshot = mockk {
-				every { getValue(PartyRemote::class.java) } returns party
-			}
-			val partiesSnapshot: Iterable<DataSnapshot> = listOf(partySnapshot)
 			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns partiesSnapshot
+				every { children } returns listOf(
+					mockk {
+						every { getValue(PartyRemote::class.java) } returns party
+					},
+				)
 			}
+
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			tested.parties().first() shouldBe listOf(party)
@@ -50,13 +51,14 @@ class PartiesRepositoryTest : ShouldSpec(
 			val party: PartyRemote = mockk {
 				every { id } returns 1
 			}
-			val partySnapshot: DataSnapshot = mockk {
-				every { getValue(PartyRemote::class.java) } returns party
-			}
-			val partiesSnapshot: Iterable<DataSnapshot> = listOf(partySnapshot)
 			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns partiesSnapshot
+				every { children } returns listOf(
+					mockk {
+						every { getValue(PartyRemote::class.java) } returns party
+					},
+				)
 			}
+
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			tested.partyById(1).first() shouldBe party
@@ -66,13 +68,14 @@ class PartiesRepositoryTest : ShouldSpec(
 			val party: PartyRemote = mockk {
 				every { id } returns 2
 			}
-			val partySnapshot: DataSnapshot = mockk {
-				every { getValue(PartyRemote::class.java) } returns party
-			}
-			val partiesSnapshot: Iterable<DataSnapshot> = listOf(partySnapshot)
 			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns partiesSnapshot
+				every { children } returns listOf(
+					mockk {
+						every { getValue(PartyRemote::class.java) } returns party
+					},
+				)
 			}
+
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			shouldThrowExactly<NoSuchElementException> {

@@ -1,7 +1,6 @@
 package com.intive.picover.images.repository
 
 import android.net.Uri
-import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.ShouldSpec
@@ -20,7 +19,6 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		val testDispatcher = StandardTestDispatcher()
 		val imageReference: StorageReference = mockk()
-		val storageItem: StorageReference = mockk()
 		val storageReference: StorageReference = mockk {
 			every { child("image") } returns imageReference
 		}
@@ -36,15 +34,16 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		should("downloaded URIs WHEN storage reference and uri is fetched successfully") {
 			runTest(testDispatcher) {
-				val listResult: ListResult = mockk {
-					every { items } returns listOf(storageItem)
-				}
 				val uriResult: Uri = mockk()
+
 				every { imageReference.listAll() } returns mockk {
-					coEvery { await() } returns listResult
-				}
-				every { storageItem.downloadUrl } returns mockk {
-					coEvery { await() } returns uriResult
+					coEvery { await().items } returns listOf(
+						mockk {
+							every { downloadUrl } returns mockk {
+								coEvery { await() } returns uriResult
+							}
+						},
+					)
 				}
 
 				tested.fetchImages() shouldBe listOf(uriResult)
@@ -65,14 +64,14 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		should("throw exception WHEN fetching the uri fails") {
 			runTest(testDispatcher) {
-				val listResult: ListResult = mockk {
-					every { items } returns listOf(storageItem)
-				}
 				every { imageReference.listAll() } returns mockk {
-					coEvery { await() } returns listResult
-				}
-				every { storageItem.downloadUrl } returns mockk {
-					coEvery { await() } throws Exception()
+					coEvery { await().items } returns listOf(
+						mockk {
+							every { downloadUrl } returns mockk {
+								coEvery { await() } throws Exception()
+							}
+						},
+					)
 				}
 
 				shouldThrowExactly<Exception> {
