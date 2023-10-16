@@ -8,26 +8,24 @@ import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.intive.picover.R
 
-sealed class NavigationItem(
+enum class NavigationItem(
 	@StringRes val labelResId: Int,
 	val icon: ImageVector,
 	val route: String,
 ) {
-	data object Parties : NavigationItem(
+	PARTIES(
 		labelResId = R.string.Parties,
 		icon = Icons.Filled.Celebration,
 		route = "parties",
-	)
-
-	data object Camera : NavigationItem(
+	),
+	CAMERA(
 		labelResId = R.string.Camera,
 		icon = Icons.Filled.PhotoCamera,
 		route = "camera",
-	)
-
-	data object Profile : NavigationItem(
+	),
+	PROFILE(
 		labelResId = R.string.Profile,
 		icon = Icons.Filled.Person,
 		route = "profile",
-	)
+	),
 }
