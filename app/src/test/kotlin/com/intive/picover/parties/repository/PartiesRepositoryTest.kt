@@ -41,7 +41,6 @@ class PartiesRepositoryTest : ShouldSpec(
 					},
 				)
 			}
-
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			tested.parties().first() shouldBe listOf(party)
@@ -58,7 +57,6 @@ class PartiesRepositoryTest : ShouldSpec(
 					},
 				)
 			}
-
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			tested.partyById(1).first() shouldBe party
@@ -75,7 +73,6 @@ class PartiesRepositoryTest : ShouldSpec(
 					},
 				)
 			}
-
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			shouldThrowExactly<NoSuchElementException> {
