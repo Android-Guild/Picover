@@ -15,7 +15,6 @@
         <activity
             android:name=".main.view.MainActivity"
             android:exported="true"
-            android:label="@string/AppName"
             android:theme="@style/Theme.Picover">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +32,7 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

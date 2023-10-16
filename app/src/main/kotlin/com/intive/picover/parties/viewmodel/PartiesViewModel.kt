@@ -1,8 +1,11 @@
 package com.intive.picover.parties.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.intive.picover.common.validator.TextValidator
+import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.MVIViewModel
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitter
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitterImplementation
@@ -23,10 +26,16 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PartiesViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
+	@Validator.ShortText private val shortTextValidator: TextValidator,
+	@Validator.LongText private val longTextValidator: TextValidator,
 ) : MVIViewModel<PartiesEvent>(),
 	SideEffectEmitter<PartiesSideEffect> by SideEffectEmitterImplementation() {
 
 	val state: MutableState<ViewModelState<List<Party>>> = mutableStateOf(Loading)
+	private val _title = mutableStateOf("")
+	val title: String by _title
+	private val _description = mutableStateOf("")
+	val description: String by _description
 
 	init {
 		loadParties()
@@ -55,4 +64,16 @@ class PartiesViewModel @Inject constructor(
 				}
 		}
 	}
+
+	fun updateTitle(newTitle: String) {
+		_title.value = newTitle
+	}
+
+	fun updateDescription(newDescription: String) {
+		_description.value = newDescription
+	}
+
+	fun validateShortText(text: String) = shortTextValidator.validate(text)
+
+	fun validateLongText(text: String) = longTextValidator.validate(text)
 }
