@@ -26,7 +26,7 @@ fun PicoverOutlinedTextField(
 	keyboardActions: KeyboardActions = KeyboardActions(),
 	isError: Boolean = false,
 	errorText: String? = null,
-	isEnable: Boolean = true,
+	isEnabled: Boolean = true,
 	trailingIcon: @Composable (() -> Unit)? = null,
 ) {
 	OutlinedTextField(
@@ -50,7 +50,7 @@ fun PicoverOutlinedTextField(
 				)
 			}
 		},
-		enabled = isEnable,
+		enabled = isEnabled,
 		trailingIcon = trailingIcon,
 	)
 }
