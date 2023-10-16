@@ -64,57 +64,43 @@ class MainActivity : ComponentActivity() {
 	@Composable
 	private fun Content() {
 		val windowSize = calculateWindowSizeClass(this)
-		val navigationType = NavigationType.fromWindowSize(windowSize)
 		val navController = rememberNavController()
-		val navigationItems = listOf(
-			NavigationItem.Parties,
-			NavigationItem.Camera,
-			NavigationItem.Profile,
-		)
 		Scaffold { paddingValues ->
-			when (navigationType) {
-				NavigationType.BOTTOM_BAR -> ContentWithNavigationBar(navigationItems, navController, paddingValues)
-				NavigationType.RAIL -> ContentWithNavigationRail(navigationItems, navController, paddingValues)
+			when (NavigationType.fromWindowSize(windowSize)) {
+				NavigationType.BOTTOM_BAR -> ContentWithNavigationBar(navController, paddingValues)
+				NavigationType.RAIL -> ContentWithNavigationRail(navController, paddingValues)
 			}
 		}
 	}
 
 	@Composable
 	private fun ContentWithNavigationBar(
-		navigationItems: List<NavigationItem>,
 		navController: NavHostController,
 		paddingValues: PaddingValues,
 	) {
 		PicoverNavigationBar(
-			items = navigationItems,
 			navController = navController,
-			onItemClick = {
-				navController.navigateWithSingleTop(it)
-			},
 			modifier = Modifier.padding(paddingValues),
+			onItemClick = navController::navigateWithSingleTop,
 		)
 	}
 
 	@Composable
 	private fun ContentWithNavigationRail(
-		navigationItems: List<NavigationItem>,
 		navController: NavHostController,
 		paddingValues: PaddingValues,
 	) {
 		PicoverNavigationRail(
-			items = navigationItems,
 			navController = navController,
-			onItemClick = {
-				navController.navigateWithSingleTop(it)
-			},
 			modifier = Modifier.padding(paddingValues),
+			onItemClick = navController::navigateWithSingleTop,
 		)
 	}
+}
 
-	private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
-		navigate(item.route) {
-			popUpTo(graph.findStartDestination().id)
-			launchSingleTop = true
-		}
+private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
+	navigate(item.route) {
+		popUpTo(graph.findStartDestination().id)
+		launchSingleTop = true
 	}
 }

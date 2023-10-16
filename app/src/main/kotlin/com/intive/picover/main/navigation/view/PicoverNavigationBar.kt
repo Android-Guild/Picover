@@ -15,7 +15,6 @@ import com.intive.picover.main.navigation.model.NavigationItem
 
 @Composable
 fun PicoverNavigationBar(
-	items: List<NavigationItem>,
 	navController: NavHostController,
 	modifier: Modifier = Modifier,
 	onItemClick: (NavigationItem) -> Unit,
@@ -25,10 +24,9 @@ fun PicoverNavigationBar(
 		PicoverNavHost(
 			modifier = modifier.weight(1f),
 			navController = navController,
-			startDestination = NavigationItem.Parties.route,
 		)
 		NavigationBar(modifier = Modifier.fillMaxWidth()) {
-			items.forEach { item ->
+			NavigationItem.entries.forEach { item ->
 				NavigationBarItem(
 					selected = item.route == backStackEntry.value?.destination?.route,
 					onClick = { onItemClick(item) },

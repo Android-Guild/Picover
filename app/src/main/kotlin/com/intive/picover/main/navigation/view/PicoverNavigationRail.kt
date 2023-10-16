@@ -14,7 +14,6 @@ import com.intive.picover.main.navigation.model.NavigationItem
 
 @Composable
 fun PicoverNavigationRail(
-	items: List<NavigationItem>,
 	navController: NavHostController,
 	modifier: Modifier = Modifier,
 	onItemClick: (NavigationItem) -> Unit,
@@ -23,7 +22,7 @@ fun PicoverNavigationRail(
 
 	Row {
 		NavigationRail {
-			items.forEach { item ->
+			NavigationItem.entries.forEach { item ->
 				NavigationRailItem(
 					selected = item.route == backStackEntry.value?.destination?.route,
 					onClick = { onItemClick(item) },
@@ -42,7 +41,6 @@ fun PicoverNavigationRail(
 		PicoverNavHost(
 			modifier = modifier,
 			navController = navController,
-			startDestination = NavigationItem.Parties.route,
 		)
 	}
 }
