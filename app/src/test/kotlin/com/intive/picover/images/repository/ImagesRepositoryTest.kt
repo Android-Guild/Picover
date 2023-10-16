@@ -35,16 +35,11 @@ class ImagesRepositoryTest : ShouldSpec(
 		should("downloaded URIs WHEN storage reference and uri is fetched successfully") {
 			runTest(testDispatcher) {
 				val uriResult: Uri = mockk()
-
-				every { imageReference.listAll() } returns mockk {
-					coEvery { await().items } returns listOf(
-						mockk {
-							every { downloadUrl } returns mockk {
-								coEvery { await() } returns uriResult
-							}
-						},
-					)
-				}
+				coEvery { imageReference.listAll().await().items } returns listOf(
+					mockk {
+						coEvery { downloadUrl.await() } returns uriResult
+					},
+				)
 
 				tested.fetchImages() shouldBe listOf(uriResult)
 			}
@@ -52,9 +47,7 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		should("throw exception WHEN fetching storage reference fails") {
 			runTest(testDispatcher) {
-				every { imageReference.listAll() } returns mockk {
-					coEvery { await() } throws Exception()
-				}
+				coEvery { imageReference.listAll().await() } throws Exception()
 
 				shouldThrowExactly<Exception> {
 					tested.fetchImages()
@@ -64,15 +57,11 @@ class ImagesRepositoryTest : ShouldSpec(
 
 		should("throw exception WHEN fetching the uri fails") {
 			runTest(testDispatcher) {
-				every { imageReference.listAll() } returns mockk {
-					coEvery { await().items } returns listOf(
-						mockk {
-							every { downloadUrl } returns mockk {
-								coEvery { await() } throws Exception()
-							}
-						},
-					)
-				}
+				coEvery { imageReference.listAll().await().items } returns listOf(
+					mockk {
+						coEvery { downloadUrl.await() } throws Exception()
+					},
+				)
 
 				shouldThrowExactly<Exception> {
 					tested.fetchImages()
