@@ -36,7 +36,7 @@ import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.main.theme.Typography
 import com.intive.picover.parties.model.PartiesEvent
-import com.intive.picover.parties.model.PartiesSideEffect
+import com.intive.picover.parties.model.PartiesSideEffect.NavigateToPartyDetails
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.viewmodel.PartiesViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -54,7 +54,7 @@ fun PartiesScreen(
 	LaunchedEffect(true) {
 		viewModel.sideEffects.collectLatest { effect ->
 			when (effect) {
-				is PartiesSideEffect.NavigateToPartyDetails -> navController.navigate("partyDetails/${effect.partyId}")
+				is NavigateToPartyDetails -> navController.navigate("partyDetails/${effect.partyId}")
 			}
 		}
 	}

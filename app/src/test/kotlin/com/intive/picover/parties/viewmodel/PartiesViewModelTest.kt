@@ -87,7 +87,6 @@ class PartiesViewModelTest : ShouldSpec(
 
 		should("call validator WHEN validateShortInputText runs") {
 			val text = "MyUserName1234"
-
 			every { textValidator.validate(text) } returns ValidationStatus.ValidText
 
 			tested.validateShortText(text)
@@ -97,7 +96,6 @@ class PartiesViewModelTest : ShouldSpec(
 
 		should("call validator WHEN validateLongText runs") {
 			val text = "MyUserName1234"
-
 			every { textValidator.validate(text) } returns ValidationStatus.ValidText
 
 			tested.validateLongText(text)
