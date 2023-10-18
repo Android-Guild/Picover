@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
@@ -27,9 +28,11 @@ import com.intive.picover.profile.model.Profile
 import com.intive.picover.profile.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel) {
+fun ProfileScreen(
+	viewModel: ProfileViewModel,
+	navController: NavHostController,
+) {
 	val state by viewModel.state
-	var isDeleteAccountDialogVisible by remember { mutableStateOf(false) }
 	val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
 		if (uri != null) {
 			viewModel.updateAvatar(uri)
@@ -89,17 +92,8 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
 		ProfileActions(
 			onLogoutClick = viewModel::onLogoutClick,
 			onDeleteAccountCLick = {
-				isDeleteAccountDialogVisible = true
+				navController.navigate("profile/deleteAccount")
 			},
-		)
-	}
-	if (isDeleteAccountDialogVisible) {
-		DeleteAccountDialog(
-			onConfirm = {
-				viewModel.onDeleteAccountClick()
-				isDeleteAccountDialogVisible = false
-			},
-			onDismiss = { isDeleteAccountDialogVisible = false },
 		)
 	}
 	if (showProfileUpdateBottomSheet) {
