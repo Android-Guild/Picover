@@ -6,26 +6,17 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.intive.picover.auth.intent.SignInIntent
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.navigation.model.NavigationItem
-import com.intive.picover.main.navigation.model.NavigationType
-import com.intive.picover.main.navigation.view.PicoverNavHost
-import com.intive.picover.main.navigation.view.PicoverNavigationBar
-import com.intive.picover.main.navigation.view.PicoverNavigationRail
+import com.intive.picover.main.navigation.view.MainScreen
 import com.intive.picover.main.theme.PicoverTheme
 import com.intive.picover.main.viewmodel.MainViewModel
 import com.intive.picover.main.viewmodel.state.MainState.Loading
@@ -34,7 +25,6 @@ import com.intive.picover.main.viewmodel.state.MainState.UserUnauthorized
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -54,44 +44,10 @@ class MainActivity : ComponentActivity() {
 				val state by viewModel.state.collectAsState(initial = Loading)
 				when (state) {
 					Loading -> PicoverLoader(Modifier.fillMaxSize())
-					UserAuthorized -> Content()
+					UserAuthorized -> MainScreen(this)
 					UserUnauthorized -> LaunchedEffect(Unit) { signInLauncher.launch(signInIntent.intent) }
 				}
 			}
-		}
-	}
-
-	@Composable
-	private fun Content() {
-		val windowSize = calculateWindowSizeClass(this)
-		val navController = rememberNavController()
-		when (NavigationType.fromWindowSize(windowSize)) {
-			NavigationType.BOTTOM_BAR -> BottomBarNavigation(navController)
-			NavigationType.RAIL -> RailNavigation(navController)
-		}
-	}
-
-	@Composable
-	private fun BottomBarNavigation(navController: NavHostController) {
-		Scaffold(
-			bottomBar = {
-				PicoverNavigationBar(navController)
-			},
-		) { innerPadding ->
-			PicoverNavHost(
-				modifier = Modifier.padding(innerPadding),
-				navController = navController,
-			)
-		}
-	}
-
-	@Composable
-	private fun RailNavigation(navController: NavHostController) {
-		Scaffold { innerPadding ->
-			PicoverNavigationRail(
-				navController = navController,
-				modifier = Modifier.padding(innerPadding),
-			)
 		}
 	}
 }
