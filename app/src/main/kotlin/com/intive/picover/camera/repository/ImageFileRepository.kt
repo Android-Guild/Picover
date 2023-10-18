@@ -12,7 +12,7 @@ class ImageFileRepository @Inject constructor(
 	@ApplicationContext private val context: Context,
 ) {
 
-	fun createTempFileAndGetUri(): Uri? =
+	fun createTempFileAndGetUri(): Uri =
 		File.createTempFile("IMG_", ".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)).let {
 			FileProvider.getUriForFile(context, "${context.packageName}.provider", it)
 		}
