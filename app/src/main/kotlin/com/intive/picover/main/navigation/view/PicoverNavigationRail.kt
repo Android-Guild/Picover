@@ -11,12 +11,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.intive.picover.main.navigation.model.NavigationItem
+import com.intive.picover.main.view.navigateWithSingleTop
 
 @Composable
 fun PicoverNavigationRail(
 	navController: NavHostController,
-	modifier: Modifier = Modifier,
-	onItemClick: (NavigationItem) -> Unit,
+	modifier: Modifier,
 ) {
 	val backStackEntry = navController.currentBackStackEntryAsState()
 
@@ -25,7 +25,7 @@ fun PicoverNavigationRail(
 			NavigationItem.entries.forEach { item ->
 				NavigationRailItem(
 					selected = item.route == backStackEntry.value?.destination?.route,
-					onClick = { onItemClick(item) },
+					onClick = { navController.navigateWithSingleTop(item) },
 					icon = {
 						Icon(
 							imageVector = item.icon,

@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -24,6 +23,7 @@ import com.intive.picover.auth.intent.SignInIntent
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.main.navigation.model.NavigationItem
 import com.intive.picover.main.navigation.model.NavigationType
+import com.intive.picover.main.navigation.view.PicoverNavHost
 import com.intive.picover.main.navigation.view.PicoverNavigationBar
 import com.intive.picover.main.navigation.view.PicoverNavigationRail
 import com.intive.picover.main.theme.PicoverTheme
@@ -65,40 +65,38 @@ class MainActivity : ComponentActivity() {
 	private fun Content() {
 		val windowSize = calculateWindowSizeClass(this)
 		val navController = rememberNavController()
-		Scaffold { paddingValues ->
-			when (NavigationType.fromWindowSize(windowSize)) {
-				NavigationType.BOTTOM_BAR -> ContentWithNavigationBar(navController, paddingValues)
-				NavigationType.RAIL -> ContentWithNavigationRail(navController, paddingValues)
-			}
+		when (NavigationType.fromWindowSize(windowSize)) {
+			NavigationType.BOTTOM_BAR -> BottomBarNavigation(navController)
+			NavigationType.RAIL -> RailNavigation(navController)
 		}
 	}
 
 	@Composable
-	private fun ContentWithNavigationBar(
-		navController: NavHostController,
-		paddingValues: PaddingValues,
-	) {
-		PicoverNavigationBar(
-			navController = navController,
-			modifier = Modifier.padding(paddingValues),
-			onItemClick = navController::navigateWithSingleTop,
-		)
+	private fun BottomBarNavigation(navController: NavHostController) {
+		Scaffold(
+			bottomBar = {
+				PicoverNavigationBar(navController)
+			},
+		) { innerPadding ->
+			PicoverNavHost(
+				modifier = Modifier.padding(innerPadding),
+				navController = navController,
+			)
+		}
 	}
 
 	@Composable
-	private fun ContentWithNavigationRail(
-		navController: NavHostController,
-		paddingValues: PaddingValues,
-	) {
-		PicoverNavigationRail(
-			navController = navController,
-			modifier = Modifier.padding(paddingValues),
-			onItemClick = navController::navigateWithSingleTop,
-		)
+	private fun RailNavigation(navController: NavHostController) {
+		Scaffold { innerPadding ->
+			PicoverNavigationRail(
+				navController = navController,
+				modifier = Modifier.padding(innerPadding),
+			)
+		}
 	}
 }
 
-private fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
+fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
 	navigate(item.route) {
 		popUpTo(graph.findStartDestination().id)
 		launchSingleTop = true
