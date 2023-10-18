@@ -10,12 +10,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.intive.picover.auth.intent.SignInIntent
 import com.intive.picover.common.loader.PicoverLoader
-import com.intive.picover.main.navigation.model.NavigationItem
 import com.intive.picover.main.navigation.view.MainScreen
 import com.intive.picover.main.theme.PicoverTheme
 import com.intive.picover.main.viewmodel.MainViewModel
@@ -49,12 +46,5 @@ class MainActivity : ComponentActivity() {
 				}
 			}
 		}
-	}
-}
-
-fun NavHostController.navigateWithSingleTop(item: NavigationItem) {
-	navigate(item.route) {
-		popUpTo(graph.findStartDestination().id)
-		launchSingleTop = true
 	}
 }
