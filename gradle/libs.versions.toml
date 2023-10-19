@@ -38,6 +38,7 @@ ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-co
 material = "com.google.android.material:material:1.10.0"
 workmanager = "androidx.work:work-runtime-ktx:2.8.1"
 
+test-guava = "com.google.guava:guava:31.0.1-android"
 test-mockk = "io.mockk:mockk:1.13.8"
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
