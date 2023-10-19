@@ -1,8 +1,6 @@
 package com.intive.picover.profile.view
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
+import com.intive.picover.common.result.TakePictureOrPickImageContract
+import com.intive.picover.common.result.launch
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
@@ -33,10 +33,8 @@ fun ProfileScreen(
 	navController: NavHostController,
 ) {
 	val state by viewModel.state
-	val photoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-		if (uri != null) {
-			viewModel.updateAvatar(uri)
-		}
+	val takePictureOrPickImageLauncher = rememberLauncherForActivityResult(TakePictureOrPickImageContract()) { uri ->
+		uri?.let(viewModel::updateAvatar)
 	}
 	var showProfileUpdateBottomSheet by rememberSaveable { mutableStateOf(false) }
 	var userName by remember { mutableStateOf("") }
@@ -49,11 +47,7 @@ fun ProfileScreen(
 			is Loaded -> {
 				UserInfo(
 					profile = state.data(),
-					onEditPhotoClick = {
-						photoLauncher.launch(
-							PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-						)
-					},
+					onEditPhotoClick = takePictureOrPickImageLauncher::launch,
 					onEditNameClick = {
 						showProfileUpdateBottomSheet = true
 					},
@@ -68,11 +62,7 @@ fun ProfileScreen(
 				)
 				UserInfo(
 					profile = loadingProfile,
-					onEditPhotoClick = {
-						photoLauncher.launch(
-							PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-						)
-					},
+					onEditPhotoClick = takePictureOrPickImageLauncher::launch,
 					onEditNameClick = {
 						showProfileUpdateBottomSheet = true
 					},

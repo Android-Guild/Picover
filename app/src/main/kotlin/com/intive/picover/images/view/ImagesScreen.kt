@@ -23,28 +23,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
-import com.intive.picover.common.result.TakePictureContract
+import com.intive.picover.common.result.TakePictureOrPickImageContract
+import com.intive.picover.common.result.launch
 import com.intive.picover.images.viewmodel.ImagesViewModel
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun ImagesScreen(viewModel: ImagesViewModel) {
-	val takePictureResultLauncher = rememberLauncherForActivityResult(TakePictureContract()) {
-		it?.let(viewModel::scheduleUploadPhoto)
-	}
 	val state by viewModel.state
 	when {
-		state.isLoaded() -> PhotosGrid(state.data()) {
-			takePictureResultLauncher.launch(Unit)
-		}
-
+		state.isLoaded() -> PhotosGrid(state.data(), viewModel::scheduleUploadPhoto)
 		state.isError() -> PicoverGenericError()
 		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
 	}
 }
 
 @Composable
-private fun PhotosGrid(uris: List<Uri>, onTakeImage: () -> Unit) {
+private fun PhotosGrid(uris: List<Uri>, onImageTaken: (Uri) -> Unit) {
+	val takePictureOrPickImageLauncher = rememberLauncherForActivityResult(TakePictureOrPickImageContract()) {
+		it?.let(onImageTaken)
+	}
 	Box(Modifier.fillMaxSize()) {
 		LazyVerticalStaggeredGrid(
 			columns = StaggeredGridCells.Adaptive(minSize = 120.dp),
@@ -59,7 +57,7 @@ private fun PhotosGrid(uris: List<Uri>, onTakeImage: () -> Unit) {
 			modifier = Modifier
 				.padding(12.dp)
 				.align(Alignment.BottomEnd),
-			onClick = onTakeImage,
+			onClick = takePictureOrPickImageLauncher::launch,
 			containerColor = MaterialTheme.colorScheme.secondaryContainer,
 			contentColor = MaterialTheme.colorScheme.secondary,
 		) {
