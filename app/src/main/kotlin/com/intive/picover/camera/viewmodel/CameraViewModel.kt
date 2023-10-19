@@ -1,6 +1,5 @@
 package com.intive.picover.camera.viewmodel
 
-import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.intive.picover.camera.repository.ImageFileRepository
@@ -12,12 +11,8 @@ class CameraViewModel @Inject constructor(
 	imageFileRepository: ImageFileRepository,
 ) : ViewModel() {
 
-	val takenImageUri = mutableStateOf<Uri?>(null)
+	val takenImageUri = imageFileRepository.createTempFileAndGetUri()
 	val isImageTaken = mutableStateOf(false)
-
-	init {
-		takenImageUri.value = imageFileRepository.createTempFileAndGetUri()
-	}
 
 	fun onImageTaken(wasSaved: Boolean) {
 		if (wasSaved) {

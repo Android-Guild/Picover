@@ -18,7 +18,7 @@ class CameraViewModelTest : ShouldSpec(
 			every { imageFileRepository.createTempFileAndGetUri() } returns imageUri
 
 			assertSoftly(tested) {
-				takenImageUri.value shouldBe imageUri
+				takenImageUri shouldBe imageUri
 				isImageTaken.value shouldBe false
 			}
 		}

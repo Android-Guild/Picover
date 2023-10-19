@@ -16,13 +16,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.intive.picover.R
 import com.intive.picover.camera.viewmodel.CameraViewModel
-import com.intive.picover.common.loader.PicoverLoader
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun CameraScreen(viewModel: CameraViewModel) {
-	val takenImageUri by viewModel.takenImageUri
+	val takenImageUri = viewModel.takenImageUri
 	val isImageTaken by viewModel.isImageTaken
 	val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
 		viewModel.onImageTaken(wasSaved = it)
@@ -32,7 +31,7 @@ fun CameraScreen(viewModel: CameraViewModel) {
 
 @Composable
 private fun Screen(
-	imageUri: Uri?,
+	imageUri: Uri,
 	isImageTaken: Boolean,
 	takeImage: () -> Unit,
 ) {
@@ -40,24 +39,11 @@ private fun Screen(
 		modifier = Modifier.fillMaxSize(),
 		contentAlignment = Alignment.Center,
 	) {
-		if (imageUri == null) {
-			PicoverLoader()
+		if (isImageTaken) {
+			TakenImage(imageUri)
 		} else {
-			Content(imageUri, isImageTaken, takeImage)
+			TakePictureButton(onClick = takeImage)
 		}
-	}
-}
-
-@Composable
-private fun Content(
-	imageUri: Uri,
-	isImageTaken: Boolean,
-	takeImage: () -> Unit,
-) {
-	if (isImageTaken) {
-		TakenImage(imageUri)
-	} else {
-		TakePictureButton(onClick = takeImage)
 	}
 }
 
@@ -78,12 +64,6 @@ private fun TakePictureButton(onClick: () -> Unit) {
 	Button(onClick = onClick) {
 		Text(stringResource(R.string.TakePictureButton))
 	}
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun LoadingPreview() {
-	Screen(imageUri = null, isImageTaken = false) {}
 }
 
 @Preview(showBackground = true)
