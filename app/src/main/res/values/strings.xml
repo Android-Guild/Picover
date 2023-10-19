@@ -26,4 +26,7 @@
     <string name="PartyScreenFabAddIcon">Click to create new party</string>
     <string name="PartyScreenAddPartyBottomSheetTitle">Party Title</string>
     <string name="PartyScreenAddPartyBottomSheetDescription">Description</string>
+    <string name="UploadChannelName">Uploading</string>
+    <string name="UploadOngoingNotificationTitle">Uploading…</string>
+    <string name="UploadFinishedNotificationTitle">New photo has been uploaded!</string>
 </resources>
