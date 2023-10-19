@@ -39,6 +39,7 @@ test-mockk = "io.mockk:mockk:1.13.8"
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
 test-kotest-runner = "io.kotest:kotest-runner-junit5:5.7.2"
+test-kotest-datatest = "io.kotest:kotest-framework-datatest:5.7.2"
 test-ktlint = { group = "com.pinterest.ktlint", name = "ktlint-test", version.ref = "ktlint" }
 test-slf4j = "org.slf4j:slf4j-simple:2.0.9"
 
