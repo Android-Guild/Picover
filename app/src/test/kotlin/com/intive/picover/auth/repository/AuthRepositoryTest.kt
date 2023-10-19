@@ -9,7 +9,6 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
-import com.intive.picover.common.converters.BitmapConverter
 import com.intive.picover.profile.model.Profile
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
@@ -25,7 +24,6 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
-import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 
@@ -38,7 +36,6 @@ class AuthRepositoryTest : ShouldSpec(
 		val userEmail = "test@gmail.com"
 		val userUid = "test1234567890"
 		val profile = Profile(userPhoto, userName, userEmail)
-		val byteArrayOutputStream: ByteArrayOutputStream = mockk(relaxed = true)
 		val firebaseAuth: FirebaseAuth = mockk(relaxUnitFun = true) {
 			every { currentUser } returns mockk {
 				every { photoUrl } returns userPhoto
@@ -47,11 +44,8 @@ class AuthRepositoryTest : ShouldSpec(
 				every { uid } returns userUid
 			}
 		}
-		val bitmapConverter: BitmapConverter = mockk {
-			every { convertBitmapToBytes(userPhoto) } returns byteArrayOutputStream
-		}
 		val referenceToUserAvatar: StorageReference = mockk {
-			every { putBytes(byteArrayOutputStream.toByteArray()) } returns mockk {
+			every { putFile(userPhoto) } returns mockk {
 				every { isComplete } returns true
 				every { exception } returns null
 				every { isCanceled } returns false
@@ -61,7 +55,7 @@ class AuthRepositoryTest : ShouldSpec(
 		val storageReference: StorageReference = mockk(relaxed = true) {
 			every { child("user/$userUid") } returns referenceToUserAvatar
 		}
-		val tested = AuthRepository(storageReference, firebaseAuth, bitmapConverter)
+		val tested = AuthRepository(storageReference, firebaseAuth)
 
 		beforeSpec {
 			mockkStatic("kotlinx.coroutines.tasks.TasksKt")
@@ -117,12 +111,12 @@ class AuthRepositoryTest : ShouldSpec(
 			result shouldBe AccountDeletionResult.ReAuthenticationNeeded
 		}
 
-		should("call StorageReference.putBytes WHEN updateUserAvatar called") {
+		should("call StorageReference.putFile WHEN updateUserAvatar called") {
 			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
 			tested.updateUserAvatar(userPhoto)
 
-			verify { referenceToUserAvatar.putBytes(byteArrayOutputStream.toByteArray()) }
+			verify { referenceToUserAvatar.putFile(userPhoto) }
 		}
 
 		should("return Profile WHEN updateUserAvatar called") {
