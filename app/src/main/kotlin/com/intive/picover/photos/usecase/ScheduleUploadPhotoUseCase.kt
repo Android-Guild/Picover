@@ -5,6 +5,7 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.await
 import androidx.work.workDataOf
 import com.intive.picover.photos.work.UploadPhotoWork
 import com.intive.picover.photos.work.UploadPhotoWorker
@@ -14,7 +15,7 @@ class ScheduleUploadPhotoUseCase @Inject constructor(
 	private val workManager: WorkManager,
 ) {
 
-	operator fun invoke(uri: Uri) {
+	suspend operator fun invoke(uri: Uri) {
 		val constraints = Constraints.Builder()
 			.setRequiredNetworkType(NetworkType.CONNECTED)
 			.build()
@@ -22,7 +23,7 @@ class ScheduleUploadPhotoUseCase @Inject constructor(
 			.setInputData(workDataOf(UploadPhotoWork.URI_KEY to uri.toString()))
 			.setConstraints(constraints)
 			.build()
-		// TODO wait for completion
 		workManager.enqueue(uploadWork)
+			.await()
 	}
 }
