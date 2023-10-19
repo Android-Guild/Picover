@@ -12,6 +12,7 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,16 +22,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.intive.picover.main.navigation.model.NavigationItem
-import com.intive.picover.main.navigation.model.NavigationType
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun MainScreen(activity: Activity) {
 	val windowSize = calculateWindowSizeClass(activity)
 	val navController = rememberNavController()
-	when (NavigationType.fromWindowSize(windowSize)) {
-		NavigationType.BOTTOM_BAR -> BottomBarNavigation(navController)
-		NavigationType.RAIL -> RailNavigation(navController)
+	if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
+		BottomBarNavigation(navController)
+	} else {
+		RailNavigation(navController)
 	}
 }
 
