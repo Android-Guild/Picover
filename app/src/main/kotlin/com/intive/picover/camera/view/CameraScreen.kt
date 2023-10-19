@@ -2,44 +2,44 @@ package com.intive.picover.camera.view
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.intive.picover.R
-import com.intive.picover.camera.viewmodel.CameraViewModel
+import com.intive.picover.common.result.TakePictureContract
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun CameraScreen(viewModel: CameraViewModel) {
-	val takenImageUri = viewModel.takenImageUri
-	val isImageTaken by viewModel.isImageTaken
-	val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
-		viewModel.onImageTaken(wasSaved = it)
+fun CameraScreen() {
+	var pictureUri by remember { mutableStateOf<Uri?>(null) }
+	val cameraLauncher = rememberLauncherForActivityResult(TakePictureContract()) {
+		it?.let { pictureUri = it }
 	}
-	Screen(takenImageUri, isImageTaken) { cameraLauncher.launch(takenImageUri) }
+	Screen(pictureUri) { cameraLauncher.launch(Unit) }
 }
 
 @Composable
 private fun Screen(
-	imageUri: Uri,
-	isImageTaken: Boolean,
+	imageUri: Uri?,
 	takeImage: () -> Unit,
 ) {
 	Box(
 		modifier = Modifier.fillMaxSize(),
 		contentAlignment = Alignment.Center,
 	) {
-		if (isImageTaken) {
+		if (imageUri != null) {
 			TakenImage(imageUri)
 		} else {
 			TakePictureButton(onClick = takeImage)
@@ -69,11 +69,11 @@ private fun TakePictureButton(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun ImageNotTakenPreview() {
-	Screen(imageUri = Uri.parse(""), isImageTaken = false) {}
+	Screen(imageUri = null) {}
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun ImageTakenPreview() {
-	Screen(imageUri = Uri.parse(""), isImageTaken = true) {}
+	Screen(imageUri = Uri.parse("")) {}
 }

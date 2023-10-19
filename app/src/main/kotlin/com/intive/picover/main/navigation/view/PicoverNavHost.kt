@@ -36,7 +36,7 @@ fun PicoverNavHost(
 			)
 		}
 		composable("camera") {
-			CameraScreen(hiltViewModel())
+			CameraScreen()
 		}
 		composable("profile") {
 			ProfileScreen(hiltViewModel(), navController)

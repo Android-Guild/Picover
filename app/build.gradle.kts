@@ -88,6 +88,7 @@ dependencies {
 	debugImplementation(libs.compose.ui.tooling)
 	debugImplementation(libs.leakcanary)
 	testImplementation(libs.test.kotest.runner)
+	testImplementation(libs.test.kotest.datatest)
 	testImplementation(libs.test.mockk)
 	testCompileOnly("org.jetbrains.kotlin:kotlin-reflect:1.8.20") {
 		because("Needed to locally trigger single kotest test - check new versions of kotlin and kotest plugins to fix this workaround")
