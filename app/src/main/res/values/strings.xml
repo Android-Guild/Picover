@@ -1,7 +1,7 @@
 <resources>
     <string name="AppName">Picover</string>
     <string name="Parties">Parties</string>
-    <string name="Camera">Camera</string>
+    <string name="Photos">Photos</string>
     <string name="Profile">Profile</string>
     <string name="OpenLicenses">Licenses</string>
     <string name="TakePictureButton">Take a picture</string>
