@@ -8,7 +8,6 @@ import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.model.AuthEvent
-import com.intive.picover.common.converters.BitmapConverter
 import com.intive.picover.profile.model.Profile
 import javax.inject.Inject
 import kotlinx.coroutines.channels.awaitClose
@@ -18,7 +17,6 @@ import kotlinx.coroutines.tasks.await
 class AuthRepository @Inject constructor(
 	storageReference: StorageReference,
 	private val firebaseAuth: FirebaseAuth,
-	private val bitmapConverter: BitmapConverter,
 ) {
 
 	private val userAvatarReference by lazy { storageReference.child("user/${requireUser().uid}") }
@@ -66,7 +64,7 @@ class AuthRepository @Inject constructor(
 	suspend fun updateUserAvatar(uri: Uri) =
 		try {
 			userAvatarReference
-				.putBytes(bitmapConverter.convertBitmapToBytes(uri).toByteArray())
+				.putFile(uri)
 				.await()
 			userProfile()
 		} catch (exception: Exception) {
