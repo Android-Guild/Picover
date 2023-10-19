@@ -1,5 +1,7 @@
 package com.intive.picover.common.di
 
+import android.content.Context
+import androidx.work.WorkManager
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -8,6 +10,7 @@ import com.intive.picover.common.validator.qualifier.Validator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -39,4 +42,8 @@ object AppModule {
 			allowBlank = false
 			maxLength = 80
 		}
+
+	@Provides
+	fun provideWorkManager(@ApplicationContext context: Context) =
+		WorkManager.getInstance(context)
 }
