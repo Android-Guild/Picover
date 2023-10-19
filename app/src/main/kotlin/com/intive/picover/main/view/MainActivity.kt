@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,6 +28,10 @@ class MainActivity : ComponentActivity() {
 
 	@Inject
 	lateinit var signInIntent: SignInIntent
+
+	@Inject
+	lateinit var snackbarHostState: SnackbarHostState
+
 	private val viewModel: MainViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +46,7 @@ class MainActivity : ComponentActivity() {
 				val state by viewModel.state.collectAsState(initial = Loading)
 				when (state) {
 					Loading -> PicoverLoader(Modifier.fillMaxSize())
-					UserAuthorized -> MainScreen(this)
+					UserAuthorized -> MainScreen(this, snackbarHostState)
 					UserUnauthorized -> LaunchedEffect(Unit) { signInLauncher.launch(signInIntent.intent) }
 				}
 			}

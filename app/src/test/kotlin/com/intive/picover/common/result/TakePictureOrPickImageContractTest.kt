@@ -19,7 +19,7 @@ import io.mockk.slot
 import io.mockk.unmockkAll
 import java.io.File
 
-class TakePictureContractTest : ShouldSpec(
+class TakePictureOrPickImageContractTest : ShouldSpec(
 	{
 		val tested = TakePictureOrPickImageContract()
 

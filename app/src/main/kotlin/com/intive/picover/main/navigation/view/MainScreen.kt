@@ -4,13 +4,14 @@ import android.app.Activity
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -27,22 +28,19 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.intive.picover.main.navigation.model.NavigationItem
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterialNavigationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
-fun MainScreen(activity: Activity) {
+fun MainScreen(activity: Activity, snackbarHostState: SnackbarHostState) {
 	val windowSize = calculateWindowSizeClass(activity)
 	val bottomSheetNavigator = rememberBottomSheetNavigator()
 	val navController = rememberNavController(bottomSheetNavigator)
+	val snackbarHost = @Composable {
+		SnackbarHost(snackbarHostState)
+	}
 	if (windowSize.widthSizeClass == WindowWidthSizeClass.Compact) {
-		BottomBarNavigation(
-			navController = navController,
-			bottomSheetNavigator = bottomSheetNavigator,
-		)
+		BottomBarNavigation(navController, bottomSheetNavigator, snackbarHost)
 	} else {
-		RailNavigation(
-			navController = navController,
-			bottomSheetNavigator = bottomSheetNavigator,
-		)
+		RailNavigation(navController, bottomSheetNavigator, snackbarHost)
 	}
 }
 
@@ -51,8 +49,10 @@ fun MainScreen(activity: Activity) {
 private fun BottomBarNavigation(
 	navController: NavHostController,
 	bottomSheetNavigator: BottomSheetNavigator,
+	snackbarHost: @Composable () -> Unit,
 ) {
 	Scaffold(
+		snackbarHost = snackbarHost,
 		bottomBar = {
 			NavigationBar(modifier = Modifier.fillMaxWidth()) {
 				val backStackEntry = navController.currentBackStackEntryAsState()
@@ -87,8 +87,9 @@ private fun BottomBarNavigation(
 private fun RailNavigation(
 	navController: NavHostController,
 	bottomSheetNavigator: BottomSheetNavigator,
+	snackbarHost: @Composable () -> Unit,
 ) {
-	Scaffold { innerPadding ->
+	Scaffold(snackbarHost = snackbarHost) { innerPadding ->
 		Row {
 			NavigationRail {
 				val backStackEntry = navController.currentBackStackEntryAsState()
