@@ -17,7 +17,7 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import java.io.File
 
-class ImageFileRepositoryTest : ShouldSpec(
+class TakePictureContractTest : ShouldSpec(
 	{
 		val context: Context = mockk()
 		val tested = TakePictureContract()

@@ -18,10 +18,10 @@ enum class NavigationItem(
 		icon = Icons.Filled.Celebration,
 		route = "parties",
 	),
-	CAMERA(
-		labelResId = R.string.Camera,
+	PHOTOS(
+		labelResId = R.string.Photos,
 		icon = Icons.Filled.PhotoCamera,
-		route = "camera",
+		route = "photos",
 	),
 	PROFILE(
 		labelResId = R.string.Profile,

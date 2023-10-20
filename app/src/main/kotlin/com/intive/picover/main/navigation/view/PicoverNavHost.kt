@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import com.intive.picover.articles.view.ArticlesScreen
-import com.intive.picover.camera.view.CameraScreen
 import com.intive.picover.images.view.ImagesScreen
 import com.intive.picover.main.navigation.model.NavigationItem
 import com.intive.picover.parties.view.PartiesScreen
@@ -35,9 +34,6 @@ fun PicoverNavHost(
 				navController = navController,
 			)
 		}
-		composable("camera") {
-			CameraScreen()
-		}
 		composable("profile") {
 			ProfileScreen(hiltViewModel(), navController)
 		}
@@ -51,7 +47,7 @@ fun PicoverNavHost(
 				onDismiss = { navController.popBackStack() },
 			)
 		}
-		composable("images") {
+		composable("photos") {
 			ImagesScreen(hiltViewModel())
 		}
 		composable(
