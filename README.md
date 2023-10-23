@@ -150,3 +150,8 @@ PascalCase
 ### Code
 
 [Kotlin coding conventions](https://kotlinlang.org/docs/coding-conventions.html)
+
+### Agreements
+
+- Text validation: allow users to type more characters than limited by the validator and let them to decide how to fit the signs to match the max size. See
+  discussion: [here](https://github.com/Android-Guild/Picover/issues/297)
