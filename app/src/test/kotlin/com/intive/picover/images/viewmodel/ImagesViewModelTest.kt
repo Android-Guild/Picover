@@ -33,7 +33,7 @@ internal class ImagesViewModelTest : ShouldSpec(
 			).forAll { (state, answers) ->
 				coEvery { imagesRepository.fetchImages() }.answers()
 
-				val tested = ImagesViewModel(imagesRepository, uploadPhotoUseCase)
+				val tested = ImagesViewModel(imagesRepository, mockk())
 
 				tested.state.value shouldBe state
 			}
