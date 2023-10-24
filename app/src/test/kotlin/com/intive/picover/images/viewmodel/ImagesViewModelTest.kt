@@ -7,7 +7,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.images.repository.ImagesRepository
-import com.intive.picover.photos.usecase.UploadPhotoUseCase
+import com.intive.picover.photos.usecase.ScheduleUploadPhotoUseCase
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -22,7 +22,7 @@ internal class ImagesViewModelTest : ShouldSpec(
 		extension(CoroutineTestExtension())
 
 		val imagesRepository: ImagesRepository = mockk(relaxed = true)
-		val uploadPhotoUseCase: UploadPhotoUseCase = mockk(relaxed = true)
+		val scheduleUploadPhotoUseCase: ScheduleUploadPhotoUseCase = mockk(relaxed = true)
 
 		should("set state WHEN fetchImages called") {
 			val uris: List<Uri> = listOf(mockk())
@@ -39,13 +39,13 @@ internal class ImagesViewModelTest : ShouldSpec(
 			}
 		}
 
-		should("delegate upload photo to use case") {
+		should("delegate schedule upload photo to use case") {
 			val photoUri: Uri = mockk()
-			val tested = ImagesViewModel(imagesRepository, uploadPhotoUseCase)
+			val tested = ImagesViewModel(imagesRepository, scheduleUploadPhotoUseCase)
 
-			tested.uploadPhoto(photoUri)
+			tested.scheduleUploadPhoto(photoUri)
 
-			verify { uploadPhotoUseCase(photoUri) }
+			verify { scheduleUploadPhotoUseCase(photoUri) }
 		}
 	},
 )

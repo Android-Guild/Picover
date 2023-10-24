@@ -30,7 +30,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun ImagesScreen(viewModel: ImagesViewModel) {
 	val takePictureResultLauncher = rememberLauncherForActivityResult(TakePictureContract()) {
-		it?.let(viewModel::uploadPhoto)
+		it?.let(viewModel::scheduleUploadPhoto)
 	}
 	val state by viewModel.state
 	when {

@@ -6,7 +6,7 @@ import com.intive.picover.common.viewmodel.StatefulViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.images.repository.ImagesRepository
-import com.intive.picover.photos.usecase.UploadPhotoUseCase
+import com.intive.picover.photos.usecase.ScheduleUploadPhotoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ImagesViewModel @Inject constructor(
 	private val repository: ImagesRepository,
-	private val uploadPhotoUseCase: UploadPhotoUseCase,
+	private val scheduleUploadPhotoUseCase: ScheduleUploadPhotoUseCase,
 ) : StatefulViewModel<List<Uri>>() {
 
 	init {
@@ -23,8 +23,8 @@ class ImagesViewModel @Inject constructor(
 		}
 	}
 
-	fun uploadPhoto(uri: Uri) {
-		uploadPhotoUseCase(uri)
+	fun scheduleUploadPhoto(uri: Uri) {
+		scheduleUploadPhotoUseCase(uri)
 	}
 
 	private suspend fun loadImages() {
