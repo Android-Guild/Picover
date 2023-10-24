@@ -91,9 +91,7 @@ class AuthRepositoryTest : ShouldSpec(
 		}
 
 		should("call delete on currentUser from FirebaseAuth AND return Success WHEN deleteAccount called AND delete succeeded") {
-			every { firebaseAuth.currentUser!!.delete() } returns mockk {
-				coEvery { await() } returns mockk()
-			}
+			coEvery { firebaseAuth.currentUser!!.delete().await() } returns mockk()
 
 			val result = tested.deleteAccount()
 
@@ -102,9 +100,7 @@ class AuthRepositoryTest : ShouldSpec(
 		}
 
 		should("return ReAuthenticationNeeded WHEN deleteAccount called AND delete failed with FirebaseAuthRecentLoginRequiredException") {
-			every { firebaseAuth.currentUser!!.delete() } returns mockk {
-				coEvery { await() } throws mockk<FirebaseAuthRecentLoginRequiredException>()
-			}
+			coEvery { firebaseAuth.currentUser!!.delete().await() } throws mockk<FirebaseAuthRecentLoginRequiredException>()
 
 			val result = tested.deleteAccount()
 
@@ -137,14 +133,13 @@ class AuthRepositoryTest : ShouldSpec(
 
 		should("set display name WHEN updateUserName called") {
 			val slot = slot<UserProfileChangeRequest>()
-			val currentUser: FirebaseUser = mockk {
+			every { firebaseAuth.currentUser!! } returns mockk {
 				every { displayName } returns "Marian Kowalski"
 				every { email } returns userEmail
 				every { uid } returns userUid
+				coEvery { updateProfile(capture(slot)).await() } returns mockk()
 			}
-			every { firebaseAuth.currentUser!! } returns currentUser
 			every { TextUtils.isEmpty(any()) } returns true
-			coEvery { currentUser.updateProfile(capture(slot)).await() } returns mockk()
 			coEvery { referenceToUserAvatar.downloadUrl.await() } returns userPhoto
 
 			val result = tested.updateUserName("Marian Kowalski")
