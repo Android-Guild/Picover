@@ -85,6 +85,14 @@ class PartiesViewModelTest : ShouldSpec(
 			}
 		}
 
+		should("set navigate to add party side effect WHEN onAddPartyClick called") {
+			runBlocking(dispatcher) {
+				tested.onAddPartyClick()
+
+				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToAddParty
+			}
+		}
+
 		should("call validator WHEN validateShortInputText runs") {
 			val text = "MyUserName1234"
 			every { textValidator.validate(text) } returns ValidationStatus.ValidText
