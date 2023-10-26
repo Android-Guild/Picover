@@ -10,7 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -47,10 +47,10 @@ fun PicoverTheme(
 	if (!view.isInEditMode) {
 		SideEffect {
 			with(view.context as Activity) {
-				WindowCompat.setDecorFitsSystemWindows(window, false)
+				window.navigationBarColor = colorScheme.primary.copy(alpha = 0.08f).compositeOver(colorScheme.surface.copy()).toArgb()
+				window.statusBarColor = colorScheme.background.toArgb()
 				WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-				window.statusBarColor = Color.Transparent.toArgb()
-				window.navigationBarColor = Color.Transparent.toArgb()
+				WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
 			}
 		}
 	}
