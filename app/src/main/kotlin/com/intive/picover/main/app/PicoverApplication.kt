@@ -6,6 +6,7 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
+// Test PR
 @HiltAndroidApp
 class PicoverApplication : Application(), Configuration.Provider {
 
