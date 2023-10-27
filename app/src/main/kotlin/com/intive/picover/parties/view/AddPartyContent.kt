@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -31,17 +32,18 @@ fun AddPartyBottomSheet(
 	viewModel: PartiesViewModel,
 	navController: NavHostController,
 ) {
+	val state by viewModel.state
 	ModalBottomSheet(
 		onDismissRequest = { navController.popBackStack() },
 	) {
 		AddPartyContent(
-			title = viewModel.title,
+			title = state.title,
 			onTitleChange = { viewModel.updateTitle(it) },
-			description = viewModel.description,
+			description = state.description,
 			onDescriptionChange = { viewModel.updateDescription(it) },
 			onSaveButtonClick = { navController.popBackStack() },
-			titleValidationStatus = viewModel.validateShortText(viewModel.title),
-			descriptionValidationStatus = viewModel.validateLongText(viewModel.description),
+			titleValidationStatus = viewModel.validateShortText(state.title),
+			descriptionValidationStatus = viewModel.validateLongText(state.description),
 		)
 	}
 }

@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
+import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.main.theme.Typography
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect.NavigateToAddParty
@@ -51,15 +52,15 @@ fun PartiesScreen(
 			}
 		}
 	}
-	when {
-		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
-		state.isLoaded() -> LoadedContent(
-			parties = state.data(),
+	when (state.type) {
+		MVIState.Type.LOADING -> PicoverLoader(modifier = Modifier.fillMaxSize())
+		MVIState.Type.LOADED -> LoadedContent(
+			parties = state.parties,
 			onPartyClick = viewModel::onPartyClick,
 			onFabClick = viewModel::onAddPartyClick,
 		)
 
-		state.isError() -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
+		MVIState.Type.ERROR -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
 	}
 }
 

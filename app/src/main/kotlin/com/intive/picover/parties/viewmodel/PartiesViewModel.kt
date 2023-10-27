@@ -1,21 +1,15 @@
 package com.intive.picover.parties.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.MVIViewModel
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitter
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitterImplementation
-import com.intive.picover.common.viewmodel.state.ViewModelState
-import com.intive.picover.common.viewmodel.state.ViewModelState.Error
-import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
-import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
+import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect
-import com.intive.picover.parties.model.Party
+import com.intive.picover.parties.model.PartiesState
 import com.intive.picover.parties.model.toUI
 import com.intive.picover.parties.repository.PartiesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,14 +22,8 @@ class PartiesViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
 	@Validator.ShortText private val shortTextValidator: TextValidator,
 	@Validator.LongText private val longTextValidator: TextValidator,
-) : MVIViewModel<PartiesEvent>(),
+) : MVIViewModel<PartiesState, PartiesEvent>(initialState = PartiesState()),
 	SideEffectEmitter<PartiesSideEffect> by SideEffectEmitterImplementation() {
-
-	val state: MutableState<ViewModelState<List<Party>>> = mutableStateOf(Loading)
-	private val _title = mutableStateOf("")
-	val title: String by _title
-	private val _description = mutableStateOf("")
-	val description: String by _description
 
 	init {
 		loadParties()
@@ -60,11 +48,15 @@ class PartiesViewModel @Inject constructor(
 	}
 
 	fun updateTitle(newTitle: String) {
-		_title.value = newTitle
+		_state.update {
+			copy(title = newTitle)
+		}
 	}
 
 	fun updateDescription(newDescription: String) {
-		_description.value = newDescription
+		_state.update {
+			copy(description = newDescription)
+		}
 	}
 
 	fun validateShortText(text: String) = shortTextValidator.validate(text)
@@ -73,12 +65,21 @@ class PartiesViewModel @Inject constructor(
 
 	private fun loadParties() {
 		viewModelScope.launch {
-			state.value = Loading
+			_state.update {
+				copy(type = MVIState.Type.LOADING)
+			}
 			partiesRepository.parties()
 				.catch {
-					state.value = Error
+					_state.update {
+						copy(type = MVIState.Type.ERROR)
+					}
 				}.collect {
-					state.value = Loaded(it.toUI())
+					_state.update {
+						copy(
+							parties = it.toUI(),
+							type = MVIState.Type.LOADED,
+						)
+					}
 				}
 		}
 	}
