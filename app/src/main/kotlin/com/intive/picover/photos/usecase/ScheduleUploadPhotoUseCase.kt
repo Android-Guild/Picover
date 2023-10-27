@@ -1,7 +1,13 @@
 package com.intive.picover.photos.usecase
 
 import android.net.Uri
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.intive.picover.photos.work.UploadPhotoWork
+import com.intive.picover.photos.work.UploadPhotoWorker
 import javax.inject.Inject
 
 class ScheduleUploadPhotoUseCase @Inject constructor(
@@ -9,6 +15,14 @@ class ScheduleUploadPhotoUseCase @Inject constructor(
 ) {
 
 	operator fun invoke(uri: Uri) {
-		// TODO schedule upload
+		val constraints = Constraints.Builder()
+			.setRequiredNetworkType(NetworkType.CONNECTED)
+			.build()
+		val uploadWork = OneTimeWorkRequestBuilder<UploadPhotoWorker>()
+			.setInputData(workDataOf(UploadPhotoWork.URI_KEY to uri.toString()))
+			.setConstraints(constraints)
+			.build()
+		// TODO wait for completion
+		workManager.enqueue(uploadWork)
 	}
 }
