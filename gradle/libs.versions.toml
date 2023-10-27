@@ -57,5 +57,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.strictly = "1.9.10-1.0.13" }
 kotlin-noarg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlin" }
 oss-licenses = { id = "com.google.android.gms.oss-licenses-plugin" }
-firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.strictly = "4.0.0" }
+firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.strictly = "4.0.1" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.strictly = "2.9.9" }
