@@ -53,15 +53,9 @@ class PartiesViewModel @Inject constructor(
 		}
 	}
 
-	private fun loadParties() {
+	fun onAddPartyClick() {
 		viewModelScope.launch {
-			state.value = Loading
-			partiesRepository.parties()
-				.catch {
-					state.value = Error
-				}.collect {
-					state.value = Loaded(it.toUI())
-				}
+			setEffect(PartiesSideEffect.NavigateToAddParty)
 		}
 	}
 
@@ -76,4 +70,16 @@ class PartiesViewModel @Inject constructor(
 	fun validateShortText(text: String) = shortTextValidator.validate(text)
 
 	fun validateLongText(text: String) = longTextValidator.validate(text)
+
+	private fun loadParties() {
+		viewModelScope.launch {
+			state.value = Loading
+			partiesRepository.parties()
+				.catch {
+					state.value = Error
+				}.collect {
+					state.value = Loaded(it.toUI())
+				}
+		}
+	}
 }

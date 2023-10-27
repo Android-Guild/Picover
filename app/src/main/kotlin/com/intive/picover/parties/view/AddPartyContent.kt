@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,19 +19,42 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.text.PicoverOutlinedTextField
 import com.intive.picover.common.validator.ValidationStatus
+import com.intive.picover.parties.viewmodel.PartiesViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddPartyBottomSheet(
+	viewModel: PartiesViewModel,
+	navController: NavHostController,
+) {
+	ModalBottomSheet(
+		onDismissRequest = { navController.popBackStack() },
+	) {
+		AddPartyContent(
+			title = viewModel.title,
+			onTitleChange = { viewModel.updateTitle(it) },
+			description = viewModel.description,
+			onDescriptionChange = { viewModel.updateDescription(it) },
+			onSaveButtonClick = { navController.popBackStack() },
+			titleValidationStatus = viewModel.validateShortText(viewModel.title),
+			descriptionValidationStatus = viewModel.validateLongText(viewModel.description),
+		)
+	}
+}
 
 @Composable
-fun PartyBottomSheet(
+fun AddPartyContent(
 	title: String,
 	onTitleChange: (String) -> Unit,
 	titleValidationStatus: ValidationStatus,
 	description: String,
 	onDescriptionChange: (String) -> Unit,
 	descriptionValidationStatus: ValidationStatus,
-	onButtonClick: () -> Unit,
+	onSaveButtonClick: () -> Unit,
 ) {
 	val focusManager = LocalFocusManager.current
 	Column(
@@ -65,7 +90,7 @@ fun PartyBottomSheet(
 		)
 		Button(
 			modifier = Modifier,
-			onClick = onButtonClick,
+			onClick = onSaveButtonClick,
 		) {
 			Text(
 				text = stringResource(R.string.SaveButton),
@@ -77,13 +102,13 @@ fun PartyBottomSheet(
 
 @Preview(showBackground = true)
 @Composable
-private fun BottomSheetValidPreview() {
-	PartyBottomSheet(
+private fun AddPartyContentValidPreview() {
+	AddPartyContent(
 		title = LoremIpsum(4).values.first(),
 		onTitleChange = {},
 		description = LoremIpsum(15).values.first(),
 		onDescriptionChange = {},
-		onButtonClick = {},
+		onSaveButtonClick = {},
 		titleValidationStatus = ValidationStatus.ValidText,
 		descriptionValidationStatus = ValidationStatus.ValidText,
 	)
@@ -91,13 +116,13 @@ private fun BottomSheetValidPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun BottomSheetInvalidPreview() {
-	PartyBottomSheet(
+private fun AddPartyContentInvalidPreview() {
+	AddPartyContent(
 		title = LoremIpsum(6).values.first(),
 		onTitleChange = {},
 		description = LoremIpsum(20).values.first(),
 		onDescriptionChange = {},
-		onButtonClick = {},
+		onSaveButtonClick = {},
 		titleValidationStatus = ValidationStatus.TooLongText,
 		descriptionValidationStatus = ValidationStatus.TooLongText,
 	)

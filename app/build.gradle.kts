@@ -63,6 +63,7 @@ dependencies {
 	lintChecks(project(":lint"))
 	ksp(libs.hilt.android.compiler)
 	ksp(libs.hilt.compiler)
+	implementation(libs.accompanist.navigation.material)
 	implementation(platform(libs.compose.bom))
 	implementation(libs.compose.ui.ui)
 	implementation(libs.compose.ui.preview)
