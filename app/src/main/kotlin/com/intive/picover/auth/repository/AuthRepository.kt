@@ -3,7 +3,7 @@ package com.intive.picover.auth.repository
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
-import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.auth.userProfileChangeRequest
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
 import com.intive.picover.auth.model.AccountDeletionResult

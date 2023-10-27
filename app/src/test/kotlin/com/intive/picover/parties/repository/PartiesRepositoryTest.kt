@@ -3,7 +3,8 @@ package com.intive.picover.parties.repository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.snapshots
+import com.google.firebase.database.Query
+import com.google.firebase.database.snapshots
 import com.intive.picover.parties.model.PartyRemote
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.ShouldSpec
@@ -25,7 +26,7 @@ class PartiesRepositoryTest : ShouldSpec(
 		val tested = PartiesRepository(firebaseDatabase)
 
 		beforeSpec {
-			mockkStatic("com.google.firebase.database.ktx.DatabaseKt")
+			mockkStatic(Query::snapshots)
 		}
 
 		afterSpec {

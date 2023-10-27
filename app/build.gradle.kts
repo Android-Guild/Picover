@@ -84,7 +84,6 @@ dependencies {
 	implementation(libs.hilt.work)
 	implementation(libs.coil)
 	implementation(libs.material)
-	implementation(libs.firebase.auth)
 	implementation(libs.firebaseui.auth)
 	implementation(libs.play.services.auth)
 	implementation(libs.firebase.database)
