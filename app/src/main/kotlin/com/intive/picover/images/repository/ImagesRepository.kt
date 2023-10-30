@@ -4,6 +4,8 @@ import com.google.firebase.storage.StorageReference
 import com.intive.picover.common.coroutines.dispatcher.Dispatcher
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
@@ -18,6 +20,10 @@ class ImagesRepository @Inject constructor(
 	suspend fun fetchImages() =
 		withContext(dispatcher) {
 			imageReference.listAll().await().items
-				.map { it.downloadUrl.await() }
+				.map {
+					async {
+						it.downloadUrl.await()
+					}
+				}.awaitAll()
 		}
 }
