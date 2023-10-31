@@ -2,12 +2,16 @@ name: Lint
 on:
   pull_request:
   push:
-    branches:
-      - dev
+#    branches:
+#      - dev
 jobs:
   lint-debug:
     runs-on: ubuntu-latest
     container: gradle:8.4.0-jdk17
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/gradle-cache
