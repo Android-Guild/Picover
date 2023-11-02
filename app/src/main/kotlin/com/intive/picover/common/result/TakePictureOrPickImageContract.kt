@@ -10,9 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import java.io.File
 
-typealias TakePictureOrPickImageContract = TakePictureContract
-
-class TakePictureContract : ActivityResultContract<Unit, Uri?>() {
+class TakePictureOrPickImageContract : ActivityResultContract<Unit, Uri?>() {
 
 	private val takePictureContract by lazy { ActivityResultContracts.TakePicture() }
 	private val pickVisualMediaContract by lazy { ActivityResultContracts.PickVisualMedia() }
