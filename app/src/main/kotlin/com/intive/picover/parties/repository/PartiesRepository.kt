@@ -5,6 +5,7 @@ import com.google.firebase.database.snapshots
 import com.intive.picover.parties.model.PartyRemote
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 
 class PartiesRepository @Inject constructor(
 	firebaseDatabase: FirebaseDatabase,
@@ -17,6 +18,15 @@ class PartiesRepository @Inject constructor(
 		partiesReference.snapshots.map { snapshot ->
 			snapshot.children.map { childSnapshot ->
 				childSnapshot.getValue(PartyRemote::class.java)!!
+			}
+		}
+
+	suspend fun addParty(partyRemote: PartyRemote) =
+		runCatching {
+			partiesReference.push().let { databaseReference ->
+				databaseReference.key?.let { key ->
+					databaseReference.setValue(partyRemote.copy(id = key)).await()
+				} ?: throw Exception("Firebase returns key as null")
 			}
 		}
 
