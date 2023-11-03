@@ -8,3 +8,9 @@ data class PartyRemote(
 	val title: String,
 	val description: String,
 )
+
+fun Party.toRemote() = PartyRemote(
+	id = id,
+	title = title,
+	description = description,
+)
