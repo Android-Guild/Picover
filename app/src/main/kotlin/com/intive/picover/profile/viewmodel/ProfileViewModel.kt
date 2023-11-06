@@ -1,7 +1,8 @@
 package com.intive.picover.profile.viewmodel
 
 import android.net.Uri
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.intive.picover.R
 import com.intive.picover.auth.model.AccountDeletionResult
@@ -25,15 +26,10 @@ class ProfileViewModel @Inject constructor(
 	@Validator.ShortText private val textValidator: TextValidator,
 ) : StatefulViewModel<Profile>() {
 
-	val userName = derivedStateOf {
-		_state.value.let { state ->
-			if (state is Loaded) {
-				state.data.name
-			} else {
-				""
-			}
-		}
-	}
+	private val _username = mutableStateOf("")
+	val username: State<String> = _username
+	val usernameErrorMessageId
+		get() = textValidator.validate(username.value).errorMessageId
 
 	init {
 		fetchProfile()
@@ -61,9 +57,9 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
-	fun updateName(name: String) {
+	fun saveUsername() {
 		executeAndUpdateProfile {
-			authRepository.updateUserName(name)
+			authRepository.updateUserName(username.value)
 		}
 	}
 
@@ -73,8 +69,13 @@ class ProfileViewModel @Inject constructor(
 		}
 	}
 
-	fun validatingName(text: String) =
-		textValidator.validate(text)
+	fun onUsernameChange(username: String) {
+		_username.value = username
+	}
+
+	fun initUsername() {
+		_username.value = state.value.data().name
+	}
 
 	private fun executeAndUpdateProfile(action: suspend () -> Result<Profile>) {
 		viewModelScope.launch {
@@ -82,6 +83,7 @@ class ProfileViewModel @Inject constructor(
 			action()
 				.onSuccess {
 					_state.value = Loaded(it)
+					initUsername()
 				}.onFailure {
 					_state.value = Error
 				}

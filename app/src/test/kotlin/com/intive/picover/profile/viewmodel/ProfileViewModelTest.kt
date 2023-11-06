@@ -34,7 +34,12 @@ class ProfileViewModelTest : ShouldSpec(
 		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
 		val toastPublisher: ToastPublisher = mockk(relaxed = true)
-		val textValidator: TextValidator = mockk()
+		// TODO: Implement separate TextValidator based on screen purpose
+		val textValidator: TextValidator = TextValidator.build {
+			allowEmpty = false
+			allowBlank = false
+			maxLength = 20
+		}
 		val tested by lazy { ProfileViewModel(authRepository, toastPublisher, textValidator) }
 
 		should("call logout on AuthRepository WHEN onLogoutClick") {
@@ -63,9 +68,9 @@ class ProfileViewModelTest : ShouldSpec(
 			every { profile.name } returns "Marian"
 			coEvery { authRepository.userProfile() } returns Result.success(profile)
 
-			assertSoftly {
-				tested.state.value shouldBe Loaded(profile)
-				tested.userName.value shouldBe "Marian"
+			assertSoftly(tested) {
+				state.value shouldBe Loaded(profile)
+				username.value shouldBe "Marian"
 			}
 		}
 
@@ -82,8 +87,8 @@ class ProfileViewModelTest : ShouldSpec(
 					{ tested.updateAvatar(uri) },
 				),
 				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
+					{ authRepository.updateUserName("") },
+					{ tested.saveUsername() },
 				),
 				ManageProfileParam(
 					{ authRepository.userProfile() },
@@ -105,8 +110,8 @@ class ProfileViewModelTest : ShouldSpec(
 					{ tested.updateAvatar(uri) },
 				),
 				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
+					{ authRepository.updateUserName("") },
+					{ tested.saveUsername() },
 				),
 				ManageProfileParam(
 					{ authRepository.userProfile() },
@@ -128,8 +133,8 @@ class ProfileViewModelTest : ShouldSpec(
 					{ tested.updateAvatar(uri) },
 				),
 				ManageProfileParam(
-					{ authRepository.updateUserName("Marian K") },
-					{ tested.updateName("Marian K") },
+					{ authRepository.updateUserName("") },
+					{ tested.saveUsername() },
 				),
 				ManageProfileParam(
 					{ authRepository.userProfile() },
@@ -145,18 +150,17 @@ class ProfileViewModelTest : ShouldSpec(
 		}
 
 		should("set userName WHEN updateName called") {
-			coEvery { authRepository.updateUserName("Marian K") } returns Result.success(Profile(uri, "Marian K", "test@gmail.com"))
+			coEvery { authRepository.updateUserName("") } returns Result.success(Profile(uri, "Marian K", "test@gmail.com"))
 
-			tested.updateName("Marian K")
+			tested.saveUsername()
 
-			tested.userName.value shouldBe "Marian K"
+			tested.username.value shouldBe "Marian K"
 		}
 
-		should("validate text WHEN validatingName called") {
-			val text = "MyUserName1234"
-			every { textValidator.validate(text) } returns ValidationStatus.ValidText
+		should("validate text WHEN username changed") {
+			tested.onUsernameChange("MyUserName1234")
 
-			tested.validatingName(text) shouldBe ValidationStatus.ValidText
+			tested.usernameErrorMessageId shouldBe ValidationStatus.ValidText.errorMessageId
 		}
 	},
 )

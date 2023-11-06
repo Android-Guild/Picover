@@ -27,12 +27,11 @@ import com.intive.picover.R
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ProfileUpdateBottomSheet(
-	userName: String,
-	updateUserName: (String) -> Unit,
-	updateName: (String) -> Unit,
+	username: String,
+	onSaveClick: () -> Unit,
 	updateVisibility: (Boolean) -> Unit,
-	validateName: (String) -> Boolean,
-	getInvalidNameErrorMessageId: (String) -> Int,
+	onUsernameChange: (String) -> Unit,
+	usernameErrorMessageId: Int?,
 ) {
 	val keyboardController = LocalSoftwareKeyboardController.current
 	ModalBottomSheet(
@@ -61,11 +60,11 @@ fun ProfileUpdateBottomSheet(
 				actions = {
 					IconButton(
 						onClick = {
-							updateName(userName)
+							onSaveClick()
 							updateVisibility(false)
 							keyboardController?.hide()
 						},
-						enabled = validateName(userName),
+						enabled = usernameErrorMessageId == null,
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Check,
@@ -82,24 +81,24 @@ fun ProfileUpdateBottomSheet(
 		) {
 			TextField(
 				modifier = Modifier.fillMaxWidth(),
-				value = userName,
+				value = username,
 				onValueChange = {
-					updateUserName(it)
+					onUsernameChange(it)
 				},
 				supportingText = {
-					if (!validateName(userName)) {
+					usernameErrorMessageId?.let {
 						Text(
 							modifier = Modifier.fillMaxWidth(),
-							text = stringResource(id = getInvalidNameErrorMessageId(userName)),
+							text = stringResource(id = it),
 						)
 					}
 					Text(
-						text = "${userName.length} / 20",
+						text = "${username.length} / 20",
 						modifier = Modifier.fillMaxWidth(),
 						textAlign = TextAlign.End,
 					)
 				},
-				isError = !validateName(userName),
+				isError = usernameErrorMessageId != null,
 				label = { Text(text = stringResource(id = R.string.UserName)) },
 				maxLines = 1,
 			)
