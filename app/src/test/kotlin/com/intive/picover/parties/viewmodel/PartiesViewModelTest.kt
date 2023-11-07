@@ -3,11 +3,10 @@ package com.intive.picover.parties.viewmodel
 import com.intive.picover.common.coroutines.CoroutineTestExtension
 import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.common.validator.ValidationStatus
-import com.intive.picover.common.viewmodel.state.ViewModelState.Error
-import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
-import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
+import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect
+import com.intive.picover.parties.model.PartiesState
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.PartyRemote
 import com.intive.picover.parties.model.toUI
@@ -37,7 +36,7 @@ class PartiesViewModelTest : ShouldSpec(
 
 		val dispatcher = UnconfinedTestDispatcher()
 		val partiesRemote: List<PartyRemote> = mockk()
-		val parties: List<Party> = mockk()
+		val parties: List<Party> = listOf(mockk())
 		val repository: PartiesRepository = mockk()
 		val textValidator: TextValidator = mockk()
 		lateinit var tested: PartiesViewModel
@@ -53,9 +52,9 @@ class PartiesViewModelTest : ShouldSpec(
 
 		should("set state WHEN initialized according to fetch parties result") {
 			listOf(
-				emptyFlow<List<PartyRemote>>() to Loading,
-				flowOf(partiesRemote) to Loaded(parties),
-				flow<List<PartyRemote>> { throw Exception() } to Error,
+				emptyFlow<List<PartyRemote>>() to PartiesState(type = MVIState.Type.LOADING),
+				flowOf(partiesRemote) to PartiesState(parties = parties, type = MVIState.Type.LOADED),
+				flow<List<PartyRemote>> { throw Exception() } to PartiesState(type = MVIState.Type.ERROR),
 			).forAll { (result, state) ->
 				every { repository.parties() } returns result
 
@@ -116,7 +115,7 @@ class PartiesViewModelTest : ShouldSpec(
 
 			tested.updateTitle(title)
 
-			tested.title shouldBe title
+			tested.state.value.title shouldBe title
 		}
 
 		should("update the description WHEN newDescription is provided") {
@@ -124,7 +123,7 @@ class PartiesViewModelTest : ShouldSpec(
 
 			tested.updateDescription(description)
 
-			tested.description shouldBe description
+			tested.state.value.description shouldBe description
 		}
 	},
 )
