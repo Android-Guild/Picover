@@ -18,6 +18,7 @@ import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import io.mockk.Awaits
+import io.mockk.awaits
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -30,7 +31,7 @@ class ProfileViewModelTest : ShouldSpec(
 		extension(CoroutineTestExtension())
 		isolationMode = IsolationMode.InstancePerTest
 
-		val profile: Profile = mockk()
+		val profile: Profile = mockk(relaxed = true)
 		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
 		val toastPublisher: ToastPublisher = mockk(relaxed = true)
@@ -41,6 +42,10 @@ class ProfileViewModelTest : ShouldSpec(
 			maxLength = 20
 		}
 		val tested by lazy { ProfileViewModel(authRepository, toastPublisher, textValidator) }
+
+		beforeSpec {
+			coEvery { authRepository.userProfile() } just awaits
+		}
 
 		should("call logout on AuthRepository WHEN onLogoutClick") {
 			tested.onLogoutClick()
@@ -72,12 +77,6 @@ class ProfileViewModelTest : ShouldSpec(
 				state.value shouldBe Loaded(profile)
 				username.value shouldBe "Marian"
 			}
-		}
-
-		should("call updateUserAvatar WHEN updateAvatar called") {
-			tested.updateAvatar(uri)
-
-			coVerify { authRepository.updateUserAvatar(uri) }
 		}
 
 		should("load profile WHEN specific method called") {

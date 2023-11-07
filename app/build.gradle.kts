@@ -92,6 +92,7 @@ dependencies {
 	debugImplementation(libs.leakcanary)
 	testImplementation(libs.test.kotest.runner)
 	testImplementation(libs.test.guava)
+	testImplementation(libs.test.junit.launcher)
 	testImplementation(libs.test.kotest.datatest)
 	testImplementation(libs.test.mockk)
 	testCompileOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.10") {

@@ -14,7 +14,6 @@ import com.intive.picover.parties.repository.PartiesRepository
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import io.mockk.clearMocks
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -69,8 +68,6 @@ class PartiesViewModelTest : ShouldSpec(
 		}
 
 		should("start loading parties WHEN load parties event is emitted") {
-			clearMocks(repository)
-
 			tested.handleEvent(PartiesEvent.Load)
 
 			coVerify { repository.parties() }
