@@ -9,9 +9,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,7 +32,6 @@ fun ProfileScreen(
 	val takePictureOrPickImageLauncher = rememberLauncherForActivityResult(TakePictureOrPickImageContract()) { uri ->
 		uri?.let(viewModel::updateAvatar)
 	}
-	var showProfileUpdateBottomSheet by rememberSaveable { mutableStateOf(false) }
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -50,7 +46,7 @@ fun ProfileScreen(
 						// TODO: Without this initialization, the username text field will have a previously typed value.
 						//  Thus ProfileUpdateBottomSheet should have an independent state from ProfileScreen to get rid of hacks like this.
 						viewModel.initUsername()
-						showProfileUpdateBottomSheet = true
+						navController.navigate("updateProfile")
 					},
 				)
 			}
@@ -64,9 +60,7 @@ fun ProfileScreen(
 				UserInfo(
 					profile = loadingProfile,
 					onEditPhotoClick = takePictureOrPickImageLauncher::launch,
-					onEditNameClick = {
-						showProfileUpdateBottomSheet = true
-					},
+					onEditNameClick = {},
 					editButtonsEnabled = false,
 					showShimmer = true,
 				)
@@ -83,17 +77,8 @@ fun ProfileScreen(
 		ProfileActions(
 			onLogoutClick = viewModel::onLogoutClick,
 			onDeleteAccountCLick = {
-				navController.navigate("profile/deleteAccount")
+				navController.navigate("deleteAccount")
 			},
-		)
-	}
-	if (showProfileUpdateBottomSheet) {
-		ProfileUpdateBottomSheet(
-			username = viewModel.username.value,
-			onSaveClick = { viewModel.saveUsername() },
-			updateVisibility = { showProfileUpdateBottomSheet = it },
-			onUsernameChange = { viewModel.onUsernameChange(it) },
-			usernameErrorMessageId = viewModel.usernameErrorMessageId,
 		)
 	}
 }
