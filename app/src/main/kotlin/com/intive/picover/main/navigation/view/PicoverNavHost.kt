@@ -95,7 +95,6 @@ private fun NavGraphBuilder.profileGraph(navController: NavHostController) {
 				onSaveClick = viewModel::saveUsername,
 				onClose = navController::popBackStack,
 				onUsernameChange = viewModel::onUsernameChange,
-				usernameErrorMessageId = viewModel.usernameErrorMessageId,
 			)
 		}
 	}

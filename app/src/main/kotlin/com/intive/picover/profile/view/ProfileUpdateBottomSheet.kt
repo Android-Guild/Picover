@@ -14,13 +14,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.intive.picover.R
+import com.intive.picover.common.text.PicoverOutlinedTextField
+import com.intive.picover.common.validator.TextValidator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,8 +33,8 @@ fun ProfileUpdateBottomSheet(
 	onSaveClick: () -> Unit,
 	onClose: () -> Unit,
 	onUsernameChange: (String) -> Unit,
-	usernameErrorMessageId: Int?,
 ) {
+	var isUserNameValid by remember { mutableStateOf(true) }
 	ModalBottomSheet(
 		modifier = Modifier.padding(bottom = 56.dp),
 		onDismissRequest = onClose,
@@ -54,7 +58,7 @@ fun ProfileUpdateBottomSheet(
 							onSaveClick()
 							onClose()
 						},
-						enabled = usernameErrorMessageId == null,
+						enabled = isUserNameValid,
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Check,
@@ -69,28 +73,13 @@ fun ProfileUpdateBottomSheet(
 				.padding(start = 20.dp, end = 20.dp, bottom = 42.dp)
 				.fillMaxWidth(),
 		) {
-			TextField(
+			PicoverOutlinedTextField(
 				modifier = Modifier.fillMaxWidth(),
 				value = username,
-				onValueChange = {
-					onUsernameChange(it)
-				},
-				supportingText = {
-					usernameErrorMessageId?.let {
-						Text(
-							modifier = Modifier.fillMaxWidth(),
-							text = stringResource(id = it),
-						)
-					}
-					Text(
-						text = "${username.length} / 20",
-						modifier = Modifier.fillMaxWidth(),
-						textAlign = TextAlign.End,
-					)
-				},
-				isError = usernameErrorMessageId != null,
-				label = { Text(text = stringResource(id = R.string.UserName)) },
-				maxLines = 1,
+				onValueChange = onUsernameChange,
+				validator = TextValidator.Short,
+				labelText = stringResource(id = R.string.UserName),
+				onValidationStatusChange = { isUserNameValid = it },
 			)
 		}
 	}

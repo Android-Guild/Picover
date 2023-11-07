@@ -1,8 +1,6 @@
 package com.intive.picover.parties.viewmodel
 
 import com.intive.picover.common.coroutines.CoroutineTestExtension
-import com.intive.picover.common.validator.TextValidator
-import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect
@@ -19,7 +17,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -37,7 +34,6 @@ class PartiesViewModelTest : ShouldSpec(
 		val partiesRemote: List<PartyRemote> = mockk()
 		val parties: List<Party> = listOf(mockk())
 		val repository: PartiesRepository = mockk()
-		val textValidator: TextValidator = mockk()
 		lateinit var tested: PartiesViewModel
 
 		beforeSpec {
@@ -59,8 +55,6 @@ class PartiesViewModelTest : ShouldSpec(
 
 				tested = PartiesViewModel(
 					partiesRepository = repository,
-					shortTextValidator = textValidator,
-					longTextValidator = textValidator,
 				)
 
 				tested.state.value shouldBe state
@@ -87,24 +81,6 @@ class PartiesViewModelTest : ShouldSpec(
 
 				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToAddParty
 			}
-		}
-
-		should("call validator WHEN validateShortInputText runs") {
-			val text = "MyUserName1234"
-			every { textValidator.validate(text) } returns ValidationStatus.ValidText
-
-			tested.validateShortText(text)
-
-			verify { textValidator.validate(text) }
-		}
-
-		should("call validator WHEN validateLongText runs") {
-			val text = "MyUserName1234"
-			every { textValidator.validate(text) } returns ValidationStatus.ValidText
-
-			tested.validateLongText(text)
-
-			verify { textValidator.validate(text) }
 		}
 
 		should("update the title WHEN newTitle is provided") {

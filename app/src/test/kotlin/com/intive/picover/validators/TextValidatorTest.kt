@@ -64,11 +64,11 @@ class TextValidatorTest : ShouldSpec(
 					expectedStatus = ValidText,
 				),
 			).forAll { param ->
-				val tested = TextValidator.build {
-					allowEmpty = param.allowEmpty
-					allowBlank = param.allowBlank
-					maxLength = param.maxLength
-				}
+				val tested = TextValidator(
+					allowEmpty = param.allowEmpty,
+					allowBlank = param.allowBlank,
+					maxLength = param.maxLength,
+				)
 
 				tested.validate(param.textToValidate) shouldBe param.expectedStatus
 			}
