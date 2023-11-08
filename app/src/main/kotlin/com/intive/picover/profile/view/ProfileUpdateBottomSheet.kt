@@ -16,39 +16,30 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.intive.picover.R
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileUpdateBottomSheet(
 	username: String,
 	onSaveClick: () -> Unit,
-	updateVisibility: (Boolean) -> Unit,
+	onClose: () -> Unit,
 	onUsernameChange: (String) -> Unit,
 	usernameErrorMessageId: Int?,
 ) {
-	val keyboardController = LocalSoftwareKeyboardController.current
 	ModalBottomSheet(
 		modifier = Modifier.padding(bottom = 56.dp),
-		onDismissRequest = {
-			updateVisibility(false)
-			keyboardController?.hide()
-		},
+		onDismissRequest = onClose,
 	) {
 		Row(horizontalArrangement = Arrangement.SpaceAround) {
 			CenterAlignedTopAppBar(
 				navigationIcon = {
 					IconButton(
-						onClick = {
-							updateVisibility(false)
-							keyboardController?.hide()
-						},
+						onClick = onClose,
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Close,
@@ -61,8 +52,7 @@ fun ProfileUpdateBottomSheet(
 					IconButton(
 						onClick = {
 							onSaveClick()
-							updateVisibility(false)
-							keyboardController?.hide()
+							onClose()
 						},
 						enabled = usernameErrorMessageId == null,
 					) {
