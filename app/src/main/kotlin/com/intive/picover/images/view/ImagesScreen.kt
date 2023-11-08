@@ -4,10 +4,9 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -20,13 +19,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.common.result.TakePictureOrPickImageContract
 import com.intive.picover.common.result.launch
 import com.intive.picover.images.viewmodel.ImagesViewModel
+import com.intive.picover.photos.model.Photo
 import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.components.LocalImageComponent
 
 @Composable
 fun ImagesScreen(viewModel: ImagesViewModel) {
@@ -39,7 +42,7 @@ fun ImagesScreen(viewModel: ImagesViewModel) {
 }
 
 @Composable
-private fun PhotosGrid(uris: List<Uri>, onImageTaken: (Uri) -> Unit) {
+private fun PhotosGrid(photos: List<Photo>, onImageTaken: (Uri) -> Unit) {
 	val takePictureOrPickImageLauncher = rememberLauncherForActivityResult(TakePictureOrPickImageContract()) {
 		it?.let(onImageTaken)
 	}
@@ -49,8 +52,13 @@ private fun PhotosGrid(uris: List<Uri>, onImageTaken: (Uri) -> Unit) {
 			verticalItemSpacing = 4.dp,
 			horizontalArrangement = Arrangement.spacedBy(4.dp),
 		) {
-			items(uris) {
-				Photo(uri = it)
+			items(photos) {
+				CoilImage(
+					modifier = Modifier.size(it.width.dp, it.height.dp),
+					imageModel = { it.uri },
+					previewPlaceholder = R.drawable.ic_launcher_foreground,
+					component = LocalImageComponent.current,
+				)
 			}
 		}
 		FloatingActionButton(
@@ -66,17 +74,11 @@ private fun PhotosGrid(uris: List<Uri>, onImageTaken: (Uri) -> Unit) {
 	}
 }
 
+@Preview
 @Composable
-private fun Photo(uri: Uri) {
-	CoilImage(
-		modifier = Modifier
-			.defaultMinSize(minHeight = 120.dp)
-			.wrapContentHeight(),
-		imageModel = { uri },
-		loading = {
-			PicoverLoader(
-				modifier = Modifier.fillMaxSize(),
-			)
-		},
-	)
+private fun PhotosGridPreview() {
+	val uris = (1..14).map {
+		Photo.withRandomSize(Uri.EMPTY)
+	}
+	PhotosGrid(uris) {}
 }
