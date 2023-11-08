@@ -11,6 +11,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +22,7 @@ import com.intive.picover.R
 import com.skydoves.landscapist.components.LocalImageComponent
 import com.skydoves.landscapist.components.imageComponent
 import com.skydoves.landscapist.placeholder.placeholder.PlaceholderPlugin
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 private val DarkColorScheme = darkColorScheme(
 	primary = Purple80,
@@ -61,6 +63,10 @@ fun PicoverTheme(
 		}
 	}
 	val imageComponent = imageComponent {
+		+ShimmerPlugin(
+			baseColor = Color(0xFF424242),
+			highlightColor = Color(0xA3C2C2C2),
+		)
 		+PlaceholderPlugin.Failure(painterResource(R.drawable.ic_avatar_placeholder))
 	}
 	CompositionLocalProvider(LocalImageComponent provides imageComponent) {

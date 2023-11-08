@@ -7,6 +7,7 @@ import com.intive.picover.common.viewmodel.StatefulViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.images.repository.ImagesRepository
+import com.intive.picover.photos.model.Photo
 import com.intive.picover.photos.usecase.ScheduleUploadPhotoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class ImagesViewModel @Inject constructor(
 	private val repository: ImagesRepository,
 	private val scheduleUploadPhotoUseCase: ScheduleUploadPhotoUseCase,
 	private val snackbarHostState: SnackbarHostState,
-) : StatefulViewModel<List<Uri>>() {
+) : StatefulViewModel<List<Photo>>() {
 
 	init {
 		viewModelScope.launch {
@@ -40,6 +41,7 @@ class ImagesViewModel @Inject constructor(
 	private suspend fun loadImages() {
 		runCatching {
 			repository.fetchImages()
+				.map { Photo.withRandomSize(it) }
 		}.onSuccess {
 			_state.value = Loaded(it)
 		}.onFailure {
