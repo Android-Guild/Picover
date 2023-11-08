@@ -1,5 +1,7 @@
 name: Pull request metadata
-on: pull_request
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
 jobs:
   assert-pull-request-metadata:
     runs-on: ubuntu-latest
@@ -21,5 +23,12 @@ jobs:
           COMMITS_COUNT=${{ github.event.pull_request.commits }}
           if (( $COMMITS_COUNT > 1 )); then
             echo "Error: You have $COMMITS_COUNT commits in pull request. Squash them and keep only one."
+            exit 1
+          fi
+      - name: Assert pull request title
+        run: |
+          HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)
+          if [ "${{ github.event.pull_request.title }}" != "$HEAD_COMMIT_MESSAGE" ]; then
+            echo "Pull request title should be the same as the commit message!"
             exit 1
           fi
