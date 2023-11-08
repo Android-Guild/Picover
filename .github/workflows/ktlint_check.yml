@@ -1,4 +1,4 @@
-name: Ktlint check
+name: Ktlint
 on: pull_request
 jobs:
   ktlint-check:
