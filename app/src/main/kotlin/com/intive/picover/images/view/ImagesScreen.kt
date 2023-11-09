@@ -22,10 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.intive.picover.R
-import com.intive.picover.common.error.PicoverGenericError
-import com.intive.picover.common.loader.PicoverLoader
 import com.intive.picover.common.result.TakePictureOrPickImageContract
 import com.intive.picover.common.result.launch
+import com.intive.picover.common.state.DefaultStateDispatcher
 import com.intive.picover.images.viewmodel.ImagesViewModel
 import com.intive.picover.photos.model.Photo
 import com.skydoves.landscapist.coil.CoilImage
@@ -34,10 +33,8 @@ import com.skydoves.landscapist.components.LocalImageComponent
 @Composable
 fun ImagesScreen(viewModel: ImagesViewModel) {
 	val state by viewModel.state
-	when {
-		state.isLoaded() -> PhotosGrid(state.data(), viewModel::scheduleUploadPhoto)
-		state.isError() -> PicoverGenericError()
-		state.isLoading() -> PicoverLoader(modifier = Modifier.fillMaxSize())
+	DefaultStateDispatcher(state) {
+		PhotosGrid(it, viewModel::scheduleUploadPhoto)
 	}
 }
 
