@@ -58,7 +58,7 @@ fun PicoverNavHost(
 			}
 			composable(
 				route = "partyDetails/{partyId}",
-				arguments = listOf(navArgument("partyId") { type = NavType.IntType }),
+				arguments = listOf(navArgument("partyId") { type = NavType.StringType }),
 			) {
 				PartyDetailsScreen(hiltViewModel())
 			}

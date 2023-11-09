@@ -75,9 +75,9 @@ class PartiesViewModelTest : ShouldSpec(
 
 		should("set navigate to party details side effect WHEN onPartyClick called") {
 			runBlocking(dispatcher) {
-				tested.onPartyClick(1)
+				tested.onPartyClick("1")
 
-				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToPartyDetails(1)
+				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToPartyDetails("1")
 			}
 		}
 

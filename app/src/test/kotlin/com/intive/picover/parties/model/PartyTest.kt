@@ -9,7 +9,7 @@ internal class PartyTest : ShouldSpec(
 		should("map list of remote parties to parties WHEN toUI called") {
 			val tested = listOf(
 				PartyRemote(
-					id = 1,
+					id = "1",
 					title = "title",
 					description = "description",
 				),
@@ -17,7 +17,7 @@ internal class PartyTest : ShouldSpec(
 
 			tested.toUI() shouldBe listOf(
 				Party(
-					id = 1,
+					id = "1",
 					title = "title",
 					description = "description",
 				),
@@ -26,13 +26,13 @@ internal class PartyTest : ShouldSpec(
 
 		should("map remote party to party WHEN toUI called") {
 			val tested = PartyRemote(
-				id = 1,
+				id = "1",
 				title = "title",
 				description = "description",
 			)
 
 			tested.toUI() shouldBe Party(
-				id = 1,
+				id = "1",
 				title = "title",
 				description = "description",
 			)

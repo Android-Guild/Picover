@@ -47,5 +47,11 @@ private fun LoadedContent(party: Party) {
 @Preview(showBackground = true)
 @Composable
 private fun PartyDetailsScreenLoadedPreview() {
-	LoadedContent(party = Party(id = 1, title = "title1", description = "description1"))
+	LoadedContent(
+		party = Party(
+			id = "1",
+			title = "title1",
+			description = "description1",
+		),
+	)
 }

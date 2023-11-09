@@ -24,7 +24,7 @@ class PartyDetailsViewModelTest : ShouldSpec(
 	{
 		extension(CoroutineTestExtension())
 
-		val partyId = 2
+		val partyId = "2"
 		val partyRemote: PartyRemote = mockk()
 		val party: Party = mockk()
 		val repository: PartiesRepository = mockk()

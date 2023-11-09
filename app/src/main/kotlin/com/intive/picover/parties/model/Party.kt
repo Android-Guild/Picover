@@ -1,7 +1,7 @@
 package com.intive.picover.parties.model
 
 data class Party(
-	val id: Int,
+	val id: String,
 	val title: String,
 	val description: String,
 )

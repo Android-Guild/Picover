@@ -67,7 +67,7 @@ fun PartiesScreen(
 @Composable
 private fun LoadedContent(
 	parties: List<Party>,
-	onPartyClick: (Int) -> Unit,
+	onPartyClick: (String) -> Unit,
 	onFabClick: () -> Unit,
 ) {
 	Box(
@@ -101,7 +101,7 @@ private fun LoadedContent(
 @Composable
 private fun PartyTile(
 	party: Party,
-	onClick: (Int) -> Unit,
+	onClick: (String) -> Unit,
 ) {
 	Card(
 		modifier = Modifier
@@ -128,13 +128,14 @@ private fun PartyTile(
 @Preview(showBackground = true)
 @Composable
 private fun PartyScreenLoadedPreview() {
-	val parties = (1..5).map {
-		Party(
-			id = it,
-			title = "title$it",
-			description = "description$it",
-		)
-	}
+	val parties = (1..5)
+		.map {
+			Party(
+				id = it.toString(),
+				title = "title$it",
+				description = "description$it",
+			)
+		}
 	LoadedContent(
 		parties = parties,
 		onPartyClick = {},

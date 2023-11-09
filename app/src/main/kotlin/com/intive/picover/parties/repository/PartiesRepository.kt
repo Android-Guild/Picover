@@ -20,7 +20,7 @@ class PartiesRepository @Inject constructor(
 			}
 		}
 
-	fun partyById(id: Int) =
+	fun partyById(id: String) =
 		parties().map { parties ->
 			parties.first { it.id == id }
 		}
