@@ -5,7 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Celebration
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import com.intive.picover.R
 
 enum class NavigationItem(
@@ -28,4 +31,20 @@ enum class NavigationItem(
 		icon = Icons.Filled.Person,
 		route = "profileGraph",
 	),
+	;
+
+	companion object {
+		@Composable
+		fun NavigationItem.Icon() {
+			androidx.compose.material3.Icon(
+				imageVector = icon,
+				contentDescription = stringResource(id = labelResId),
+			)
+		}
+
+		@Composable
+		fun NavigationItem.Label() {
+			Text(text = stringResource(id = labelResId))
+		}
+	}
 }
