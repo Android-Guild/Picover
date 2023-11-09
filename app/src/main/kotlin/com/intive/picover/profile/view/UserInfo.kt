@@ -2,7 +2,6 @@ package com.intive.picover.profile.view
 
 import android.net.Uri
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,10 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.intive.picover.R
 import com.intive.picover.common.animations.ShimmerBrush
 import com.intive.picover.common.annotation.LightDarkPreview
 import com.intive.picover.main.theme.PicoverTheme
@@ -38,6 +35,7 @@ import com.intive.picover.main.theme.Typography
 import com.intive.picover.profile.model.Profile
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.components.LocalImageComponent
 
 @Composable
 fun UserInfo(
@@ -122,17 +120,7 @@ private fun UserAvatar(imageUri: Uri?) {
 		loading = {
 			CircularProgressIndicator()
 		},
-		failure = {
-			Image(
-				modifier = Modifier
-					.size(120.dp)
-					.clip(CircleShape),
-				painter = painterResource(id = R.drawable.ic_avatar_placeholder),
-				contentDescription = null,
-				alignment = Alignment.Center,
-				contentScale = ContentScale.Crop,
-			)
-		},
+		component = LocalImageComponent.current,
 	)
 }
 
