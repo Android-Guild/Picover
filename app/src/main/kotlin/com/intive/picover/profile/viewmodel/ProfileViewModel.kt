@@ -4,10 +4,7 @@ import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.intive.picover.R
-import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
-import com.intive.picover.common.toast.ToastPublisher
 import com.intive.picover.common.viewmodel.StatefulViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
@@ -20,7 +17,6 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
 	private val authRepository: AuthRepository,
-	private val toastPublisher: ToastPublisher,
 ) : StatefulViewModel<Profile>() {
 
 	private val _username = mutableStateOf("")
@@ -32,18 +28,6 @@ class ProfileViewModel @Inject constructor(
 
 	fun onLogoutClick() {
 		authRepository.logout()
-	}
-
-	fun onDeleteAccountClick() {
-		viewModelScope.launch {
-			val accountDeletionResult = authRepository.deleteAccount()
-			when (accountDeletionResult) {
-				is AccountDeletionResult.Success -> R.string.DeleteAccountSuccessToastText
-				is AccountDeletionResult.ReAuthenticationNeeded -> R.string.DeleteAccountReAuthenticationToastText
-			}.let {
-				toastPublisher.show(it)
-			}
-		}
 	}
 
 	fun updateAvatar(uri: Uri) {
