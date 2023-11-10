@@ -20,7 +20,7 @@ class PartyDetailsViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
 ) : StatefulViewModel<Party>() {
 
-	private val partyId: Int = savedStateHandle["partyId"]!!
+	private val partyId: String = savedStateHandle["partyId"]!!
 
 	init {
 		loadParty()

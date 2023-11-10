@@ -4,7 +4,7 @@ import com.intive.picover.common.annotation.NoArgConstructor
 
 @NoArgConstructor
 data class PartyRemote(
-	val id: Int,
+	val id: String,
 	val title: String,
 	val description: String,
 )

@@ -49,7 +49,7 @@ class PartiesRepositoryTest : ShouldSpec(
 
 		should("fetch party by id") {
 			val party: PartyRemote = mockk {
-				every { id } returns 1
+				every { id } returns "1"
 			}
 			val dataSnapshot: DataSnapshot = mockk {
 				every { children } returns listOf(
@@ -60,12 +60,12 @@ class PartiesRepositoryTest : ShouldSpec(
 			}
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
-			tested.partyById(1).first() shouldBe party
+			tested.partyById("1").first() shouldBe party
 		}
 
 		should("throw error WHEN there is no party for given id") {
 			val party: PartyRemote = mockk {
-				every { id } returns 2
+				every { id } returns "2"
 			}
 			val dataSnapshot: DataSnapshot = mockk {
 				every { children } returns listOf(
@@ -77,7 +77,7 @@ class PartiesRepositoryTest : ShouldSpec(
 			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
 
 			shouldThrowExactly<NoSuchElementException> {
-				tested.partyById(1).first()
+				tested.partyById("1").first()
 			}
 		}
 	},

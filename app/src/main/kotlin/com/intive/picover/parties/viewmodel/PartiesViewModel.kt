@@ -35,7 +35,7 @@ class PartiesViewModel @Inject constructor(
 		}
 	}
 
-	fun onPartyClick(partyId: Int) {
+	fun onPartyClick(partyId: String) {
 		viewModelScope.launch {
 			setEffect(PartiesSideEffect.NavigateToPartyDetails(partyId))
 		}
