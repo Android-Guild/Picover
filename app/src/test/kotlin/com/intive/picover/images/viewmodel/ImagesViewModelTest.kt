@@ -8,6 +8,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.images.repository.ImagesRepository
+import com.intive.picover.photos.model.Photo
 import com.intive.picover.photos.usecase.ScheduleUploadPhotoUseCase
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
@@ -19,6 +20,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.mockkObject
 
 internal class ImagesViewModelTest : ShouldSpec(
 	{
@@ -28,14 +30,20 @@ internal class ImagesViewModelTest : ShouldSpec(
 		val scheduleUploadPhotoUseCase: ScheduleUploadPhotoUseCase = mockk(relaxed = true)
 		val snackbarHostState: SnackbarHostState = mockk(relaxed = true)
 
+		beforeSpec {
+			mockkObject(Photo)
+		}
+
 		should("set state WHEN fetchImages called") {
-			val uris: List<Uri> = listOf(mockk())
+			val uri: Uri = mockk()
+			val photo = Photo(10, 10, uri)
 			listOf(
 				Loading to mockkAnswer<List<Uri>> { just(Awaits) },
 				Error to mockkAnswer { throws(Throwable()) },
-				Loaded(uris) to mockkAnswer { returns(uris) },
+				Loaded(listOf(photo)) to mockkAnswer { returns(listOf(uri)) },
 			).forAll { (state, answers) ->
 				coEvery { imagesRepository.fetchImages() }.answers()
+				every { Photo.withRandomSize(uri) } returns photo
 
 				val tested = ImagesViewModel(imagesRepository, mockk(), mockk())
 
