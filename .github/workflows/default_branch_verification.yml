@@ -1,4 +1,4 @@
-name: Dev branch verification
+name: Build and distribute
 on:
   push:
     branches:
@@ -15,17 +15,7 @@ jobs:
         with:
           secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
       - run: ./gradlew build
-  upload-debug-apk:
-    runs-on: ubuntu-latest
-    container: gradle:8.4.0-jdk17
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/gradle-cache
-      - uses: android-actions/setup-android@v3.0.0
-      - uses: ./.github/actions/firebase-google-service
-        with:
-          secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
       - uses: ./.github/actions/firebase-service-credentials
         with:
           secret: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
-      - run: ./gradlew assembleDebug appDistributionUploadDebug
+      - run: ./gradlew appDistributionUploadDebug
