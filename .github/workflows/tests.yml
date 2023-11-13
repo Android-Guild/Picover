@@ -1,10 +1,11 @@
-name: Build and distribute
+name: Tests
 on:
+  pull_request:
   push:
     branches:
       - dev
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
     container: gradle:8.4.0-jdk17
     steps:
@@ -14,8 +15,4 @@ jobs:
       - uses: ./.github/actions/firebase-google-service
         with:
           secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
-      - run: ./gradlew build
-      - uses: ./.github/actions/firebase-service-credentials
-        with:
-          secret: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
-      - run: ./gradlew appDistributionUploadDebug
+      - run: ./gradlew test

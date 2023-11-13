@@ -1,5 +1,9 @@
-name: Pull Request build
-on: pull_request
+name: Build and distribute
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,3 +16,8 @@ jobs:
         with:
           secret: ${{ secrets.FIREBASE_GOOGLE_SERVICE }}
       - run: ./gradlew assemble
+      - uses: ./.github/actions/firebase-service-credentials
+        with:
+          secret: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+      - run: ./gradlew appDistributionUploadDebug
+        if: github.ref == 'refs/heads/dev'
