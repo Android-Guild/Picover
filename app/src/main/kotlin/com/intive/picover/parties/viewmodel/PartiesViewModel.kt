@@ -2,8 +2,6 @@ package com.intive.picover.parties.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.intive.picover.common.viewmodel.MVIViewModel
-import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitter
-import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitterImplementation
 import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect
@@ -18,8 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PartiesViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
-) : MVIViewModel<PartiesState, PartiesEvent>(initialState = PartiesState()),
-	SideEffectEmitter<PartiesSideEffect> by SideEffectEmitterImplementation() {
+) : MVIViewModel<PartiesState, PartiesEvent, PartiesSideEffect>(initialState = PartiesState()) {
 
 	init {
 		loadParties()
@@ -28,18 +25,6 @@ class PartiesViewModel @Inject constructor(
 	override fun handleEvent(event: PartiesEvent) {
 		when (event) {
 			is PartiesEvent.Load -> loadParties()
-		}
-	}
-
-	fun onPartyClick(partyId: String) {
-		viewModelScope.launch {
-			setEffect(PartiesSideEffect.NavigateToPartyDetails(partyId))
-		}
-	}
-
-	fun onAddPartyClick() {
-		viewModelScope.launch {
-			setEffect(PartiesSideEffect.NavigateToAddParty)
 		}
 	}
 

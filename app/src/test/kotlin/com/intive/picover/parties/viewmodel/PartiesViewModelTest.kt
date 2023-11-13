@@ -3,7 +3,6 @@ package com.intive.picover.parties.viewmodel
 import com.intive.picover.common.coroutines.CoroutineTestExtension
 import com.intive.picover.common.viewmodel.state.MVIState
 import com.intive.picover.parties.model.PartiesEvent
-import com.intive.picover.parties.model.PartiesSideEffect
 import com.intive.picover.parties.model.PartiesState
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.PartyRemote
@@ -17,20 +16,14 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PartiesViewModelTest : ShouldSpec(
 	{
 		extension(CoroutineTestExtension())
 
-		val dispatcher = UnconfinedTestDispatcher()
 		val partiesRemote: List<PartyRemote> = mockk()
 		val parties: List<Party> = listOf(mockk())
 		val repository: PartiesRepository = mockk()
@@ -62,25 +55,9 @@ class PartiesViewModelTest : ShouldSpec(
 		}
 
 		should("start loading parties WHEN load parties event is emitted") {
-			tested.handleEvent(PartiesEvent.Load)
+			tested.emitEvent(PartiesEvent.Load)
 
 			coVerify { repository.parties() }
-		}
-
-		should("set navigate to party details side effect WHEN onPartyClick called") {
-			runBlocking(dispatcher) {
-				tested.onPartyClick("1")
-
-				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToPartyDetails("1")
-			}
-		}
-
-		should("set navigate to add party side effect WHEN onAddPartyClick called") {
-			runBlocking(dispatcher) {
-				tested.onAddPartyClick()
-
-				tested.sideEffects.first() shouldBe PartiesSideEffect.NavigateToAddParty
-			}
 		}
 
 		should("update the title WHEN newTitle is provided") {
