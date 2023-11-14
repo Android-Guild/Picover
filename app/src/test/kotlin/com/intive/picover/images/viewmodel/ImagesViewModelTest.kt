@@ -57,7 +57,7 @@ internal class ImagesViewModelTest : ShouldSpec(
 				mockkAnswer { just(Runs) },
 			).forAll { answer ->
 				val photoUri: Uri = mockk()
-				every { scheduleUploadPhotoUseCase(photoUri) }.answer()
+				coEvery { scheduleUploadPhotoUseCase(photoUri) }.answer()
 				val tested = ImagesViewModel(imagesRepository, scheduleUploadPhotoUseCase, snackbarHostState)
 
 				tested.scheduleUploadPhoto(photoUri)
