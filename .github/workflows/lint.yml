@@ -21,3 +21,10 @@ jobs:
         with:
           sarif_file: app/build/reports/lint-results-debug.sarif
           category: lint
+  ktlint-check:
+    runs-on: ubuntu-latest
+    container: gradle:8.4.0-jdk17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/gradle-cache
+      - run: ./gradlew ktlintCheck

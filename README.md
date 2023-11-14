@@ -1,7 +1,7 @@
 # Picover
 
-[![](https://github.com/intive/Picover/actions/workflows/default_branch_verification.yml/badge.svg)](https://github.com/intive/Picover/actions/workflows/default_branch_verification.yml)
-[![](https://github.com/intive/Picover/actions/workflows/android_lint.yml/badge.svg)](https://github.com/Android-Guild/Picover/actions/workflows/android_lint.yml)
+[![](https://github.com/intive/Picover/actions/workflows/build.yml/badge.svg)](https://github.com/intive/Picover/actions/workflows/build.yml)
+[![](https://github.com/intive/Picover/actions/workflows/lint.yml/badge.svg)](https://github.com/Android-Guild/Picover/actions/workflows/lint.yml)
 
 App for documenting memories from Android Guild meetings and parties
 
