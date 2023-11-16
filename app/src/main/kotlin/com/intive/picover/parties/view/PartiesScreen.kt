@@ -56,8 +56,8 @@ fun PartiesScreen(
 		MVIState.Type.LOADING -> PicoverLoader(modifier = Modifier.fillMaxSize())
 		MVIState.Type.LOADED -> LoadedContent(
 			parties = state.parties,
-			onPartyClick = viewModel::onPartyClick,
-			onFabClick = viewModel::onAddPartyClick,
+			onPartyClick = { viewModel.emitEffect(NavigateToPartyDetails(it)) },
+			onFabClick = { viewModel.emitEffect(NavigateToAddParty) },
 		)
 
 		MVIState.Type.ERROR -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
