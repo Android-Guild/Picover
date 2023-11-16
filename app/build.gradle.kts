@@ -18,7 +18,7 @@ android {
 	compileSdk = 34
 
 	defaultConfig {
-		applicationId = "com.intive.picover"
+		applicationId = "com.intive.picover.kmp"
 		minSdk = 26
 		targetSdk = 34
 		versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toInt() ?: 1
