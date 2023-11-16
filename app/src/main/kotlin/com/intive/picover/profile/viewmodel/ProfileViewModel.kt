@@ -8,8 +8,6 @@ import com.intive.picover.R
 import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.toast.ToastPublisher
-import com.intive.picover.common.validator.TextValidator
-import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.StatefulViewModel
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
@@ -23,13 +21,10 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
 	private val authRepository: AuthRepository,
 	private val toastPublisher: ToastPublisher,
-	@Validator.ShortText private val textValidator: TextValidator,
 ) : StatefulViewModel<Profile>() {
 
 	private val _username = mutableStateOf("")
 	val username: State<String> = _username
-	val usernameErrorMessageId
-		get() = textValidator.validate(username.value).errorMessageId
 
 	init {
 		fetchProfile()

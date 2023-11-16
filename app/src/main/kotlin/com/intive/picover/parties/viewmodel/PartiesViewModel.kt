@@ -1,8 +1,6 @@
 package com.intive.picover.parties.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.intive.picover.common.validator.TextValidator
-import com.intive.picover.common.validator.qualifier.Validator
 import com.intive.picover.common.viewmodel.MVIViewModel
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitter
 import com.intive.picover.common.viewmodel.sideeffect.SideEffectEmitterImplementation
@@ -20,8 +18,6 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PartiesViewModel @Inject constructor(
 	private val partiesRepository: PartiesRepository,
-	@Validator.ShortText private val shortTextValidator: TextValidator,
-	@Validator.LongText private val longTextValidator: TextValidator,
 ) : MVIViewModel<PartiesState, PartiesEvent>(initialState = PartiesState()),
 	SideEffectEmitter<PartiesSideEffect> by SideEffectEmitterImplementation() {
 
@@ -58,10 +54,6 @@ class PartiesViewModel @Inject constructor(
 			copy(description = newDescription)
 		}
 	}
-
-	fun validateShortText(text: String) = shortTextValidator.validate(text)
-
-	fun validateLongText(text: String) = longTextValidator.validate(text)
 
 	private fun loadParties() {
 		viewModelScope.launch {

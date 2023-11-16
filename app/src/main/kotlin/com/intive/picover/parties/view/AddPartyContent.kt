@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.text.PicoverOutlinedTextField
-import com.intive.picover.common.validator.ValidationStatus
+import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.parties.viewmodel.PartiesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,8 +42,6 @@ fun AddPartyBottomSheet(
 			description = state.description,
 			onDescriptionChange = { viewModel.updateDescription(it) },
 			onSaveButtonClick = { navController.popBackStack() },
-			titleValidationStatus = viewModel.validateShortText(state.title),
-			descriptionValidationStatus = viewModel.validateLongText(state.description),
 		)
 	}
 }
@@ -52,10 +50,8 @@ fun AddPartyBottomSheet(
 fun AddPartyContent(
 	title: String,
 	onTitleChange: (String) -> Unit,
-	titleValidationStatus: ValidationStatus,
 	description: String,
 	onDescriptionChange: (String) -> Unit,
-	descriptionValidationStatus: ValidationStatus,
 	onSaveButtonClick: () -> Unit,
 ) {
 	val focusManager = LocalFocusManager.current
@@ -64,15 +60,13 @@ fun AddPartyContent(
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		PicoverOutlinedTextField(
-			label = stringResource(R.string.PartyScreenAddPartyBottomSheetTitle),
+			labelText = stringResource(R.string.PartyScreenAddPartyBottomSheetTitle),
 			modifier = Modifier
 				.fillMaxWidth()
 				.padding(bottom = 16.dp),
 			value = title,
 			onValueChange = onTitleChange,
-			errorText = titleValidationStatus.errorMessageId?.let {
-				stringResource(id = it)
-			},
+			validator = TextValidator.Short,
 			imeAction = ImeAction.Next,
 			keyboardActions = KeyboardActions(
 				onNext = {
@@ -81,16 +75,14 @@ fun AddPartyContent(
 			),
 		)
 		PicoverOutlinedTextField(
-			label = stringResource(R.string.PartyScreenAddPartyBottomSheetDescription),
+			labelText = stringResource(R.string.PartyScreenAddPartyBottomSheetDescription),
 			modifier = Modifier
 				.fillMaxWidth()
 				.padding(bottom = 16.dp),
 			value = description,
 			onValueChange = onDescriptionChange,
+			validator = TextValidator.Long,
 			maxLines = 3,
-			errorText = descriptionValidationStatus.errorMessageId?.let {
-				stringResource(id = it)
-			},
 		)
 		Button(
 			modifier = Modifier,
@@ -113,8 +105,6 @@ private fun AddPartyContentValidPreview() {
 		description = LoremIpsum(15).values.first(),
 		onDescriptionChange = {},
 		onSaveButtonClick = {},
-		titleValidationStatus = ValidationStatus.ValidText,
-		descriptionValidationStatus = ValidationStatus.ValidText,
 	)
 }
 
@@ -127,7 +117,5 @@ private fun AddPartyContentInvalidPreview() {
 		description = LoremIpsum(20).values.first(),
 		onDescriptionChange = {},
 		onSaveButtonClick = {},
-		titleValidationStatus = ValidationStatus.TooLongText,
-		descriptionValidationStatus = ValidationStatus.TooLongText,
 	)
 }

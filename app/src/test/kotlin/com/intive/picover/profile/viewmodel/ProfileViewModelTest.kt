@@ -6,8 +6,6 @@ import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
 import com.intive.picover.common.toast.ToastPublisher
-import com.intive.picover.common.validator.TextValidator
-import com.intive.picover.common.validator.ValidationStatus
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
@@ -35,13 +33,7 @@ class ProfileViewModelTest : ShouldSpec(
 		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
 		val toastPublisher: ToastPublisher = mockk(relaxed = true)
-		// TODO: Implement separate TextValidator based on screen purpose
-		val textValidator: TextValidator = TextValidator.build {
-			allowEmpty = false
-			allowBlank = false
-			maxLength = 20
-		}
-		val tested by lazy { ProfileViewModel(authRepository, toastPublisher, textValidator) }
+		val tested by lazy { ProfileViewModel(authRepository, toastPublisher) }
 
 		beforeSpec {
 			coEvery { authRepository.userProfile() } just awaits
@@ -154,12 +146,6 @@ class ProfileViewModelTest : ShouldSpec(
 			tested.saveUsername()
 
 			tested.username.value shouldBe "Marian K"
-		}
-
-		should("validate text WHEN username changed") {
-			tested.onUsernameChange("MyUserName1234")
-
-			tested.usernameErrorMessageId shouldBe ValidationStatus.ValidText.errorMessageId
 		}
 	},
 )
