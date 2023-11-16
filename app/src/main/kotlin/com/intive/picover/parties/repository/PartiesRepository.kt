@@ -1,27 +1,32 @@
 package com.intive.picover.parties.repository
 
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.snapshots
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.snapshots
 import com.intive.picover.parties.model.PartyRemote
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 
 class PartiesRepository @Inject constructor(
-	firebaseDatabase: FirebaseDatabase,
+	private val firestore: FirebaseFirestore,
 ) {
 
-	private val partiesReference =
-		firebaseDatabase.getReference("Parties")
-
 	fun parties() =
-		partiesReference.snapshots.map { snapshot ->
-			snapshot.children.map { childSnapshot ->
-				childSnapshot.getValue(PartyRemote::class.java)!!
+		firestore.collection("parties")
+			.snapshots()
+			.map { snapshot ->
+				snapshot.documents.map { it.toParty() }
 			}
-		}
 
 	fun partyById(id: String) =
-		parties().map { parties ->
-			parties.first { it.id == id }
-		}
+		firestore.document("parties/$id")
+			.snapshots()
+			.map { it.toParty() }
+
+	private fun DocumentSnapshot.toParty() =
+		PartyRemote(
+			id,
+			getString("title")!!,
+			getString("description")!!,
+		)
 }

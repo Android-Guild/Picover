@@ -1,12 +1,11 @@
 package com.intive.picover.parties.repository
 
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
-import com.google.firebase.database.snapshots
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.snapshots
 import com.intive.picover.parties.model.PartyRemote
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -18,12 +17,8 @@ import kotlinx.coroutines.flow.flowOf
 
 class PartiesRepositoryTest : ShouldSpec(
 	{
-
-		val databaseReference: DatabaseReference = mockk()
-		val firebaseDatabase: FirebaseDatabase = mockk {
-			every { getReference("Parties") } returns databaseReference
-		}
-		val tested = PartiesRepository(firebaseDatabase)
+		val firestore: FirebaseFirestore = mockk()
+		val tested = PartiesRepository(firestore)
 
 		beforeSpec {
 			mockkStatic(Query::snapshots)
@@ -34,51 +29,35 @@ class PartiesRepositoryTest : ShouldSpec(
 		}
 
 		should("fetch parties") {
-			val party: PartyRemote = mockk()
-			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns listOf(
+			val query: QuerySnapshot = mockk {
+				every { documents } returns listOf(
 					mockk {
-						every { getValue(PartyRemote::class.java) } returns party
+						every { id } returns "ABC"
+						every { getString("title") } returns "Party title"
+						every { getString("description") } returns "Party description"
 					},
 				)
 			}
-			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
+			every { firestore.collection("parties").snapshots() } returns flowOf(query)
 
-			tested.parties().first() shouldBe listOf(party)
+			val result = tested.parties()
+
+			result.first() shouldBe listOf(
+				PartyRemote(id = "ABC", title = "Party title", description = "Party description"),
+			)
 		}
 
 		should("fetch party by id") {
-			val party: PartyRemote = mockk {
-				every { id } returns "1"
+			val document: DocumentSnapshot = mockk {
+				every { id } returns "ABC"
+				every { getString("title") } returns "Party title"
+				every { getString("description") } returns "Party description"
 			}
-			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns listOf(
-					mockk {
-						every { getValue(PartyRemote::class.java) } returns party
-					},
-				)
-			}
-			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
+			every { firestore.document("parties/ABC").snapshots() } returns flowOf(document)
 
-			tested.partyById("1").first() shouldBe party
-		}
+			val result = tested.partyById("ABC")
 
-		should("throw error WHEN there is no party for given id") {
-			val party: PartyRemote = mockk {
-				every { id } returns "2"
-			}
-			val dataSnapshot: DataSnapshot = mockk {
-				every { children } returns listOf(
-					mockk {
-						every { getValue(PartyRemote::class.java) } returns party
-					},
-				)
-			}
-			every { databaseReference.snapshots } returns flowOf(dataSnapshot)
-
-			shouldThrowExactly<NoSuchElementException> {
-				tested.partyById("1").first()
-			}
+			result.first() shouldBe PartyRemote(id = "ABC", title = "Party title", description = "Party description")
 		}
 	},
 )
