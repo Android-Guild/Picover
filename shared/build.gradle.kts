@@ -10,7 +10,7 @@ kotlin {
 
 	sourceSets {
 		commonMain.dependencies {
-			implementation(project.dependencies.platform(libs.firebase.bom))
+			implementation(libs.coroutines)
 			implementation(libs.firebase.firestore)
 		}
 		commonTest.dependencies {

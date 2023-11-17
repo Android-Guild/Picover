@@ -1,9 +1,8 @@
 package com.intive.picover.shared.party.data.repo
 
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.snapshots
 import com.intive.picover.shared.party.data.model.PartyRemote
+import dev.gitlive.firebase.firestore.DocumentSnapshot
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.map
 
 class PartiesRepository(
@@ -25,7 +24,7 @@ class PartiesRepository(
 	private fun DocumentSnapshot.toParty() =
 		PartyRemote(
 			id,
-			getString("title")!!,
-			getString("description")!!,
+			get("title"),
+			get("description"),
 		)
 }

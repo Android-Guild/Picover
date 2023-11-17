@@ -3,7 +3,6 @@ package com.intive.picover.common.di
 import android.content.Context
 import androidx.compose.material3.SnackbarHostState
 import androidx.work.WorkManager
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.intive.picover.shared.party.data.repo.PartiesRepository
@@ -12,6 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.gitlive.firebase.firestore.firestore
 import javax.inject.Singleton
 
 @Module
@@ -24,7 +24,7 @@ object AppModule {
 
 	@Provides
 	fun providePartiesRepository() =
-		PartiesRepository(Firebase.firestore)
+		PartiesRepository(dev.gitlive.firebase.Firebase.firestore)
 
 	@Provides
 	fun provideWorkManager(@ApplicationContext context: Context) =
