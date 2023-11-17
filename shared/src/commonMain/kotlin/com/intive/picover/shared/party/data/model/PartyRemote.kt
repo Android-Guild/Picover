@@ -1,4 +1,4 @@
-package com.intive.picover.parties.model
+package com.intive.picover.shared.party.data.model
 
 data class PartyRemote(
 	val id: String,

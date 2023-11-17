@@ -6,6 +6,7 @@ import androidx.work.WorkManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.intive.picover.shared.party.data.repo.PartiesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +23,8 @@ object AppModule {
 		Firebase.storage.reference
 
 	@Provides
-	fun provideFirestore() =
-		Firebase.firestore
+	fun providePartiesRepository() =
+		PartiesRepository(Firebase.firestore)
 
 	@Provides
 	fun provideWorkManager(@ApplicationContext context: Context) =
