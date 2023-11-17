@@ -15,23 +15,28 @@ Current issues are present in the [project backlog](https://github.com/orgs/inti
 
 ## Repository
 
-### Branch
+### Branch and commit naming
 
-Each branch should be associated with a team member and corresponding issue created [here](https://github.com/intive/Picover/issues).
-To accomplish that, use following template `issue_number/description`, example:
-> 1/initial-project
+Allowed branch name templates:
+- `issue_number/description`
+- `description`
+
+Examples:
+- `1/initial-project`
+- `initial-project`
+
+Allowed commit message templates:
+- `#issue_number description`
+- `description`
+
+Examples:
+- `#1 Initial project`
+- `Initial project`
 
 Where:
-
-- `issue_number` – number preceded by a hash character for a particular issue,
+- `issue_number` – number for a particular issue created [here](https://github.com/Android-Guild/Picover-KMP/issues),
 - `description` – up to author, "what has been done in this commit?" in few words, could be a name of the issue for
   issues with only one commit.
-
-### Commit
-
-In a similar manner, to keep bidirectional history, each commit should be associated with the corresponding issue,
-so the template is following `#issue_number description`, example:
-> #1 initial project
 
 ### Pull Requests
 
