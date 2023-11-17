@@ -55,6 +55,7 @@ android {
 
 dependencies {
 	lintChecks(project(":lint"))
+	implementation(project(":shared"))
 	ksp(libs.hilt.android.compiler)
 	ksp(libs.hilt.compiler)
 	implementation(libs.accompanist.navigation.material)
