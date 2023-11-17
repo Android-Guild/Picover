@@ -13,4 +13,9 @@ dependencyResolutionManagement {
 	}
 }
 rootProject.name = "Picover"
-include(":app", ":lint", ":ktlint-ruleset")
+include(
+	":app",
+	":shared",
+	":lint",
+	":ktlint-ruleset",
+)
