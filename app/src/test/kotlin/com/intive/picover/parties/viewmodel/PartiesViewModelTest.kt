@@ -1,7 +1,7 @@
 package com.intive.picover.parties.viewmodel
 
 import com.intive.picover.common.coroutines.CoroutineTestExtension
-import com.intive.picover.common.viewmodel.state.MVIState
+import com.intive.picover.common.viewmodel.state.MVIStateType
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesState
 import com.intive.picover.parties.model.Party
@@ -40,9 +40,9 @@ class PartiesViewModelTest : ShouldSpec(
 
 		should("set state WHEN initialized according to fetch parties result") {
 			listOf(
-				emptyFlow<List<PartyRemote>>() to PartiesState(type = MVIState.Type.LOADING),
-				flowOf(partiesRemote) to PartiesState(parties = parties, type = MVIState.Type.LOADED),
-				flow<List<PartyRemote>> { throw Exception() } to PartiesState(type = MVIState.Type.ERROR),
+				emptyFlow<List<PartyRemote>>() to PartiesState(type = MVIStateType.LOADING),
+				flowOf(partiesRemote) to PartiesState(parties = parties, type = MVIStateType.LOADED),
+				flow<List<PartyRemote>> { throw Exception() } to PartiesState(type = MVIStateType.ERROR),
 			).forAll { (result, state) ->
 				every { repository.parties() } returns result
 
@@ -55,7 +55,7 @@ class PartiesViewModelTest : ShouldSpec(
 		}
 
 		should("start loading parties WHEN load parties event is emitted") {
-			tested.emitEvent(PartiesEvent.Load)
+			tested.event(PartiesEvent.Load)
 
 			coVerify { repository.parties() }
 		}

@@ -1,14 +1,14 @@
 package com.intive.picover.common.viewmodel.state
 
-@Deprecated("Please use MVIState.Type instead", replaceWith = ReplaceWith("MVIState.Type"))
+@Deprecated("Please use MVIStateType instead", replaceWith = ReplaceWith("MVIState.Type"))
 sealed class ViewModelState<out T> {
-	@Deprecated("Please use MVIState.Type.LOADING instead", replaceWith = ReplaceWith("MVIState.Type.LOADING"))
+	@Deprecated("Please use MVIStateType.LOADING instead", replaceWith = ReplaceWith("MVIStateType.LOADING"))
 	data object Loading : ViewModelState<Nothing>()
 
-	@Deprecated("Please use MVIState.Type.ERROR instead", replaceWith = ReplaceWith("MVIState.Type.ERROR"))
+	@Deprecated("Please use MVIStateType.ERROR instead", replaceWith = ReplaceWith("MVIStateType.ERROR"))
 	data object Error : ViewModelState<Nothing>()
 
-	@Deprecated("Please use MVIState.Type.LOADED instead", replaceWith = ReplaceWith("MVIState.Type.LOADED"))
+	@Deprecated("Please use MVIStateType.LOADED instead", replaceWith = ReplaceWith("MVIStateType.LOADED"))
 	data class Loaded<T>(val data: T) : ViewModelState<T>()
 
 	fun isLoading() =

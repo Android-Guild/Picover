@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import androidx.navigation.NavHostController
 import com.intive.picover.R
 import com.intive.picover.common.error.PicoverGenericError
 import com.intive.picover.common.loader.PicoverLoader
-import com.intive.picover.common.viewmodel.state.MVIState
+import com.intive.picover.common.viewmodel.state.MVIStateType
 import com.intive.picover.main.theme.Typography
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect.NavigateToAddParty
@@ -43,7 +44,7 @@ fun PartiesScreen(
 	viewModel: PartiesViewModel,
 	navController: NavHostController,
 ) {
-	val state by viewModel.state
+	val state by viewModel.state.collectAsState()
 	LaunchedEffect(true) {
 		viewModel.sideEffects.collectLatest { effect ->
 			when (effect) {
@@ -53,14 +54,14 @@ fun PartiesScreen(
 		}
 	}
 	when (state.type) {
-		MVIState.Type.LOADING -> PicoverLoader(modifier = Modifier.fillMaxSize())
-		MVIState.Type.LOADED -> LoadedContent(
+		MVIStateType.LOADING -> PicoverLoader(modifier = Modifier.fillMaxSize())
+		MVIStateType.LOADED -> LoadedContent(
 			parties = state.parties,
-			onPartyClick = { viewModel.emitEffect(NavigateToPartyDetails(it)) },
-			onFabClick = { viewModel.emitEffect(NavigateToAddParty) },
+			onPartyClick = { viewModel.effect(NavigateToPartyDetails(it)) },
+			onFabClick = { viewModel.effect(NavigateToAddParty) },
 		)
 
-		MVIState.Type.ERROR -> PicoverGenericError(onRetryClick = { viewModel.emitEvent(PartiesEvent.Load) })
+		MVIStateType.ERROR -> PicoverGenericError(onRetryClick = { viewModel.event(PartiesEvent.Load) })
 	}
 }
 
