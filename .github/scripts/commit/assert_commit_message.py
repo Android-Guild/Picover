@@ -1,7 +1,7 @@
 import re
 import sys
 
-developer_pattern = re.compile(r'#[0-9]+\s[^\s].*')
+developer_pattern = re.compile(r'(#[0-9]+\s)?[a-zA-Z]\w*((\s|-)\w+)*')
 renovate_pattern = re.compile(r'Update .+')
 
 
@@ -18,6 +18,9 @@ commits = [
     (False, "100 Configure"),
     (False, " #100 Configure"),
     (False, "#100  Configure"),
+    (True, "Configure"),
+    (True, "Configure kotest long message"),
+    (False, "Configure kotest "),
     (True, "Update kotlin from 1.8.0 to 1.9.0"),
     (False, " Update kotlin"),
     (True, current_commit_message),

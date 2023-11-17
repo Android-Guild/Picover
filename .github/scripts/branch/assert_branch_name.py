@@ -1,7 +1,7 @@
 import re
 import sys
 
-developer_pattern = re.compile(r'[0-9]+/[a-zA-Z0-9-.]+')
+developer_pattern = re.compile(r'([0-9]+/)?[a-zA-Z0-9-.]+')
 renovate_pattern = re.compile(r'renovate/.+')
 
 
@@ -16,8 +16,10 @@ branches = [
     (True, "200/configure-dependabot"),
     (True, "200/bump-kotlin-1.9.0"),
     (True, "renovate/androidx.lifecycle"),
-    (False, "100-configure"),
+    (True, "100-configure"),
     (True, "100/configure"),
+    (True, "configure"),
+    (False, "configure branch"),
     (True, current_branch_name),
 ]
 for is_valid, branch in branches:
