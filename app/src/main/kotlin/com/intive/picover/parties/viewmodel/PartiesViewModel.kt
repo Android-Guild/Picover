@@ -2,7 +2,7 @@ package com.intive.picover.parties.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.intive.picover.common.viewmodel.MVIViewModel
-import com.intive.picover.common.viewmodel.state.MVIState
+import com.intive.picover.common.viewmodel.state.MVIStateType
 import com.intive.picover.parties.model.PartiesEvent
 import com.intive.picover.parties.model.PartiesSideEffect
 import com.intive.picover.parties.model.PartiesState
@@ -11,6 +11,7 @@ import com.intive.picover.parties.repository.PartiesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -22,7 +23,7 @@ class PartiesViewModel @Inject constructor(
 		loadParties()
 	}
 
-	override fun handleEvent(event: PartiesEvent) {
+	override fun event(event: PartiesEvent) {
 		when (event) {
 			is PartiesEvent.Load -> loadParties()
 		}
@@ -30,31 +31,31 @@ class PartiesViewModel @Inject constructor(
 
 	fun updateTitle(newTitle: String) {
 		_state.update {
-			copy(title = newTitle)
+			it.copy(title = newTitle)
 		}
 	}
 
 	fun updateDescription(newDescription: String) {
 		_state.update {
-			copy(description = newDescription)
+			it.copy(description = newDescription)
 		}
 	}
 
 	private fun loadParties() {
 		viewModelScope.launch {
 			_state.update {
-				copy(type = MVIState.Type.LOADING)
+				it.copy(type = MVIStateType.LOADING)
 			}
 			partiesRepository.parties()
 				.catch {
 					_state.update {
-						copy(type = MVIState.Type.ERROR)
+						it.copy(type = MVIStateType.ERROR)
 					}
-				}.collect {
+				}.collect { parties ->
 					_state.update {
-						copy(
-							parties = it.toUI(),
-							type = MVIState.Type.LOADED,
+						it.copy(
+							parties = parties.toUI(),
+							type = MVIStateType.LOADED,
 						)
 					}
 				}

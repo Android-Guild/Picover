@@ -1,8 +1,6 @@
 package com.intive.picover.parties.model
 
-import com.intive.picover.common.viewmodel.sideeffect.SideEffect
-
-sealed class PartiesSideEffect : SideEffect {
+sealed class PartiesSideEffect {
 	data class NavigateToPartyDetails(val partyId: String) : PartiesSideEffect()
 	data object NavigateToAddParty : PartiesSideEffect()
 }

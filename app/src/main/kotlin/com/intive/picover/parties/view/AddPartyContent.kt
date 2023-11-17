@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +33,7 @@ fun AddPartyBottomSheet(
 	viewModel: PartiesViewModel,
 	navController: NavHostController,
 ) {
-	val state by viewModel.state
+	val state by viewModel.state.collectAsState()
 	ModalBottomSheet(
 		onDismissRequest = { navController.popBackStack() },
 	) {
