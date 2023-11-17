@@ -1,13 +1,12 @@
-package com.intive.picover.parties.repository
+package com.intive.picover.shared.party.data.repo
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.snapshots
-import com.intive.picover.parties.model.PartyRemote
-import javax.inject.Inject
+import com.intive.picover.shared.party.data.model.PartyRemote
 import kotlinx.coroutines.flow.map
 
-class PartiesRepository @Inject constructor(
+class PartiesRepository(
 	private val firestore: FirebaseFirestore,
 ) {
 

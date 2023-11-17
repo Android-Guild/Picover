@@ -8,7 +8,7 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.parties.model.Party
 import com.intive.picover.parties.model.toUI
-import com.intive.picover.parties.repository.PartiesRepository
+import com.intive.picover.shared.party.data.repo.PartiesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.catch

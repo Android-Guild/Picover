@@ -5,19 +5,18 @@ plugins {
 
 kotlin {
 	androidTarget {
-		compilations.all {
-			kotlinOptions {
-				jvmTarget = "1.8"
-			}
-		}
+		jvmToolchain(17)
 	}
 
 	sourceSets {
 		commonMain.dependencies {
-			// put your multiplatform dependencies here
+			implementation(project.dependencies.platform(libs.firebase.bom))
+			implementation(libs.firebase.firestore)
 		}
 		commonTest.dependencies {
 			implementation(libs.test.kotlin)
+			implementation(libs.test.kotest.runner)
+			implementation(libs.test.mockk)
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.intive.picover.parties.model
 
+import com.intive.picover.shared.party.data.model.PartyRemote
+
 data class Party(
 	val id: String,
 	val title: String,

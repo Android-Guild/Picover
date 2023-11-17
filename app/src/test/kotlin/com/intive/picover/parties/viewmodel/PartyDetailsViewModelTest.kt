@@ -6,9 +6,9 @@ import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
 import com.intive.picover.parties.model.Party
-import com.intive.picover.parties.model.PartyRemote
 import com.intive.picover.parties.model.toUI
-import com.intive.picover.parties.repository.PartiesRepository
+import com.intive.picover.shared.party.data.model.PartyRemote
+import com.intive.picover.shared.party.data.repo.PartiesRepository
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe

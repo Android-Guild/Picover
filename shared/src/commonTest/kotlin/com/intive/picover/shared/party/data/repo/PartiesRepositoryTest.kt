@@ -1,11 +1,11 @@
-package com.intive.picover.parties.repository
+package com.intive.picover.shared.party.data.repo
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.snapshots
-import com.intive.picover.parties.model.PartyRemote
+import com.intive.picover.shared.party.data.model.PartyRemote
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
