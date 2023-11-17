@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.kotlin.multiplatform)
 	alias(libs.plugins.android.library)
+	alias(libs.plugins.kotest)
 }
 
 kotlin {
@@ -15,8 +16,13 @@ kotlin {
 		}
 		commonTest.dependencies {
 			implementation(libs.test.kotlin)
-			implementation(libs.test.kotest.runner)
+			implementation(libs.test.kotest.engine)
 			implementation(libs.test.mockk)
+		}
+		val androidUnitTest by getting {
+			dependencies {
+				implementation(libs.test.kotest.runner)
+			}
 		}
 	}
 }

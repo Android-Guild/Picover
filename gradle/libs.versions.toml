@@ -2,6 +2,7 @@
 agp = "8.1.4"
 dagger = "2.48.1"
 kotlin = "1.9.20"
+kotest = "5.8.0"
 ktlint = "1.0.1"
 lint = "31.1.4"
 landscapist = "2.2.12"
@@ -48,8 +49,9 @@ test-mockk = "io.mockk:mockk:1.13.8"
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
 test-junit-launcher = "org.junit.platform:junit-platform-launcher:1.10.1"
-test-kotest-runner = "io.kotest:kotest-runner-junit5:5.8.0"
-test-kotest-datatest = "io.kotest:kotest-framework-datatest:5.8.0"
+test-kotest-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+test-kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+test-kotest-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 test-kotlin = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 test-ktlint = { group = "com.pinterest.ktlint", name = "ktlint-test", version.ref = "ktlint" }
 test-slf4j = "org.slf4j:slf4j-simple:2.0.9"
@@ -65,6 +67,7 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.strictly = "1.9.20-1.0.14" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotest = { id = "io.kotest.multiplatform", version.ref = "kotest" }
 oss-licenses = { id = "com.google.android.gms.oss-licenses-plugin" }
 firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.strictly = "4.0.1" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.strictly = "2.9.9" }
