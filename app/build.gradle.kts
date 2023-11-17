@@ -1,5 +1,4 @@
 import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
-import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
 
 plugins {
 	id(libs.plugins.android.application.get().pluginId)
@@ -8,7 +7,6 @@ plugins {
 	id(libs.plugins.hilt.android.get().pluginId)
 	id(libs.plugins.google.services.get().pluginId)
 	id(libs.plugins.oss.licenses.get().pluginId)
-	id(libs.plugins.kotlin.noarg.get().pluginId)
 	id(libs.plugins.firebase.appdistribution.get().pluginId)
 	id(libs.plugins.firebase.crashlytics.get().pluginId)
 }
@@ -55,10 +53,6 @@ android {
 	}
 }
 
-configure<NoArgExtension> {
-	annotation("com.intive.picover.common.annotation.NoArgConstructor")
-}
-
 dependencies {
 	lintChecks(project(":lint"))
 	ksp(libs.hilt.android.compiler)
@@ -87,7 +81,7 @@ dependencies {
 	implementation(libs.material)
 	implementation(libs.firebaseui.auth)
 	implementation(libs.play.services.auth)
-	implementation(libs.firebase.database)
+	implementation(libs.firebase.firestore)
 	implementation(libs.workmanager)
 	debugImplementation(libs.compose.ui.tooling)
 	debugImplementation(libs.leakcanary)

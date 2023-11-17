@@ -3,7 +3,7 @@ package com.intive.picover.common.di
 import android.content.Context
 import androidx.compose.material3.SnackbarHostState
 import androidx.work.WorkManager
-import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import dagger.Module
@@ -22,8 +22,8 @@ object AppModule {
 		Firebase.storage.reference
 
 	@Provides
-	fun provideFirebaseDatabase() =
-		Firebase.database
+	fun provideFirestore() =
+		Firebase.firestore
 
 	@Provides
 	fun provideWorkManager(@ApplicationContext context: Context) =
