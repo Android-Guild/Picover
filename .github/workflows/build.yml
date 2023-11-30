@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gradle:8.4.0-jdk17
+    container: gradle:8.5.0-jdk17
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/gradle-cache
