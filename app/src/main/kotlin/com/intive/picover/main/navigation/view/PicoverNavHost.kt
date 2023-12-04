@@ -78,14 +78,7 @@ private fun NavGraphBuilder.profileGraph(navController: NavHostController) {
 			ProfileScreen(hiltViewModel(parentEntry), navController)
 		}
 		dialog("deleteAccount") {
-			val viewModel: ProfileViewModel = hiltViewModel()
-			DeleteAccountDialog(
-				onConfirm = {
-					viewModel.onDeleteAccountClick()
-					navController.popBackStack()
-				},
-				onDismiss = { navController.popBackStack() },
-			)
+			DeleteAccountDialog(hiltViewModel(), navController)
 		}
 		bottomSheet("updateProfile") {
 			val parentEntry = it.rememberParentEntry(navController)

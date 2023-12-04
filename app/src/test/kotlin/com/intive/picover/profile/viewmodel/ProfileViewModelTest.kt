@@ -1,11 +1,8 @@
 package com.intive.picover.profile.viewmodel
 
 import android.net.Uri
-import com.intive.picover.R
-import com.intive.picover.auth.model.AccountDeletionResult
 import com.intive.picover.auth.repository.AuthRepository
 import com.intive.picover.common.coroutines.CoroutineTestExtension
-import com.intive.picover.common.toast.ToastPublisher
 import com.intive.picover.common.viewmodel.state.ViewModelState.Error
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loaded
 import com.intive.picover.common.viewmodel.state.ViewModelState.Loading
@@ -18,7 +15,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.Awaits
 import io.mockk.awaits
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -32,8 +28,7 @@ class ProfileViewModelTest : ShouldSpec(
 		val profile: Profile = mockk(relaxed = true)
 		val uri: Uri = mockk()
 		val authRepository: AuthRepository = mockk(relaxed = true)
-		val toastPublisher: ToastPublisher = mockk(relaxed = true)
-		val tested by lazy { ProfileViewModel(authRepository, toastPublisher) }
+		val tested by lazy { ProfileViewModel(authRepository) }
 
 		beforeSpec {
 			coEvery { authRepository.userProfile() } just awaits
@@ -43,22 +38,6 @@ class ProfileViewModelTest : ShouldSpec(
 			tested.onLogoutClick()
 
 			verify { authRepository.logout() }
-		}
-
-		should("call deleteAccount on AuthRepository AND show on ToastPublisher depending on result WHEN onDeleteAccountClick") {
-			listOf(
-				AccountDeletionResult.Success to R.string.DeleteAccountSuccessToastText,
-				AccountDeletionResult.ReAuthenticationNeeded to R.string.DeleteAccountReAuthenticationToastText,
-			).forAll { (result, textId) ->
-				coEvery { authRepository.deleteAccount() } returns result
-
-				tested.onDeleteAccountClick()
-
-				coVerify {
-					authRepository.deleteAccount()
-					toastPublisher.show(textId)
-				}
-			}
 		}
 
 		should("profile return Profile data WHEN ProfileViewModelTest was initialized") {
