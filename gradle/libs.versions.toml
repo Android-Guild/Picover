@@ -38,7 +38,7 @@ lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = 
 ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
 ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-core", version.ref = "ktlint" }
 material = "com.google.android.material:material:1.11.0"
-workmanager = "androidx.work:work-runtime-ktx:2.8.1"
+workmanager = "androidx.work:work-runtime-ktx:2.9.0"
 
 test-guava = "com.google.guava:guava:32.1.3-jre"
 test-mockk = "io.mockk:mockk:1.13.8"
