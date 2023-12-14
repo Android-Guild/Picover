@@ -37,7 +37,7 @@ leakcanary = "com.squareup.leakcanary:leakcanary-android:2.12"
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
 ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
 ktlint-ruleset = { group = "com.pinterest.ktlint", name = "ktlint-cli-ruleset-core", version.ref = "ktlint" }
-material = "com.google.android.material:material:1.10.0"
+material = "com.google.android.material:material:1.11.0"
 workmanager = "androidx.work:work-runtime-ktx:2.8.1"
 
 test-guava = "com.google.guava:guava:32.1.3-jre"
