@@ -42,6 +42,7 @@ workmanager = "androidx.work:work-runtime-ktx:2.8.1"
 
 test-guava = "com.google.guava:guava:32.1.3-jre"
 test-mockk = "io.mockk:mockk:1.13.8"
+test-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.21"
 test-lint = { group = "com.android.tools.lint", name = "lint", version.ref = "lint" }
 test-lint-tests = { group = "com.android.tools.lint", name = "lint-tests", version.ref = "lint" }
 test-junit-launcher = "org.junit.platform:junit-platform-launcher:1.10.1"
