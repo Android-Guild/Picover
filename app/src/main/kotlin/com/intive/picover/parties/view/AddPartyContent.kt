@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,21 +20,20 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.intive.picover.R
+import com.intive.picover.common.bottomsheet.PicoverModalBottomSheet
 import com.intive.picover.common.text.PicoverOutlinedTextField
 import com.intive.picover.common.validator.TextValidator
 import com.intive.picover.parties.viewmodel.PartiesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPartyBottomSheet(
 	viewModel: PartiesViewModel,
 	navController: NavHostController,
 ) {
 	val state by viewModel.state
-	ModalBottomSheet(
-		onDismissRequest = { navController.popBackStack() },
-	) {
+	PicoverModalBottomSheet(onDismissRequest = { navController.popBackStack() }) { bottomSheetModifier ->
 		AddPartyContent(
+			modifier = bottomSheetModifier,
 			title = state.title,
 			onTitleChange = { viewModel.updateTitle(it) },
 			description = state.description,
@@ -48,6 +45,7 @@ fun AddPartyBottomSheet(
 
 @Composable
 fun AddPartyContent(
+	modifier: Modifier,
 	title: String,
 	onTitleChange: (String) -> Unit,
 	description: String,
@@ -56,7 +54,7 @@ fun AddPartyContent(
 ) {
 	val focusManager = LocalFocusManager.current
 	Column(
-		Modifier.padding(16.dp),
+		modifier = modifier,
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		PicoverOutlinedTextField(
@@ -85,7 +83,6 @@ fun AddPartyContent(
 			maxLines = 3,
 		)
 		Button(
-			modifier = Modifier,
 			onClick = onSaveButtonClick,
 		) {
 			Text(
@@ -100,6 +97,7 @@ fun AddPartyContent(
 @Composable
 private fun AddPartyContentValidPreview() {
 	AddPartyContent(
+		modifier = Modifier,
 		title = LoremIpsum(4).values.first(),
 		onTitleChange = {},
 		description = LoremIpsum(15).values.first(),
@@ -112,6 +110,7 @@ private fun AddPartyContentValidPreview() {
 @Composable
 private fun AddPartyContentInvalidPreview() {
 	AddPartyContent(
+		modifier = Modifier,
 		title = LoremIpsum(6).values.first(),
 		onTitleChange = {},
 		description = LoremIpsum(20).values.first(),
