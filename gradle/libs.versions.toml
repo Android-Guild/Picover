@@ -1,7 +1,7 @@
 [versions]
 dagger = "2.49"
 kotlin = "1.9.21"
-ktlint = "1.0.1"
+ktlint = "1.1.0"
 lint = "31.2.0"
 landscapist = "2.2.12"
 
