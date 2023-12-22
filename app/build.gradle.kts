@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.logging.warnln
 import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
 import org.jetbrains.kotlin.noarg.gradle.NoArgExtension
 
@@ -44,6 +45,10 @@ android {
 
 	composeOptions {
 		kotlinCompilerExtensionVersion = "1.5.7"
+		warnln(
+			"The Compose Compiler 1.5.7 is not compatible with the newest version of Kotlin 1.9.22. " +
+				"Please update Kotlin once compatible Compose Compiler is available.",
+		)
 	}
 
 	kotlin {
