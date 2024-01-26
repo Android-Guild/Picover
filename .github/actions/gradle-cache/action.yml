@@ -3,7 +3,7 @@ description: "Configure gradle and cache it if running on the 'dev' branch"
 runs:
   using: "composite"
   steps:
-    - uses: gradle/gradle-build-action@v2
+    - uses: gradle/gradle-build-action@v3
       with:
         cache-write-only: ${{ github.ref_name == 'dev' }}
         cache-read-only: ${{ startsWith(github.ref, 'refs/pull/') }}
